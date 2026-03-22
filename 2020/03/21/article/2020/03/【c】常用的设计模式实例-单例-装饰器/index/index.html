@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="以一个实际的User登录某APP为例，概述在后台框架中，其可能使用到的设计模式 User进行登录验证成功后，进入OnLoginSuccess事件，将各个登录逻辑用单例模式包装成事件依次处理， 将内存中的m\_user对象作为传参供单例mgr...">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【C++】常用的设计模式实例-单例&#x2F;装饰器&#x2F;观察者&#x2F;中介者">
+<meta property="og:url" content="http://example.com/2020/03/21/article/2020/03/%E3%80%90c%E3%80%91%E5%B8%B8%E7%94%A8%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AE%9E%E4%BE%8B-%E5%8D%95%E4%BE%8B-%E8%A3%85%E9%A5%B0%E5%99%A8/index/index.html">
+<meta property="og:site_name" content="HOME">
+<meta property="og:description" content="以一个实际的User登录某APP为例，概述在后台框架中，其可能使用到的设计模式 User进行登录验证成功后，进入OnLoginSuccess事件，将各个登录逻辑用单例模式包装成事件依次处理， 将内存中的m\_user对象作为传参供单例mgr...">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-03-20T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-03-22T11:38:53.330Z">
+<meta property="article:author" content="VC-ROBOT">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2020/03/21/article/2020/03/%E3%80%90c%E3%80%91%E5%B8%B8%E7%94%A8%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AE%9E%E4%BE%8B-%E5%8D%95%E4%BE%8B-%E8%A3%85%E9%A5%B0%E5%99%A8/index/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2020/03/21/article/2020/03/%E3%80%90c%E3%80%91%E5%B8%B8%E7%94%A8%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AE%9E%E4%BE%8B-%E5%8D%95%E4%BE%8B-%E8%A3%85%E9%A5%B0%E5%99%A8/index/","path":"2020/03/21/article/2020/03/【c】常用的设计模式实例-单例-装饰器/index/","title":"【C++】常用的设计模式实例-单例/装饰器/观察者/中介者"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【C++】常用的设计模式实例-单例/装饰器/观察者/中介者 | HOME</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">HOME</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">VC-ROBOT</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/03/21/article/2020/03/%E3%80%90c%E3%80%91%E5%B8%B8%E7%94%A8%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AE%9E%E4%BE%8B-%E5%8D%95%E4%BE%8B-%E8%A3%85%E9%A5%B0%E5%99%A8/index/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="VC-ROBOT">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="【C++】常用的设计模式实例-单例&#x2F;装饰器&#x2F;观察者&#x2F;中介者 | HOME">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【C++】常用的设计模式实例-单例/装饰器/观察者/中介者
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-03-21 00:00:00" itemprop="dateCreated datePublished" datetime="2020-03-21T00:00:00+08:00">2020-03-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-22 19:38:53" itemprop="dateModified" datetime="2026-03-22T19:38:53+08:00">2026-03-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>13k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>23 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>以一个实际的User登录某APP为例，概述在后台框架中，其可能使用到的设计模式</p>
+<p>User进行登录验证成功后，进入OnLoginSuccess事件，将各个登录逻辑用单例模式包装成事件依次处理， 将内存中的m_user对象作为传参供单例mgr使用，其中例如DataMgr不需要修改user内容的应严格使用const</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">User::OnLoginSuccess</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//更新上次登陆时间</span></span><br><span class="line">    TimerMgr::<span class="built_in">Instance</span>().<span class="built_in">UpdateLastLoginTime</span>(m_user);</span><br><span class="line">    <span class="comment">//返回给客户端User的信息用于显示</span></span><br><span class="line">    DataMgr::<span class="built_in">Instance</span>().<span class="built_in">SendClientUserInfo</span>(m_user);</span><br><span class="line">    <span class="comment">//将广告推送给User</span></span><br><span class="line">    AdvertiseMgr::<span class="built_in">Instance</span>().<span class="built_in">SendNewsToUser</span>(m_user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>单例模式</strong> static创建的对象是线程安全的</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">DataMgr</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">static</span> DataMgr&amp; <span class="title">Instance</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="type">static</span> DataMgr s_instance;</span><br><span class="line">        <span class="keyword">return</span> s_instance;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">SendClientUserInfo</span><span class="params">(<span class="type">const</span> User&amp; cUser)</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">DataMgr</span>()&#123;&#125;;</span><br><span class="line">    ~<span class="built_in">DataMgr</span>()&#123;&#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>总结 : 单例模式满足进程中只存在一个实例化对象，为一些频繁调用的程序节省了系统资源</strong></p>
+<hr>
+<p>现在，你想为玩家提供一些促销活动， 有以下几个活动： 1.限时充值话费满100反1 2.登录赠送海底捞代金券100减2 3.一个蚂蚁森林的复刻版(产生能量、偷能量、收取能量)</p>
+<p>分析可以发现，他们都有一些共同的特性： 1.都有开始时间和结束时间 2.都会在活动过程中获得XX 3.可能在活动过程中消耗xx 4.在获得了XX东西后会用一种方式告诉你(直接弹窗或者发一个红点) 总而言之，他们都是为了骗你进入APP，然后送你点甜头，让你花更多的钱或者提高活跃度！</p>
+<p>那么事情就简单了，我们需要有这些逻辑 1.过期判断(跨过某个时间点过期) : 登录时可能会触发活动的过期 在线状态下不会触发登录，但是活动也可能会过期 2.User的物品变化(余额、能量、代金券等等) 所有User物品发生变化时可以增加一个监听事件，在监听事件处理这些变化</p>
+<p>我们使用<strong>单例模式</strong>创建一个事件监听器，在各种事件发生时调用他</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">ItemData</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">EventTrigger</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">static</span> EventTrigger&amp; <span class="title">Instance</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="type">static</span> EventTrigger s_instance;</span><br><span class="line">        <span class="keyword">return</span> s_instance;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//登录事件</span></span><br><span class="line">    <span class="built_in">OnLoginSuccess</span>(User&amp; user);</span><br><span class="line">    <span class="comment">//跨天事件</span></span><br><span class="line">    <span class="built_in">OnPassDay</span>(User&amp; user);</span><br><span class="line">    <span class="comment">//道具增加事件</span></span><br><span class="line">    <span class="built_in">OnAddItem</span>(User&amp; user, ItemData&amp; cItemData);</span><br><span class="line">    <span class="comment">//道具减少事件</span></span><br><span class="line">    <span class="built_in">OnDelItem</span>(User&amp; user, ItemData&amp; cItemData);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>比如可以这样处理</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">User::OnLoginSuccess</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//更新上次登陆时间</span></span><br><span class="line">    TimerMgr::<span class="built_in">Instance</span>().<span class="built_in">UpdateLastLoginTime</span>(m_user);</span><br><span class="line">    <span class="comment">//返回给客户端User的信息用于显示</span></span><br><span class="line">    DataMgr::<span class="built_in">Instance</span>().<span class="built_in">SendClientUserInfo</span>(m_user);</span><br><span class="line">    <span class="comment">//将广告推送给User</span></span><br><span class="line">    AdvertiseMgr::<span class="built_in">Instance</span>().<span class="built_in">SendNewsToUser</span>(m_user);</span><br><span class="line">    <span class="comment">//触发登录事件</span></span><br><span class="line">    EventTrigger::<span class="built_in">Instance</span>().<span class="built_in">OnLoginSuccess</span>(m_user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在我们可以开始设计我们的活动类了,一个基础的活动类， 1.需要检查活动是否在有效期内 2.活动开始时会做一些处理(发优惠券) 3.活动结束时会做一些处理(删除过期的道具) 4.道具发生变化时需要做一些处理 5.活动过程中的各种操作都是独有的，不可复用</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*ActivityBase.h*/</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ActivityData</span>;</span><br><span class="line"><span class="comment">//通知方法</span></span><br><span class="line"><span class="keyword">enum</span> <span class="title class_">MSG_TYPE</span></span><br><span class="line">&#123;</span><br><span class="line">    MSG_TYPE_ALL = <span class="number">0</span>,<span class="comment">//丧心病狂的全部打包通知</span></span><br><span class="line">    MSG_TYPE_REDPOINT = <span class="number">1</span>,<span class="comment">//红点提示</span></span><br><span class="line">    MSG_TYPE_WINDOWS = <span class="number">2</span>,<span class="comment">//弹窗消息</span></span><br><span class="line">    MSG_TYPE_SHORTMSG = <span class="number">3</span>;<span class="comment">//短信通知</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//活动状态</span></span><br><span class="line"><span class="keyword">enum</span> <span class="title class_">ACT_STATUS</span></span><br><span class="line">&#123;</span><br><span class="line">    ACT_STATUS_DEFAULT = <span class="number">0</span>,<span class="comment">//默认</span></span><br><span class="line">    ACT_STATUS_NOTOPEN = <span class="number">1</span>,<span class="comment">//未开启</span></span><br><span class="line">    ACT_STATUS_OPEN = <span class="number">2</span>,<span class="comment">//刚开启</span></span><br><span class="line">    ACT_STATUS_RUNNING = <span class="number">3</span>,<span class="comment">//进行中</span></span><br><span class="line">    ACT_STATUS_CLOSE = <span class="number">4</span>,<span class="comment">//刚关闭</span></span><br><span class="line">    ACT_STATUS_EXPIRED = <span class="number">5</span>;<span class="comment">//已过期</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ActivityBase</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">//登录成功后的处理</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">OnLoinSuccess</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">//跨天的处理</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">OnPassDay</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">//获得道具的处理</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">OnAddItem</span><span class="params">(User&amp; user)</span></span>;</span><br><span class="line">    <span class="comment">//失去道具的处理</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">OnDelItem</span><span class="params">(User&amp; user)</span></span>;</span><br><span class="line">    <span class="comment">//是否可以发送消息给User</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">bool</span> <span class="title">CanSendMsgToUser</span><span class="params">(User&amp; user)</span></span>&#123;<span class="keyword">return</span> <span class="literal">true</span>&#125;;</span><br><span class="line">    <span class="comment">//以某种形式发给玩家消息</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">SendMgsToUser</span><span class="params">(User&amp; user, <span class="type">const</span> MSG_TYPE &amp;eMsgType)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">SetActivityData</span><span class="params">(<span class="type">const</span> ActivityData&amp; cActivityData)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        m_ActivityData = cActivityData;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="function">ActivityData&amp; <span class="title">GetActivityData</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> m_ActivityData;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">//刷新活动</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">RefreshActcity</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">//改变活动的状态</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">ChangeActcityStatus</span><span class="params">(ACT_STATUS&amp; eStatus)</span></span>;</span><br><span class="line">    <span class="comment">//活动开始时的事件</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">OnActStart</span><span class="params">(User&amp; user)</span> </span>= <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//活动结束时的事件</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">OnActEnd</span><span class="params">(User&amp; user)</span> </span>= <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    ActivityData m_ActivityData;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>OnActStart和OnActEnd都是纯虚函数，这是因为每个活动开始和结束的操作都不一样，我们不能设计通用的函数去处理它 那么OnLoinSuccess、OnPassDay他们会带来什么影响呢，显然他们最大的影响就是改变了活动的状态，可能会让活动开启或关闭</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*ActivityBase.cpp*/</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ActivityBase::OnLoinSuccess</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">UpdateActcityStatus</span>();</span><br><span class="line">    <span class="keyword">switch</span>(m_ActivityData.Status)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">case</span> ACT_STATUS_NOTOPEN:<span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> ACT_STATUS_OPEN:</span><br><span class="line">            <span class="built_in">OnActStart</span>();</span><br><span class="line">            <span class="built_in">ChangeActcityStatus</span>(ACT_STATUS_RUNNING);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> ACT_STATUS_RUNNING:<span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> ACT_STATUS_CLOSE:</span><br><span class="line">            <span class="built_in">OnActStop</span>();</span><br><span class="line">            <span class="built_in">ChangeActcityStatus</span>(ACT_STATUS_EXPIRED);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> ACT_STATUS_EXPIRED:<span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ActivityBase::OnPassDay</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//因为逻辑和OnLoginSuccess一样,所以不用再写一遍</span></span><br><span class="line">    <span class="built_in">OnLoginSuccess</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同理，大部分物品的变化都是会给玩家通知，告诉玩家发生了什么(恭喜你获得了满100减1代金券！呵呵)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*ActivityBase.cpp*/</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ActivityBase::OnAddItem</span><span class="params">(User&amp; user)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">CanSendMsgToUser</span>(user))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">SendMsgToUser</span>(user, m_ActivityData.MsgType);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ActivityBase::OnDelItem</span><span class="params">(User&amp; user)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">CanSendMsgToUser</span>(user))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">SendMsgToUser</span>(user, m_ActivityData.MsgType);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重头戏来了，终于进入到了关键 <strong>装饰器模式</strong> 先看看限时充值话费活动</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*ActivityTimeLimitTopUp.h*/</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SimpleSingleton</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ActivityTimeLimitTopUp</span> :</span><br><span class="line">    <span class="keyword">public</span> SimpleSingleton&lt;ActivityTimeLimitTopUp&gt;, <span class="keyword">public</span> ActivityBase</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">//充值话费消耗余额</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">OnDelItem</span><span class="params">(User&amp; user)</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">//活动开始时的事件</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">OnActStart</span><span class="params">(User&amp; user)</span></span>;</span><br><span class="line">    <span class="comment">//活动结束时的事件</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">OnActEnd</span><span class="params">(User&amp; user)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*ActivityTimeLimitTopUp.cpp*/</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ActivityTimeLimitTopUp::OnActStart</span><span class="params">(User&amp; user)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//二话不说先告诉大家可以享受充值优惠啦</span></span><br><span class="line">    <span class="built_in">SendMsgToUser</span>(user, m_ActivityData.MsgType);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ActivityTimeLimitTopUp::OnActEnd</span><span class="params">(User&amp; user)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//悄悄的结束,啥都不做</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ActivityTimeLimitTopUp::OnDelItem</span><span class="params">(User&amp; user)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//还你们1块钱</span></span><br><span class="line">    <span class="built_in">ReturnDiscountToUser</span>(user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到onloginsuccess&#x2F;onpassday这些终于不用再ctrl c+v重写一遍，他们会自动继承父类的方法 delitem因为需要所以重写了逻辑，但是总体而言只需要写一些自己独有的函数，整个类都变得清爽了 同理再看看其他两个活动</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*ActivitySeaBottomCatch.h*/</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SimpleSingleton</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ActivitySeaBottomCatch</span>:</span><br><span class="line"><span class="keyword">public</span> SimpleSingleton&lt;ActivitySeaBottomCatch&gt;, <span class="keyword">public</span> ActivityBase</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">//活动开始时的事件</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">OnActStart</span><span class="params">(User&amp; user)</span></span>;</span><br><span class="line">    <span class="comment">//活动结束时的事件</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">OnActEnd</span><span class="params">(User&amp; user)</span></span>;</span><br><span class="line">    <span class="comment">//聪明的产品经理选择返利给客户</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">ConvertCouponToMoney</span><span class="params">(User&amp; user)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*ActivitySeaBottomCatch.cpp*/</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ActivitySeaBottomCatch::OnActStart</span><span class="params">(User&amp; user)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//兑换券发给user</span></span><br><span class="line">    <span class="built_in">GiveCouponToUser</span>(user);</span><br><span class="line">    <span class="comment">//快来消费</span></span><br><span class="line">    <span class="built_in">SendMsgToUser</span>(user, m_ActivityData.MsgType);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ActivitySeaBottomCatch::OnActEnd</span><span class="params">(User&amp; user)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//大出血,把活动结束没用的兑换券按一张1分钱还给user</span></span><br><span class="line">    <span class="built_in">ConvertCouponToMoney</span>(user);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*ActivityTree.h*/</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SimpleSingleton</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ActivityTree</span>:</span><br><span class="line"><span class="keyword">public</span> SimpleSingleton&lt;ActivityTree&gt;, <span class="keyword">public</span> ActivityBase</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">//消耗了某种东西(购物获得能量)</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">OnDelItem</span><span class="params">(User&amp; user)</span></span>;</span><br><span class="line">    <span class="comment">//增加了某种东西(增加步行数获得能量)</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">OnAddItem</span><span class="params">(User&amp; user)</span></span>;</span><br><span class="line">    <span class="comment">//偷别人的能量</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">StealOtherEnergy</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">//收自己的能量</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">GetMyOwnEnergy</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">//用能量浇水</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">UseEnergyToWater</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">//重写CanSend方法</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">bool</span> <span class="title">CanSendMsgToUser</span><span class="params">(User&amp; user)</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">//活动开始时的事件</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">OnActStart</span><span class="params">(User&amp; user)</span></span>;</span><br><span class="line">    <span class="comment">//活动结束时的事件</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">OnActEnd</span><span class="params">(User&amp; user)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">AddEnergy</span><span class="params">(User&amp; user)</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">DelEnergy</span><span class="params">(User&amp; user)</span></span>;</span><br><span class="line">    <span class="comment">//如有有能量可以收，通知玩家去收能量</span></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">IfHaveEnergyCanGet</span><span class="params">(User&amp; user)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*ActivityTree.cpp*/</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ActivityTree::OnActStart</span><span class="params">(User&amp; user)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//告诉大家可以偷能量了</span></span><br><span class="line">    <span class="built_in">SendMsgToUser</span>(user, m_ActivityData.MsgType);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ActivityTree::OnActEnd</span><span class="params">(User&amp; user)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//活动结束了，感谢参与！有缘再见！</span></span><br><span class="line">    <span class="built_in">SendMsgToUser</span>(user, m_ActivityData.MsgType);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ActivityTree::OnAddItem</span><span class="params">(User&amp; user)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//增加能量</span></span><br><span class="line">    <span class="built_in">AddEnergy</span>(user);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ActivityTree::OnDelItem</span><span class="params">(User&amp; user)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//增加能量</span></span><br><span class="line">    <span class="built_in">AddEnergy</span>(user);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ActivityTree::StealOtherEnergy</span><span class="params">(User&amp; user)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//增加能量</span></span><br><span class="line">    <span class="built_in">AddEnergy</span>(user);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ActivityTree::GetMyOwnEnergy</span><span class="params">(User&amp; user)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//增加能量</span></span><br><span class="line">    <span class="built_in">AddEnergy</span>(user);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ActivityTree::UseEnergyToWater</span><span class="params">(User&amp; user)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//减少能量</span></span><br><span class="line">    <span class="built_in">DelEnergy</span>(user);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">ActivityTree::CanSendMsgToUser</span><span class="params">(User&amp; user)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">IfHaveEnergyCanGet</span>(user)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> ActivityBase::<span class="built_in">CanSendMgeToUser</span>(user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>海底捞活动只需要在活动开始时发一张兑换券，而蚂蚁森林活动就复杂得多，重写了父类的CanSendMsg方法，其他新增的功能函数可以通过APP的TCP通信协议来调用。 三种不同的活动都是基于ActivityBase稍作修改继承来的子类。</p>
+<p><strong>总结 : 装饰器模式其实是将多个功能类的通用功能抽象出来，用一个父类做统一处理， 每一个子类自己可以在继承父类的基础上添加新的功能，大大减少了代码的行数</strong></p>
+<hr>
+<p>这一过程看起来很好，其实忽略了一个问题: 如何触发这些事件？ EventTrigger可以在各个事件发生时监听，但是活动的事件又不会自动被监听，还是要手动写上去 所以EventTrigger应该是这样的</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*EventTrigger.cpp*/</span></span><br><span class="line"><span class="comment">//登录事件</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">EventTrigger::OnLoginSuccess</span><span class="params">(User&amp; user)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ActivityTimeLimitTopUp::<span class="built_in">Instance</span>().<span class="built_in">OnLoginSuccess</span>(user);</span><br><span class="line">    ActivitySeaBottomCatch::<span class="built_in">Instance</span>().<span class="built_in">OnLoginSuccess</span>(user);</span><br><span class="line">    ActivityTree::<span class="built_in">Instance</span>().<span class="built_in">OnLoginSuccess</span>(user);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//跨天事件</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">EventTrigger::OnPassDay</span><span class="params">(User&amp; user)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ActivityTimeLimitTopUp::<span class="built_in">Instance</span>().<span class="built_in">OnPassDay</span>(user);</span><br><span class="line">    ActivitySeaBottomCatch::<span class="built_in">Instance</span>().<span class="built_in">OnPassDay</span>(user);</span><br><span class="line">    ActivityTree::<span class="built_in">Instance</span>().<span class="built_in">OnPassDay</span>(user);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//道具增加事件</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">EventTrigger::OnAddItem</span><span class="params">(User&amp; user, ItemData&amp; cItemData)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ActivityTimeLimitTopUp::<span class="built_in">Instance</span>().<span class="built_in">OnAddItem</span>(user);</span><br><span class="line">    ActivitySeaBottomCatch::<span class="built_in">Instance</span>().<span class="built_in">OnAddItem</span>(user);</span><br><span class="line">    ActivityTree::<span class="built_in">Instance</span>().<span class="built_in">OnAddItem</span>(user);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//道具减少事件</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">EventTrigger::OnDelItem</span><span class="params">(User&amp; user, ItemData&amp; cItemData)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ActivityTimeLimitTopUp::<span class="built_in">Instance</span>().<span class="built_in">OnDelItem</span>(user);</span><br><span class="line">    ActivitySeaBottomCatch::<span class="built_in">Instance</span>().<span class="built_in">OnDelItem</span>(user);</span><br><span class="line">    ActivityTree::<span class="built_in">Instance</span>().<span class="built_in">OnDelItem</span>(user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样看起来挺蠢的，每多一个活动就要在所有的事件里面添加触发代码，每多一个事件就要为所有的活动写实现的代码 真让人头大，但是ActivityBase是没有实体的，整个程序运行过程中我们并没有创建他的实例对象， 其实我们需要的是有一个家伙，把所有活动都记录在内，能在发生事件的时候通知所有的活动去执行对应的事件，这样就省事多了，它就是 <strong>观察者模式</strong> 首先观察者初始化时要把所有的活动都添加到观察者列表中</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">ACTIVITY_TYPE</span></span><br><span class="line">&#123;</span><br><span class="line">    ACTIVITY_TYPE_TIMELIMITTOPUP = <span class="number">1</span>,</span><br><span class="line">    ACTIVITY_TYPE_SEABOTTOMCATCH = <span class="number">2</span>,</span><br><span class="line">    ACTIVITY_TYPE_TREE = <span class="number">3</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">/*ActivityObserver.h*/</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ActivityObserver</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">static</span> ActivityObserver&amp; <span class="title">Instance</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="type">static</span> ActivityObserver s_instance;</span><br><span class="line">        <span class="keyword">return</span> s_instance;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//观察者需要初始化自己</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">RegisterActivity</span><span class="params">()</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">//用map不用vector是考虑对特定活动做处理，索引速度更快</span></span><br><span class="line">    map&lt;<span class="type">uint64_t</span>, ActivityBase*&gt; m_ActivityMap;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*ActivityObserver.cpp*/</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ActivityObserver::RegisterActivity</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    m_ActivityMap.<span class="built_in">clear</span>();</span><br><span class="line">    m_ActivityMap.<span class="built_in">insert</span>(std::<span class="built_in">make_pair</span>(ACTIVITY_TYPE_TIMELIMITTOPUP, ActivityTimeLimitTopUp::<span class="built_in">Instance</span>()));</span><br><span class="line">    m_ActivityMap.<span class="built_in">insert</span>(std::<span class="built_in">make_pair</span>(ACTIVITY_TYPE_SEABOTTOMCATCH, ActivitySeaBottomCatch::<span class="built_in">Instance</span>()));</span><br><span class="line">    m_ActivityMap.<span class="built_in">insert</span>(std::<span class="built_in">make_pair</span>(ACTIVITY_TYPE_TREE, ActivityTree::<span class="built_in">Instance</span>()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>那么观察者什么时候初始化自己呢，我觉得在把它放在进程的启动函数里面是一个不错的选择， 毕竟程序启动以后，观察者就不需要动态的添加活动到自己的监视列表了</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">System::Start</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ActivityObserver::<span class="built_in">Instance</span>().<span class="built_in">RegisterActivity</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来我们依然需要把各个事件的触发逻辑完善</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*ActivityObserver.cpp*/</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ActivityObserver::OnLoginSuccess</span><span class="params">(User&amp; user)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;it : m_ActivityMap)</span><br><span class="line">    &#123;</span><br><span class="line">        it.sencond-&gt;<span class="built_in">OnLoginSuccess</span>(user)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ActivityObserver::OnPassDay</span><span class="params">(User&amp; user)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;it : m_ActivityMap)</span><br><span class="line">    &#123;</span><br><span class="line">        it.sencond-&gt;<span class="built_in">OnPassDay</span>(user)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ActivityObserver::OnAddItem</span><span class="params">(User&amp; user)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;it : m_ActivityMap)</span><br><span class="line">    &#123;</span><br><span class="line">        it.sencond-&gt;<span class="built_in">OnAddItem</span>(user)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ActivityObserver::OnDelItem</span><span class="params">(User&amp; user)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;it : m_ActivityMap)</span><br><span class="line">    &#123;</span><br><span class="line">        it.sencond-&gt;<span class="built_in">OnDelItem</span>(user)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后再把观察者的事件填到事件触发器中去</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*EventTrigger.cpp*/</span></span><br><span class="line"><span class="comment">//登录事件</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">EventTrigger::OnLoginSuccess</span><span class="params">(User&amp; user)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ActivityObserver::<span class="built_in">Instance</span>().<span class="built_in">OnLoginSuccess</span>(user);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//跨天事件</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">EventTrigger::OnPassDay</span><span class="params">(User&amp; user)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ActivityObserver::<span class="built_in">Instance</span>().<span class="built_in">OnPassDay</span>(user);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//道具增加事件</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">EventTrigger::OnAddItem</span><span class="params">(User&amp; user, ItemData&amp; cItemData)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ActivityObserver::<span class="built_in">Instance</span>().<span class="built_in">OnAddItem</span>(user);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//道具减少事件</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">EventTrigger::OnDelItem</span><span class="params">(User&amp; user, ItemData&amp; cItemData)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ActivityObserver::<span class="built_in">Instance</span>().<span class="built_in">OnDelItem</span>(user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样再加入新的活动，只需要在RegisterActivity中添加就好啦</p>
+<p><strong>总结 : 观察者模式将多个实体列为观察对象，在事件中批量处理对象的触发逻辑，减少搬砖工作量</strong></p>
+<hr>
+<p>在蚂蚁森林活动里面，聪明的产品忽然想到，应该来一个大家来种树，4个人一起种一棵树，提高大家的积极性 这样在收取能量的时候要告诉一起种树的人能量被收了，要不然别人还会再次收到能量就不好了 于是又让开发加班加点的设计方案，年轻的开发小哥想到那就要多一个房间的概念</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*ActivityTreeRoom.h*/</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ActivityTreeRoom</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    vector&lt;<span class="type">uint64_t</span>&gt; m_UserIDList;<span class="comment">//Room中有哪些人</span></span><br><span class="line">    <span class="type">int</span> RoomID;<span class="comment">//Room的ID</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ActivityTreeRoomMgr</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">static</span> ActivityTreeRoomMgr&amp; <span class="title">Instance</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="type">static</span> ActivityTreeRoomMgr;</span><br><span class="line">        <span class="keyword">return</span> s_instance;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//一定有一个user最先开始创建房间</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">CreateRoom</span><span class="params">(User&amp; user)</span></span>;</span><br><span class="line">    <span class="comment">//加入房间</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">JoinRoom</span><span class="params">(User&amp; user, <span class="type">int</span> RoomID)</span></span>;</span><br><span class="line">    <span class="comment">//拉取到Room中的所有人</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">GetRoomMember</span><span class="params">(<span class="type">const</span> vector&lt;<span class="type">uint64_t</span>&gt;&amp; RoomMember, <span class="type">int</span> RoomID)</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    vector&lt;ActivityTreeRoom&gt; m_Rooms;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//为了加快查找,User加入房间后，自己要记录RoomID</span></span><br><span class="line"><span class="comment">//再拾能量的时候就需要这么一个函数</span></span><br><span class="line"><span class="comment">/*ActivityTree.cpp*/</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ActivityTree::GetOurEnergy</span><span class="params">(User&amp; user)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">AddEnergy</span>(user);</span><br><span class="line">    vector&lt;<span class="type">uint64_t</span>&gt; RoomMember;</span><br><span class="line">    ActivityTreeRoomMgr::<span class="built_in">Instance</span>().<span class="built_in">GetRoomMember</span>(RoomMember, user.RoomID);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">uint32_t</span> i = <span class="number">0</span>; i &lt; RoomMember.<span class="built_in">size</span>(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        User&amp; otherUser = UserMgr::<span class="built_in">Instance</span>().<span class="built_in">GetUserbyID</span>(RoomMember[i]);</span><br><span class="line">        <span class="comment">//能量已经被捡走了</span></span><br><span class="line">        <span class="built_in">SendMsgToUser</span>(otherUser);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>乍一看是没有什么问题，但是ActivityTree为什么要处理Room的逻辑呢。 他们之间并没有直接的联系，如果再加上下线通知、上线通知，内容会越来越多。</p>
+<p><strong>中介者模式</strong></p>
+<p>其实就是把应该做的活，统统交给Mgr处理就好了</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*ActivityTree.cpp*/</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ActivityTree::GetOurEnergy</span><span class="params">(User&amp; user)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">AddEnergy</span>(user);</span><br><span class="line">    ActivityTreeRoomMgr::<span class="built_in">Instance</span>().<span class="built_in">NotifyMsgToRoomMember</span>(user.RoomID);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*ActivityTreeRoomMgr.cpp*/</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ActivityTreeRoomMgr::NotifyMsgToRoomMember</span><span class="params">(<span class="type">int</span> RoomID)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    vector&lt;<span class="type">uint64_t</span>&gt; RoomMember;</span><br><span class="line">    <span class="built_in">GetRoomMember</span>(RoomMember, user.RoomID);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">uint32_t</span> i = <span class="number">0</span>; i &lt; RoomMember.<span class="built_in">size</span>(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        User&amp; otherUser = UserMgr::<span class="built_in">Instance</span>().<span class="built_in">GetUserbyID</span>(RoomMember[i]);</span><br><span class="line">        <span class="built_in">SendMsgToUser</span>(otherUser);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>总结 : 中介者模式是基于两个对象之间不方便直接交流的情况下设定的</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/11/01/article/2018/11/%E3%80%90python%E3%80%91cnn%E5%AE%9E%E9%AA%8C/index/" rel="prev" title="【Python】CNN实验">
+                  <i class="fa fa-angle-left"></i> 【Python】CNN实验
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/04/22/article/2020/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84%E5%AD%A6%E4%B9%A0/index/" rel="next" title="微服务架构学习">
+                  微服务架构学习 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">VC-ROBOT</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
