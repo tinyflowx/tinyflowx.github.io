@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="_21\. Merge Two Sorted Lists_ Merge two sorted linked lists and return it as a new sorted list. The new list should be m...">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【C++】【LeetCode】2020.5.16~2020.6.30">
+<meta property="og:url" content="http://example.com/2017/06/21/2017/06/%E3%80%90c%E3%80%91%E3%80%90leetcode%E3%80%912020-5-162020-6-30/index/index.html">
+<meta property="og:site_name" content="HOME">
+<meta property="og:description" content="_21\. Merge Two Sorted Lists_ Merge two sorted linked lists and return it as a new sorted list. The new list should be m...">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-06-20T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-03-22T11:38:53.229Z">
+<meta property="article:author" content="VC-ROBOT">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2017/06/21/2017/06/%E3%80%90c%E3%80%91%E3%80%90leetcode%E3%80%912020-5-162020-6-30/index/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2017/06/21/2017/06/%E3%80%90c%E3%80%91%E3%80%90leetcode%E3%80%912020-5-162020-6-30/index/","path":"2017/06/21/2017/06/【c】【leetcode】2020-5-162020-6-30/index/","title":"【C++】【LeetCode】2020.5.16~2020.6.30"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【C++】【LeetCode】2020.5.16~2020.6.30 | HOME</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">HOME</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">VC-ROBOT</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/06/21/2017/06/%E3%80%90c%E3%80%91%E3%80%90leetcode%E3%80%912020-5-162020-6-30/index/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="VC-ROBOT">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="【C++】【LeetCode】2020.5.16~2020.6.30 | HOME">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【C++】【LeetCode】2020.5.16~2020.6.30
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-06-21 00:00:00" itemprop="dateCreated datePublished" datetime="2017-06-21T00:00:00+08:00">2017-06-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-22 19:38:53" itemprop="dateModified" datetime="2026-03-22T19:38:53+08:00">2026-03-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/lc/" itemprop="url" rel="index"><span itemprop="name">lc</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>14k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>26 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><em><strong>21. Merge Two Sorted Lists</strong></em></p>
+<p>Merge two sorted linked lists and return it as a new sorted list. The new list should be made by splicing together the nodes of the first two lists.</p>
+<p>Example:</p>
+<p>Input: 1-&gt;2-&gt;4, 1-&gt;3-&gt;4 Output: 1-&gt;1-&gt;2-&gt;3-&gt;4-&gt;4</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* Definition for singly-linked list.</span></span><br><span class="line"><span class="comment">* struct ListNode &#123;</span></span><br><span class="line"><span class="comment">*     int val;</span></span><br><span class="line"><span class="comment">*     ListNode *next;</span></span><br><span class="line"><span class="comment">*     ListNode() : val(0), next(nullptr) &#123;&#125;</span></span><br><span class="line"><span class="comment">*     ListNode(int x) : val(x), next(nullptr) &#123;&#125;</span></span><br><span class="line"><span class="comment">*     ListNode(int x, ListNode *next) : val(x), next(next) &#123;&#125;</span></span><br><span class="line"><span class="comment">* &#125;;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode* <span class="title">mergeTwoLists</span><span class="params">(ListNode* l1, ListNode* l2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!l1) <span class="keyword">return</span> l2;</span><br><span class="line">        <span class="keyword">if</span> (!l2) <span class="keyword">return</span> l1;</span><br><span class="line">        ListNode* head = <span class="keyword">new</span> <span class="built_in">ListNode</span>();</span><br><span class="line">        ListNode* tmp = head;</span><br><span class="line">        <span class="keyword">while</span>(l1 &amp;&amp; l2)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (l1-&gt;val &lt; l2-&gt;val)</span><br><span class="line">            &#123;</span><br><span class="line">                tmp-&gt;next = l1;</span><br><span class="line">                l1 = l1-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                tmp-&gt;next = l2;</span><br><span class="line">                l2 = l2-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line">            tmp = tmp-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (l1)</span><br><span class="line">        &#123;</span><br><span class="line">            tmp-&gt;next = l1;</span><br><span class="line">            l1 = l1-&gt;next;</span><br><span class="line">            tmp = tmp-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (l2)</span><br><span class="line">        &#123;</span><br><span class="line">            tmp-&gt;next = l2;</span><br><span class="line">            l2 = l2-&gt;next;</span><br><span class="line">            tmp = tmp-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> head-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><em><strong>22. Generate Parentheses</strong></em> Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.</p>
+<p>For example, given n &#x3D; 3, a solution set is:</p>
+<p>[ “((()))”, “(()())”, “(())()”, “()(())”, “()()()” ]</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">DFS</span><span class="params">(<span class="type">int</span> l, <span class="type">int</span> r, string s, vector&lt;string&gt; &amp;res)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (l == <span class="number">0</span> &amp;&amp; r == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            res.<span class="built_in">push_back</span>(s);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (l &gt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">DFS</span>(l - <span class="number">1</span>, r, s + <span class="string">&quot;(&quot;</span>, res);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (r &gt; <span class="number">0</span> &amp;&amp; l &lt; r)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">DFS</span>(l, r - <span class="number">1</span>, s + <span class="string">&quot;)&quot;</span>, res);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function">vector&lt;string&gt; <span class="title">generateParenthesis</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">        vector&lt;string&gt; res;</span><br><span class="line">        <span class="built_in">DFS</span>(n, n, <span class="string">&quot;&quot;</span>, res);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><em><strong>23. Merge k Sorted Lists</strong></em></p>
+<p>Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.</p>
+<p>Example:</p>
+<p>Input: [ 1-&gt;4-&gt;5, 1-&gt;3-&gt;4, 2-&gt;6 ] Output: 1-&gt;1-&gt;2-&gt;3-&gt;4-&gt;4-&gt;5-&gt;6</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* Definition for singly-linked list.</span></span><br><span class="line"><span class="comment">* struct ListNode &#123;</span></span><br><span class="line"><span class="comment">*     int val;</span></span><br><span class="line"><span class="comment">*     ListNode *next;</span></span><br><span class="line"><span class="comment">*     ListNode() : val(0), next(nullptr) &#123;&#125;</span></span><br><span class="line"><span class="comment">*     ListNode(int x) : val(x), next(nullptr) &#123;&#125;</span></span><br><span class="line"><span class="comment">*     ListNode(int x, ListNode *next) : val(x), next(next) &#123;&#125;</span></span><br><span class="line"><span class="comment">* &#125;;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode* <span class="title">mergeTwoLists</span><span class="params">(ListNode* l1, ListNode* l2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!l1) <span class="keyword">return</span> l2;</span><br><span class="line">        <span class="keyword">if</span> (!l2) <span class="keyword">return</span> l1;</span><br><span class="line">        ListNode* head = <span class="keyword">new</span> <span class="built_in">ListNode</span>();</span><br><span class="line">        ListNode* tmp = head;</span><br><span class="line">        <span class="keyword">while</span>(l1 &amp;&amp; l2)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (l1-&gt;val &lt; l2-&gt;val)</span><br><span class="line">            &#123;</span><br><span class="line">                tmp-&gt;next = l1;</span><br><span class="line">                l1 = l1-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                tmp-&gt;next = l2;</span><br><span class="line">                l2 = l2-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line">            tmp = tmp-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (l1)</span><br><span class="line">        &#123;</span><br><span class="line">            tmp-&gt;next = l1;</span><br><span class="line">            l1 = l1-&gt;next;</span><br><span class="line">            tmp = tmp-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (l2)</span><br><span class="line">        &#123;</span><br><span class="line">            tmp-&gt;next = l2;</span><br><span class="line">            l2 = l2-&gt;next;</span><br><span class="line">            tmp = tmp-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> head-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function">ListNode* <span class="title">mergeKLists</span><span class="params">(vector&lt;ListNode*&gt;&amp; lists)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (lists.<span class="built_in">size</span>() == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//0 1 2 3 4 5 6 7-&gt; 0 2 4 6-&gt; 0 4 -&gt; 0</span></span><br><span class="line">        <span class="type">int</span> step = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (step &lt; lists.<span class="built_in">size</span>())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; lists.<span class="built_in">size</span>();i += <span class="number">2</span>*step)</span><br><span class="line">            &#123;</span><br><span class="line">                ListNode* left = lists[i];</span><br><span class="line">                ListNode* right = <span class="literal">NULL</span>;</span><br><span class="line">                <span class="keyword">if</span> (i + step &lt; lists.<span class="built_in">size</span>())</span><br><span class="line">                &#123;</span><br><span class="line">                    right = lists[i + step];</span><br><span class="line">                &#125;</span><br><span class="line">                lists[i] = <span class="built_in">mergeTwoLists</span>(left, right);</span><br><span class="line">            &#125;</span><br><span class="line">            step *= <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> lists[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><em><strong>24. Swap Nodes in Pairs</strong></em> Given a linked list, swap every two adjacent nodes and return its head.</p>
+<p>You may not modify the values in the list’s nodes, only nodes itself may be changed.</p>
+<p>Example:</p>
+<p>Given 1-&gt;2-&gt;3-&gt;4, you should return the list as 2-&gt;1-&gt;4-&gt;3.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* Definition for singly-linked list.</span></span><br><span class="line"><span class="comment">* struct ListNode &#123;</span></span><br><span class="line"><span class="comment">*     int val;</span></span><br><span class="line"><span class="comment">*     ListNode *next;</span></span><br><span class="line"><span class="comment">*     ListNode() : val(0), next(nullptr) &#123;&#125;</span></span><br><span class="line"><span class="comment">*     ListNode(int x) : val(x), next(nullptr) &#123;&#125;</span></span><br><span class="line"><span class="comment">*     ListNode(int x, ListNode *next) : val(x), next(next) &#123;&#125;</span></span><br><span class="line"><span class="comment">* &#125;;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode* <span class="title">swapPairs</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        ListNode* pre = <span class="keyword">new</span> <span class="built_in">ListNode</span>();</span><br><span class="line">        ListNode* first = pre;</span><br><span class="line">        pre-&gt;next = head;</span><br><span class="line">        ListNode *l, *r, *end;</span><br><span class="line">        l = head;</span><br><span class="line">        <span class="keyword">while</span>(l)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//pre -&gt; l -&gt; r -&gt; end</span></span><br><span class="line">            <span class="comment">//pre -&gt; r -&gt; l -&gt; end</span></span><br><span class="line">            <span class="comment">//pre = l, l = end</span></span><br><span class="line">            r = l-&gt;next;</span><br><span class="line">            <span class="keyword">if</span> (!r) <span class="keyword">break</span>;</span><br><span class="line">            end = r-&gt;next;</span><br><span class="line">            pre-&gt;next = r;</span><br><span class="line">            r-&gt;next = l;</span><br><span class="line">            l-&gt;next = end;</span><br><span class="line"></span><br><span class="line">            pre = l;</span><br><span class="line">            l = end;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> first-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><em><strong>25. Reverse Nodes in k-Group</strong></em> Given a linked list, reverse the nodes of a linked list k at a time and return its modified list.</p>
+<p>k is a positive integer and is less than or equal to the length of the linked list. If the number of nodes is not a multiple of k then left-out nodes in the end should remain as it is.</p>
+<p>Example:</p>
+<p>Given this linked list: 1-&gt;2-&gt;3-&gt;4-&gt;5</p>
+<p>For k &#x3D; 2, you should return: 2-&gt;1-&gt;4-&gt;3-&gt;5</p>
+<p>For k &#x3D; 3, you should return: 3-&gt;2-&gt;1-&gt;4-&gt;5</p>
+<p>Note:</p>
+<p>Only constant extra memory is allowed. You may not alter the values in the list’s nodes, only nodes itself may be changed.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* Definition for singly-linked list.</span></span><br><span class="line"><span class="comment">* struct ListNode &#123;</span></span><br><span class="line"><span class="comment">*     int val;</span></span><br><span class="line"><span class="comment">*     ListNode *next;</span></span><br><span class="line"><span class="comment">*     ListNode() : val(0), next(nullptr) &#123;&#125;</span></span><br><span class="line"><span class="comment">*     ListNode(int x) : val(x), next(nullptr) &#123;&#125;</span></span><br><span class="line"><span class="comment">*     ListNode(int x, ListNode *next) : val(x), next(next) &#123;&#125;</span></span><br><span class="line"><span class="comment">* &#125;;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode* <span class="title">reverseKGroup</span><span class="params">(ListNode* head, <span class="type">int</span> k)</span> </span>&#123;</span><br><span class="line">        ListNode* res = <span class="keyword">new</span> <span class="built_in">ListNode</span>();</span><br><span class="line">        res-&gt;next = head;</span><br><span class="line">        ListNode* pre = res;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (pre)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//先找到所有需要的节点</span></span><br><span class="line">            <span class="type">bool</span> findNull = <span class="literal">false</span>;</span><br><span class="line">            vector&lt; ListNode*&gt; nodes;</span><br><span class="line">            ListNode* tmp = pre-&gt;next;</span><br><span class="line">            <span class="comment">//pre-&gt;0-&gt;1-&gt;2-&gt;3-&gt;4-&gt;end</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; k + <span class="number">1</span>; ++i)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//end节点是可以空的</span></span><br><span class="line">                <span class="keyword">if</span> (i == k)</span><br><span class="line">                &#123;</span><br><span class="line">                    nodes.<span class="built_in">push_back</span>(tmp);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//其他任意节点都不能空</span></span><br><span class="line">                <span class="keyword">if</span> (!tmp)</span><br><span class="line">                &#123;</span><br><span class="line">                    findNull = <span class="literal">true</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    nodes.<span class="built_in">push_back</span>(tmp);</span><br><span class="line">                    tmp = tmp-&gt;next;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (findNull)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//开始移动</span></span><br><span class="line">            <span class="comment">//pre-&gt;0-&gt;1-&gt;2-&gt;3-&gt;4-&gt;end ==&gt; pre-&gt;1 4-&gt;3-&gt;2-&gt;1-&gt;0 end</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = nodes.<span class="built_in">size</span>() - <span class="number">2</span>; i &gt; <span class="number">0</span>; --i)</span><br><span class="line">            &#123;</span><br><span class="line">                nodes[i]-&gt;next = nodes[i - <span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//pre-&gt;0 4-&gt;3-&gt;2-&gt;1-&gt;0 end ==&gt; pre-&gt;1 4-&gt;3-&gt;2-&gt;1-&gt;0-&gt;end</span></span><br><span class="line">            nodes[<span class="number">0</span>]-&gt;next = nodes[nodes.<span class="built_in">size</span>() - <span class="number">1</span>];</span><br><span class="line">            <span class="comment">//pre-&gt;0 4-&gt;3-&gt;2-&gt;1-&gt;0-&gt;end ==&gt; pre-&gt;4-&gt;3-&gt;2-&gt;1-&gt;0-&gt;end</span></span><br><span class="line">            pre-&gt;next = nodes[nodes.<span class="built_in">size</span>() - <span class="number">2</span>];</span><br><span class="line">            <span class="comment">//新的pre应该指向end前面</span></span><br><span class="line">            pre = nodes[<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><em><strong>26. Remove Duplicates from Sorted Array</strong></em></p>
+<p>Given a sorted array nums, remove the duplicates in-place such that each element appear only once and return the new length.</p>
+<p>Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.</p>
+<p>Example 1:</p>
+<p>Given nums &#x3D; [1,1,2],</p>
+<p>Your function should return length &#x3D; 2, with the first two elements of nums being 1 and 2 respectively.</p>
+<p>It doesn’t matter what you leave beyond the returned length. Example 2:</p>
+<p>Given nums &#x3D; [0,0,1,1,1,2,2,3,3,4],</p>
+<p>Your function should return length &#x3D; 5, with the first five elements of nums being modified to 0, 1, 2, 3, and 4 respectively.</p>
+<p>It doesn’t matter what values are set beyond the returned length. Clarification:</p>
+<p>Confused why the returned value is an integer but your answer is an array?</p>
+<p>Note that the input array is passed in by reference, which means modification to the input array will be known to the caller as well.</p>
+<p>Internally you can think of this:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// nums is passed in by reference. (i.e., without making a copy)</span></span><br><span class="line"><span class="type">int</span> len = <span class="built_in">removeDuplicates</span>(nums);</span><br><span class="line"></span><br><span class="line"><span class="comment">// any modification to nums in your function would be known by the caller.</span></span><br><span class="line"><span class="comment">// using the length returned by your function, it prints the first len elements.</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">    <span class="built_in">print</span>(nums[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">removeDuplicates</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (nums.<span class="built_in">size</span>() == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> idx = <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> tmpVal = nums[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; nums.<span class="built_in">size</span>(); ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[i] != tmpVal)</span><br><span class="line">            &#123;</span><br><span class="line">                nums[idx++] = nums[i];</span><br><span class="line">                tmpVal = nums[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> idx;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><em><strong>27. Remove Element</strong></em></p>
+<p>Given an array nums and a value val, remove all instances of that value in-place and return the new length.</p>
+<p>Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.</p>
+<p>The order of elements can be changed. It doesn’t matter what you leave beyond the new length.</p>
+<p>Example 1:</p>
+<p>Given nums &#x3D; [3,2,2,3], val &#x3D; 3,</p>
+<p>Your function should return length &#x3D; 2, with the first two elements of nums being 2.</p>
+<p>It doesn’t matter what you leave beyond the returned length. Example 2:</p>
+<p>Given nums &#x3D; [0,1,2,2,3,0,4,2], val &#x3D; 2,</p>
+<p>Your function should return length &#x3D; 5, with the first five elements of nums containing 0, 1, 3, 0, and 4.</p>
+<p>Note that the order of those five elements can be arbitrary.</p>
+<p>It doesn’t matter what values are set beyond the returned length. Clarification:</p>
+<p>Confused why the returned value is an integer but your answer is an array?</p>
+<p>Note that the input array is passed in by reference, which means modification to the input array will be known to the caller as well.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">removeElement</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> val)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (nums.<span class="built_in">size</span>() == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> len = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (; len &lt; nums.<span class="built_in">size</span>(); ++len)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[len] == val)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="type">int</span> idx = <span class="number">-1</span>;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> j = len + <span class="number">1</span>; j &lt; nums.<span class="built_in">size</span>(); ++j)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> (nums[j] != val)</span><br><span class="line">                    &#123;</span><br><span class="line">                        idx = j;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (idx == <span class="number">-1</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                nums[len] = nums[idx];</span><br><span class="line">                nums[idx] = val;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> len;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><em><strong>28. Implement strStr()</strong></em> Implement strStr().</p>
+<p>Return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.</p>
+<p>Example 1:</p>
+<p>Input: haystack &#x3D; “hello”, needle &#x3D; “ll” Output: 2 Example 2:</p>
+<p>Input: haystack &#x3D; “aaaaa”, needle &#x3D; “bba” Output: -1 Clarification:</p>
+<p>What should we return when needle is an empty string? This is a great question to ask during an interview.</p>
+<p>For the purpose of this problem, we will return 0 when needle is an empty string. This is consistent to C’s strstr() and Java’s indexOf().</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//试了两种办法，一种是顺序遍历截取直接compare，耗时4ms</span></span><br><span class="line"><span class="comment">//另一种是使用kmp，跳跃compare，耗时8ms</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">strStr</span><span class="params">(string haystack, string needle)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (haystack == needle)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (haystack.<span class="built_in">size</span>() &lt; needle.<span class="built_in">size</span>())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt;= haystack.<span class="built_in">size</span>() - needle.<span class="built_in">size</span>(); ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (haystack.<span class="built_in">substr</span>(i, needle.<span class="built_in">size</span>()) == needle)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">return</span> i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">getNext</span><span class="params">(string&amp; strs, vector&lt;<span class="type">int</span>&gt; &amp;next)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="type">int</span> i = <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> j = <span class="number">-1</span>;</span><br><span class="line">        next[<span class="number">0</span>] = <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; strs.<span class="built_in">size</span>())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (j == <span class="number">-1</span> || strs[i] == strs[j])</span><br><span class="line">            &#123;</span><br><span class="line">                next[++i] = ++j;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> j = next[j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">strStr_KMP</span><span class="params">(string haystack, string needle)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (haystack == needle) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (haystack.<span class="built_in">size</span>() &lt; needle.<span class="built_in">size</span>()) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">next</span><span class="params">(needle.size() + <span class="number">1</span>, <span class="number">0</span>)</span></span>;</span><br><span class="line">        <span class="built_in">getNext</span>(needle, next);</span><br><span class="line">        <span class="type">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; haystack.<span class="built_in">size</span>() &amp;&amp; j &lt; <span class="built_in">int</span>(needle.<span class="built_in">size</span>()))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (j == <span class="number">-1</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                ++i;</span><br><span class="line">                j = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (haystack[i] == needle[j])</span><br><span class="line">            &#123;</span><br><span class="line">                i++;</span><br><span class="line">                j++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                j = next[j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (j == needle.<span class="built_in">size</span>())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> i - j;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><em><strong>29. Divide Two Integers</strong></em> Given two integers dividend and divisor, divide two integers without using multiplication, division and mod operator.</p>
+<p>Return the quotient after dividing dividend by divisor.</p>
+<p>The integer division should truncate toward zero, which means losing its fractional part. For example, truncate(8.345) &#x3D; 8 and truncate(-2.7335) &#x3D; -2.</p>
+<p>Example 1:</p>
+<p>Input: dividend &#x3D; 10, divisor &#x3D; 3 Output: 3 Explanation: 10&#x2F;3 &#x3D; truncate(3.33333..) &#x3D; 3. Example 2:</p>
+<p>Input: dividend &#x3D; 7, divisor &#x3D; -3 Output: -2 Explanation: 7&#x2F;-3 &#x3D; truncate(-2.33333..) &#x3D; -2. Note:</p>
+<p>Both dividend and divisor will be 32-bit signed integers. The divisor will never be 0. Assume we are dealing with an environment which could only store integers within the 32-bit signed integer range: [−2^31, 2^31 − 1]. For the purpose of this problem, assume that your function returns 2^31 − 1 when the division result overflows.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isValid</span><span class="params">(<span class="type">int</span> val, <span class="type">int</span> flag)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (flag &lt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> val &gt;= INT_MIN;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> val &lt;= INT_MAX;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">divide</span><span class="params">(<span class="type">int</span> dividend, <span class="type">int</span> divisor)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> flag = ((dividend &lt; <span class="number">0</span>) == (divisor &lt; <span class="number">0</span>)) ? <span class="number">1</span> : <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">if</span> (divisor == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> flag == <span class="number">1</span> ? INT_MAX : INT_MIN;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (divisor == <span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> dividend;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (divisor == <span class="number">-1</span> &amp;&amp; dividend == INT_MIN)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> INT_MAX;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">long</span> <span class="type">long</span> divd = <span class="built_in">abs</span>(dividend);</span><br><span class="line">        <span class="type">long</span> <span class="type">long</span> divs = <span class="built_in">abs</span>(divisor);</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> res = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (divd &gt;= divs)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">long</span> tmp = divs;</span><br><span class="line">            <span class="type">int</span> base = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span> (divd &gt; (tmp &lt;&lt; <span class="number">1</span>))</span><br><span class="line">            &#123;</span><br><span class="line">                base = base &lt;&lt; <span class="number">1</span>;</span><br><span class="line">                tmp = tmp &lt;&lt; <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            divd -= tmp;</span><br><span class="line">            res += base;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> flag * res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><em><strong>30. Substring with Concatenation of All Words</strong></em> You are given a string, s, and a list of words, words, that are all of the same length. Find all starting indices of substring(s) in s that is a concatenation of each word in words exactly once and without any intervening characters.</p>
+<p>Example 1:</p>
+<p>Input: s &#x3D; “barfoothefoobarman”, words &#x3D; [“foo”,”bar”] Output: [0,9] Explanation: Substrings starting at index 0 and 9 are “barfoo” and “foobar” respectively. The output order does not matter, returning [9,0] is fine too. Example 2:</p>
+<p>Input: s &#x3D; “wordgoodgoodgoodbestword”, words &#x3D; [“word”,”good”,”best”,”word”] Output: []</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">findStr</span><span class="params">(<span class="type">const</span> string&amp; s, <span class="type">int</span> index, vector&lt;string&gt;&amp; words, vector&lt;<span class="type">int</span>&gt; &amp;res)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        map&lt;string, <span class="type">int</span>&gt; wordMap;</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">wordCount</span><span class="params">(words.size(), <span class="number">0</span>)</span></span>;</span><br><span class="line">        <span class="type">int</span> mapIndex = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> i : words)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (wordMap.<span class="built_in">find</span>(i) == wordMap.<span class="built_in">end</span>())</span><br><span class="line">                wordMap[i] = mapIndex;</span><br><span class="line">            mapIndex++;</span><br><span class="line">            wordCount[wordMap[i]]++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> len = words[<span class="number">0</span>].<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> strLen = len * words.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> start = index;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> matchCount = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (index + len &lt;= s.<span class="built_in">size</span>())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (matchCount == mapIndex)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//a a b a[a b a] ==&gt; a [a b a] (count+1)</span></span><br><span class="line">                <span class="comment">//匹配到了,此时index后移，count变化</span></span><br><span class="line">                res.<span class="built_in">push_back</span>(index);</span><br><span class="line">                <span class="type">const</span> string&amp; nowWord = s.<span class="built_in">substr</span>(index, len);</span><br><span class="line">                index += len;</span><br><span class="line">                wordCount[wordMap[nowWord]]++;</span><br><span class="line">                matchCount--;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">const</span> string&amp; nowWord = s.<span class="built_in">substr</span>(start, len);</span><br><span class="line">            <span class="keyword">if</span> (wordMap.<span class="built_in">find</span>(nowWord) == wordMap.<span class="built_in">end</span>())</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//a a c b[a b a] ==&gt; b [a b a]</span></span><br><span class="line">                <span class="comment">//出现了一个不能匹配的单词，之前统计过得单词全部去除</span></span><br><span class="line">                <span class="keyword">while</span> (index &lt; start)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="type">const</span> string&amp; tmpWord = s.<span class="built_in">substr</span>(index, len);</span><br><span class="line">                    index += len;</span><br><span class="line">                    wordCount[wordMap[tmpWord]]++;</span><br><span class="line">                    matchCount--;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//注意这里index和start相等，还要再跳一次</span></span><br><span class="line">                index += len; start = index;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (wordCount[wordMap[nowWord]] &lt; <span class="number">1</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//a a a b[a b a] ==&gt; a a b [a b a]</span></span><br><span class="line">                <span class="comment">//可以匹配，但是次数不够，去除这个单词首次出现位置之前的所有统计</span></span><br><span class="line">                <span class="keyword">while</span> (s.<span class="built_in">substr</span>(index, len) != nowWord)</span><br><span class="line">                &#123;</span><br><span class="line">                    wordCount[wordMap[s.<span class="built_in">substr</span>(index, len)]]++;</span><br><span class="line">                    index += len;</span><br><span class="line">                    matchCount--;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//注意这里找到了，再位移一次，但是不需要计数</span></span><br><span class="line">                index += len; start += len;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//最后就是常规情况，计数</span></span><br><span class="line">            wordCount[wordMap[nowWord]]--;</span><br><span class="line">            start += len;</span><br><span class="line">            matchCount++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">findSubstring</span><span class="params">(string s, vector&lt;string&gt;&amp; words)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (words.<span class="built_in">size</span>() == <span class="number">0</span></span><br><span class="line">            || words[<span class="number">0</span>].<span class="built_in">size</span>() * words.<span class="built_in">size</span>() &gt; s.<span class="built_in">size</span>())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; words[<span class="number">0</span>].<span class="built_in">size</span>(); ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">findStr</span>(s, i, words, res);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/05/17/2017/05/c%E5%88%9B%E5%BB%BAwebservice%E8%B0%83%E7%94%A8mysql%E6%9C%8D%E5%8A%A1/index/" rel="prev" title="[c#]创建webservice调用mysql服务">
+                  <i class="fa fa-angle-left"></i> [c#]创建webservice调用mysql服务
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/06/22/2017/06/python%E4%BD%BF%E7%94%A8pyqt4%E5%88%9B%E5%BB%BAwindows%E5%BA%94%E7%94%A8%E7%AA%97%E4%BD%93/index/" rel="next" title="[python]使用PyQt4创建windows应用窗体">
+                  [python]使用PyQt4创建windows应用窗体 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">VC-ROBOT</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
