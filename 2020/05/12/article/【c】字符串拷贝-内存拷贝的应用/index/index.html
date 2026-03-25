@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="一、字符串拷贝 这里主要讨论字符串的转换和拼接工作， 对于C++来说，最好用又简单的字符串拷贝方式是什么呢，那必然是 1s +&#x3D; &quot;Hello World!&quot;; 接下来，我们实际测试一下，分析几种字符串拼接的性能 场景：...">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【C++】字符串拷贝&#x2F;内存拷贝的应用">
+<meta property="og:url" content="http://example.com/2020/05/12/article/%E3%80%90c%E3%80%91%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8B%B7%E8%B4%9D-%E5%86%85%E5%AD%98%E6%8B%B7%E8%B4%9D%E7%9A%84%E5%BA%94%E7%94%A8/index/index.html">
+<meta property="og:site_name" content="HOME">
+<meta property="og:description" content="一、字符串拷贝 这里主要讨论字符串的转换和拼接工作， 对于C++来说，最好用又简单的字符串拷贝方式是什么呢，那必然是 1s +&#x3D; &quot;Hello World!&quot;; 接下来，我们实际测试一下，分析几种字符串拼接的性能 场景：...">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-05-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-03-22T18:18:53.733Z">
+<meta property="article:author" content="VC-ROBOT">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2020/05/12/article/%E3%80%90c%E3%80%91%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8B%B7%E8%B4%9D-%E5%86%85%E5%AD%98%E6%8B%B7%E8%B4%9D%E7%9A%84%E5%BA%94%E7%94%A8/index/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2020/05/12/article/%E3%80%90c%E3%80%91%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8B%B7%E8%B4%9D-%E5%86%85%E5%AD%98%E6%8B%B7%E8%B4%9D%E7%9A%84%E5%BA%94%E7%94%A8/index/","path":"2020/05/12/article/【c】字符串拷贝-内存拷贝的应用/index/","title":"【C++】字符串拷贝/内存拷贝的应用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【C++】字符串拷贝/内存拷贝的应用 | HOME</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">HOME</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8B%B7%E8%B4%9D"><span class="nav-number">1.</span> <span class="nav-text">一、字符串拷贝</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%86%85%E5%AD%98%E6%8B%B7%E8%B4%9D"><span class="nav-number">2.</span> <span class="nav-text">二、内存拷贝</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">VC-ROBOT</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/05/12/article/%E3%80%90c%E3%80%91%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8B%B7%E8%B4%9D-%E5%86%85%E5%AD%98%E6%8B%B7%E8%B4%9D%E7%9A%84%E5%BA%94%E7%94%A8/index/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="VC-ROBOT">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="【C++】字符串拷贝&#x2F;内存拷贝的应用 | HOME">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【C++】字符串拷贝/内存拷贝的应用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-05-12 00:00:00" itemprop="dateCreated datePublished" datetime="2020-05-12T00:00:00+08:00">2020-05-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-23 02:18:53" itemprop="dateModified" datetime="2026-03-23T02:18:53+08:00">2026-03-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">计算机基础</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>7.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>13 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="一、字符串拷贝"><a href="#一、字符串拷贝" class="headerlink" title="一、字符串拷贝"></a>一、字符串拷贝</h3><p>这里主要讨论字符串的转换和拼接工作， 对于C++来说，最好用又简单的字符串拷贝方式是什么呢，那必然是</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s += <span class="string">&quot;Hello World!&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>接下来，我们实际测试一下，分析几种字符串拼接的性能 **场景：**若干个键值对，以一定方法组合成字符串，累积拷贝到char数组中，这一操作被X个用户分别执行1次 **键值对：**int-int类型 **对比方案：**sstream&#x2F;snprintf&#x2F;+&#x3D;&#x2F;append <strong>例如：</strong> vector{1:3,2:4,3:111,4:333,432:444} -&gt; “1,3;2,4;3,111;4,333;432,444;” 我们先定义键值对，组合方式和轮次等基础信息，模拟一个vector存储键值对 我们设计若干个字符串拼接函数，输入参数是char*，最终结果保存到char*中 使用map保存这些函数和他的名字，用于调用和输出打印</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">void</span><span class="params">(*pVoid)</span><span class="params">(<span class="type">char</span>*)</span></span>;<span class="comment">//定义别名才能放在vector中</span></span><br><span class="line">map&lt;string, pVoid&gt; FuncMap;<span class="comment">//保存函数指针的map</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">KV1</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> Key;</span><br><span class="line">    <span class="type">int</span> Value1;</span><br><span class="line">&#125;;</span><br><span class="line">vector&lt;KV1&gt; Datas;</span><br><span class="line"><span class="type">const</span> <span class="type">char</span> Sym1 = <span class="string">&#x27;,&#x27;</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">char</span> Sym2 = <span class="string">&#x27;;&#x27;</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> NUM = <span class="number">10</span>;<span class="comment">//键值对数量</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> Round = <span class="number">10000</span>;<span class="comment">//执行轮次</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> ARRLEN = <span class="number">1024</span>;<span class="comment">//输出字符串最大长度</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Init</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; NUM; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">static</span> KV1 kv;</span><br><span class="line">        kv.Key = i;</span><br><span class="line">        kv.Value1 = i + <span class="built_in">rand</span>() % <span class="number">100</span>;</span><br><span class="line">        Datas.<span class="built_in">push_back</span>(kv);</span><br><span class="line">    &#125;</span><br><span class="line">    FuncMap.<span class="built_in">insert</span>(<span class="built_in">make_pair</span>(<span class="string">&quot;GetCharSnprintf:&quot;</span>, GetCharSnprintf));<span class="comment">//使用snprintf</span></span><br><span class="line">    FuncMap.<span class="built_in">insert</span>(<span class="built_in">make_pair</span>(<span class="string">&quot;GetCharSprintf:&quot;</span>, GetCharSprintf));<span class="comment">//使用sprintf</span></span><br><span class="line">    FuncMap.<span class="built_in">insert</span>(<span class="built_in">make_pair</span>(<span class="string">&quot;GetCharSSTream:&quot;</span>, GetCharSSTream));<span class="comment">//使用sstream</span></span><br><span class="line">    FuncMap.<span class="built_in">insert</span>(<span class="built_in">make_pair</span>(<span class="string">&quot;GetCharStringPlus:&quot;</span>, GetCharStringPlus));<span class="comment">//使用+=</span></span><br><span class="line">    FuncMap.<span class="built_in">insert</span>(<span class="built_in">make_pair</span>(<span class="string">&quot;GetCharStringAppend:&quot;</span>, GetCharStringAppend));<span class="comment">//使用append</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>每个函数执行Round次，模拟Round个用户分别操作一次，并统计操作时间</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">CalTime</span><span class="params">(<span class="type">const</span> pair&lt;string, pVoid&gt;&amp; FuncPair)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cout.<span class="built_in">width</span>(<span class="number">20</span>);</span><br><span class="line">    cout &lt;&lt; FuncPair.first;</span><br><span class="line">    <span class="built_in">void</span>(*p)(<span class="type">char</span>*) = FuncPair.second;<span class="comment">//获取函数指针</span></span><br><span class="line">    TimeStart = <span class="built_in">clock</span>();		<span class="comment">//程序开始计时</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt;= Round; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">char</span> Str[ARRLEN];</span><br><span class="line">        <span class="built_in">memset</span>(Str, <span class="number">0</span>, <span class="built_in">sizeof</span>(Str));</span><br><span class="line">        (*p)(Str);<span class="comment">//调用函数</span></span><br><span class="line">        <span class="keyword">if</span> (i == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            cout &lt;&lt; Str &lt;&lt; endl;<span class="comment">//打印第一组数据保证赋值结果正确</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    TimeEnd = <span class="built_in">clock</span>();		<span class="comment">//程序结束用时</span></span><br><span class="line">    <span class="type">double</span> endtime = (<span class="type">double</span>)(TimeEnd - TimeStart) / CLOCKS_PER_SEC;</span><br><span class="line">    cout.<span class="built_in">width</span>(<span class="number">20</span>);</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Total time:&quot;</span> &lt;&lt; endtime * <span class="number">1000</span> &lt;&lt; <span class="string">&quot;ms&quot;</span> &lt;&lt; endl;	<span class="comment">//ms为单位</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在main函数里初始化并调用</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">Init</span>();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> i : FuncMap)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">CalTime</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>描述一下工作，我们需要从vector中取出键值对，组成一个字符串并输出 接下来我们一个个来看需要测试的函数 首先是**+&#x3D;**，将键值对的int转换为string，和组装字符依次进行’+&#x3D;’</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">GetCharStringPlus</span><span class="params">(<span class="type">char</span>* Str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    string s;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; Datas.<span class="built_in">size</span>(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        s += <span class="built_in">IntToString</span>(Datas[i].Key) + <span class="string">&quot;,&quot;</span> + <span class="built_in">IntToString</span>(Datas[i].Value1) + <span class="string">&quot;;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">const</span> <span class="type">char</span>* c = s.<span class="built_in">c_str</span>();</span><br><span class="line">    <span class="built_in">strncpy_s</span>(Str, ARRLEN, c, <span class="built_in">strlen</span>(c));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来<strong>append</strong>，和’+&#x3D;’唯一的区别是不能写在同一行</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">GetCharStringAppend</span><span class="params">(<span class="type">char</span>* Str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    string s;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; Datas.<span class="built_in">size</span>(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        s.<span class="built_in">append</span>(<span class="built_in">IntToString</span>(Datas[i].Key));</span><br><span class="line">        s.<span class="built_in">append</span>(<span class="string">&quot;,&quot;</span>);</span><br><span class="line">        s.<span class="built_in">append</span>(<span class="built_in">IntToString</span>(Datas[i].Value1));</span><br><span class="line">        s.<span class="built_in">append</span>(<span class="string">&quot;;&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">const</span> <span class="type">char</span>* c = s.<span class="built_in">c_str</span>();</span><br><span class="line">    <span class="built_in">strncpy_s</span>(Str, ARRLEN, c, <span class="built_in">strlen</span>(c));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>再来是<strong>sstream</strong>，和+&#x3D;同样简洁的语法</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">GetCharSSTream</span><span class="params">(<span class="type">char</span>* Str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">static</span> stringstream ss;</span><br><span class="line">    ss.<span class="built_in">str</span>(<span class="string">&quot;&quot;</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; Datas.<span class="built_in">size</span>(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        ss &lt;&lt; Datas[i].Key &lt;&lt; <span class="string">&quot;,&quot;</span> &lt;&lt; Datas[i].Value1 &lt;&lt; <span class="string">&quot;;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//这里需要用tmp保存结果, 如果用const char*内容将会被释放</span></span><br><span class="line">    string tmp = ss.<span class="built_in">str</span>();</span><br><span class="line">    <span class="built_in">strncpy_s</span>(Str, ARRLEN, tmp.<span class="built_in">c_str</span>(), tmp.<span class="built_in">size</span>());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同样很小巧的<strong>sprintf</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">GetCharSprintf</span><span class="params">(<span class="type">char</span>* Str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; Datas.<span class="built_in">size</span>(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">char</span> tmp[ARRLEN];</span><br><span class="line">        <span class="built_in">sprintf_s</span>(tmp, ARRLEN, <span class="string">&quot;%d%s%d%s&quot;</span>, Datas[i].Key, <span class="string">&quot;,&quot;</span>, Datas[i].Value1, <span class="string">&quot;;&quot;</span>);</span><br><span class="line">        <span class="built_in">strcat_s</span>(Str, ARRLEN, tmp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后是傻瓜式的<strong>snprintf</strong>，代码有点恐怖</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">GetCharSnprintf</span><span class="params">(<span class="type">char</span>* Str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    _snprintf_s(Str, ARRLEN - <span class="number">1</span>, ARRLEN - <span class="number">1</span>, <span class="string">&quot;%d%s%d%s%d%s%d%s%d%s%d%s%d%s%d%s%d%s%d%s%d%s%d%s%d%s%d%s%d%s%d%s%d%s%d%s%d%s%d%s&quot;</span>,</span><br><span class="line">    Datas[<span class="number">0</span>].Key, <span class="string">&quot;,&quot;</span>, Datas[<span class="number">0</span>].Value1, <span class="string">&quot;;&quot;</span>,</span><br><span class="line">    Datas[<span class="number">1</span>].Key, <span class="string">&quot;,&quot;</span>, Datas[<span class="number">1</span>].Value1, <span class="string">&quot;;&quot;</span>,</span><br><span class="line">    Datas[<span class="number">2</span>].Key, <span class="string">&quot;,&quot;</span>, Datas[<span class="number">2</span>].Value1, <span class="string">&quot;;&quot;</span>,</span><br><span class="line">    Datas[<span class="number">3</span>].Key, <span class="string">&quot;,&quot;</span>, Datas[<span class="number">3</span>].Value1, <span class="string">&quot;;&quot;</span>,</span><br><span class="line">    Datas[<span class="number">4</span>].Key, <span class="string">&quot;,&quot;</span>, Datas[<span class="number">4</span>].Value1, <span class="string">&quot;;&quot;</span>,</span><br><span class="line">    Datas[<span class="number">5</span>].Key, <span class="string">&quot;,&quot;</span>, Datas[<span class="number">5</span>].Value1, <span class="string">&quot;;&quot;</span>,</span><br><span class="line">    Datas[<span class="number">6</span>].Key, <span class="string">&quot;,&quot;</span>, Datas[<span class="number">6</span>].Value1, <span class="string">&quot;;&quot;</span>,</span><br><span class="line">    Datas[<span class="number">7</span>].Key, <span class="string">&quot;,&quot;</span>, Datas[<span class="number">7</span>].Value1, <span class="string">&quot;;&quot;</span>,</span><br><span class="line">    Datas[<span class="number">8</span>].Key, <span class="string">&quot;,&quot;</span>, Datas[<span class="number">8</span>].Value1, <span class="string">&quot;;&quot;</span>,</span><br><span class="line">    Datas[<span class="number">9</span>].Key, <span class="string">&quot;,&quot;</span>, Datas[<span class="number">9</span>].Value1, <span class="string">&quot;;&quot;</span></span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>好了，执行main函数，对10对键值对组合拼接10000次，猜一猜谁是效率最高的小伙伴(我猜是snprintf)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">GetCharSSTream:                0,41;1,68;2,36;3,3;4,73;5,29;6,84;7,65;8,70;9,73;</span><br><span class="line">Total time:885ms</span><br><span class="line">GetCharSnprintf:               0,41;1,68;2,36;3,3;4,73;5,29;6,84;7,65;8,70;9,73;</span><br><span class="line">Total time:129ms</span><br><span class="line">GetCharSprintf:                0,41;1,68;2,36;3,3;4,73;5,29;6,84;7,65;8,70;9,73;</span><br><span class="line">Total time:182ms</span><br><span class="line">GetCharStringAppend:           0,41;1,68;2,36;3,3;4,73;5,29;6,84;7,65;8,70;9,73;</span><br><span class="line">Total time:2465ms</span><br><span class="line">GetCharStringPlus:             0,41;1,68;2,36;3,3;4,73;5,29;6,84;7,65;8,70;9,73;</span><br><span class="line">Total time:2979ms</span><br></pre></td></tr></table></figure>
+
+<p>可以看到结果都是正确的， snprintf果不其然速度最快，只需要129ms，但是扩展性很差，vector新增元素就要开始毁灭式编程 sprintf与snprintf相差无几，需要182ms，扩展性能也很好，值得使用 sstream速度排行第三，885ms，怀疑是输入流的处理耽误了时间 最后append和+&#x3D;的速度不忍直视，主要是int2string进行了string的拷贝，严重消耗性能，而且+&#x3D;比append还要更慢一些</p>
+<p>到这里应该就明白，在实际应用中选择合适的方法是一件多么重要的事情</p>
+<hr>
+<h3 id="二、内存拷贝"><a href="#二、内存拷贝" class="headerlink" title="二、内存拷贝"></a>二、内存拷贝</h3><p>设想一种情况，我们有结构体StructA、StructB、StructC如下表示</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">structA</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> ID[<span class="number">3</span>];</span><br><span class="line">    <span class="type">char</span> Level[<span class="number">3</span>];</span><br><span class="line">    <span class="type">char</span> TimeStamp[<span class="number">3</span>][<span class="number">32</span>];</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">structB</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> ID[<span class="number">3</span>];</span><br><span class="line">    <span class="type">char</span> Level[<span class="number">3</span>];</span><br><span class="line">    <span class="type">char</span> TimeStamp[<span class="number">3</span>][<span class="number">32</span>];</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">structC</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> ID1;</span><br><span class="line">    <span class="type">char</span> Level1;</span><br><span class="line">    <span class="type">char</span> TimeStamp1[<span class="number">32</span>];</span><br><span class="line">    <span class="type">int</span> ID2;</span><br><span class="line">    <span class="type">char</span> Level2;</span><br><span class="line">    <span class="type">char</span> TimeStamp2[<span class="number">32</span>];</span><br><span class="line">    <span class="type">int</span> ID3;</span><br><span class="line">    <span class="type">char</span> Level3;</span><br><span class="line">    <span class="type">char</span> TimeStamp3[<span class="number">32</span>];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>现在我们因为一些原因要将各个Struct的数据相互拷贝,应该如何实现？ 很自然的，我们可以为结构体每一个字段进行赋值，例如从A到B以及B到C的拷贝</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">CopyA2B</span><span class="params">(<span class="type">const</span> structB&amp; a, structB&amp; b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        b.ID[i] = a.ID[i];</span><br><span class="line">        b.Level[i] = a.Level[i];</span><br><span class="line">        <span class="built_in">strcpy_s</span>(b.TimeStamp[i], a.TimeStamp[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">CopyB2C</span><span class="params">(<span class="type">const</span> structB&amp; b, structC&amp; c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    c.ID1 = b.ID[<span class="number">0</span>];</span><br><span class="line">    c.ID2 = b.ID[<span class="number">1</span>];</span><br><span class="line">    c.ID3 = b.ID[<span class="number">2</span>];</span><br><span class="line">    c.Level1 = b.Level[<span class="number">0</span>];</span><br><span class="line">    c.Level2 = b.Level[<span class="number">1</span>];</span><br><span class="line">    c.Level3 = b.Level[<span class="number">2</span>];</span><br><span class="line">    <span class="built_in">strcpy_s</span>(c.TimeStamp1, b.TimeStamp[<span class="number">0</span>]);</span><br><span class="line">    <span class="built_in">strcpy_s</span>(c.TimeStamp2, b.TimeStamp[<span class="number">1</span>]);</span><br><span class="line">    <span class="built_in">strcpy_s</span>(c.TimeStamp3, b.TimeStamp[<span class="number">2</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看起来实在是太臃肿了！我们尝试定义一个宏让他美观一点</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> COPYA2B(i, A, B)\</span></span><br><span class="line"><span class="meta">B.ID[i] = A.ID[i];\</span></span><br><span class="line"><span class="meta">B.Level[i] = A.Level[i];\</span></span><br><span class="line"><span class="meta">strcpy_s(B.TimeStamp[i], A.TimeStamp[i]);</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">CopyA2B</span><span class="params">(<span class="type">const</span> structB&amp; a, structB&amp; b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">COPYA2B</span>(i, a, b);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> COPYB2C(i, B, C)\</span></span><br><span class="line"><span class="meta">C.ID##i = B.ID[i-1];\</span></span><br><span class="line"><span class="meta">C.Level##i = B.Level[i-1];\</span></span><br><span class="line"><span class="meta">strcpy_s(C.TimeStamp##i, B.TimeStamp[i-1]);</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">CopyB2C</span><span class="params">(<span class="type">const</span> structB&amp; b, structC&amp; c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">COPYB2C</span>(<span class="number">1</span>, b, c);</span><br><span class="line">    <span class="built_in">COPYB2C</span>(<span class="number">2</span>, b, c);</span><br><span class="line">    <span class="built_in">COPYB2C</span>(<span class="number">3</span>, b, c);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>define的功劳使得函数似乎好看了一些，其实本质上没有发生变化， 如果新增Struct的字段都要劳神去修改，那么有没有一种方法能一劳永逸呢 办法肯定是有的，先看看A2B，我们使用神奇的<strong>memcpy</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">CopyA2B</span><span class="params">(<span class="type">const</span> structA&amp; a, structB&amp; b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">memcpy</span>(&amp;b, &amp;a, <span class="built_in">sizeof</span>(b));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一行代码直接解决，只要<strong>保持StructA和StructB结构一致</strong>，就再也不用做修改了！ 再看看B和C，他们的结构不一致，显然不能直接使用memcpy 仔细观察一下可以发现，其实C只是将B(数组)全部展开了 这时我们使用一套组合拳<strong>offsetof+memcpy</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">CopyB2C</span><span class="params">(<span class="type">const</span> structB&amp; b, structC&amp; c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//先构造出和B一样的结构</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">_TMP_</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> ID;</span><br><span class="line">        <span class="type">char</span> Level;</span><br><span class="line">        <span class="type">char</span> TimeStamp[<span class="number">32</span>];</span><br><span class="line">    &#125;tmp[<span class="number">3</span>];</span><br><span class="line">    <span class="comment">//初始化</span></span><br><span class="line">    <span class="built_in">memset</span>(&amp;tmp[<span class="number">0</span>], <span class="number">0</span>, <span class="built_in">sizeof</span>(tmp));</span><br><span class="line">    <span class="comment">//赋值</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        tmp[i].ID = b.ID[i];</span><br><span class="line">        tmp[i].Level = b.Level[i];</span><br><span class="line">        <span class="built_in">strcpy_s</span>(tmp[i].TimeStamp, b.TimeStamp[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//计算需要拷贝给C的大小</span></span><br><span class="line">    <span class="type">int</span> iMemCpySize = <span class="built_in">offsetof</span>(<span class="keyword">struct</span> structC, TimeStamp3) - <span class="built_in">offsetof</span>(<span class="keyword">struct</span> structC, ID1) + <span class="built_in">sizeof</span>(c.TimeStamp3);</span><br><span class="line">    <span class="comment">//tmp全量拷贝到C</span></span><br><span class="line">    <span class="built_in">memcpy</span>(&amp;c.ID1, &amp;tmp[<span class="number">0</span>], iMemCpySize);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们根据数据在内存中实际存储的方式，模拟出与C<strong>结构相同</strong>的结构体 计算C的最后一个成员与第一个成员的<strong>地址偏移量</strong>，这样就可以使用memcpy啦</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/04/22/article/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84%E5%AD%A6%E4%B9%A0/index/" rel="prev" title="微服务架构学习">
+                  <i class="fa fa-angle-left"></i> 微服务架构学习
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/07/31/article/%E3%80%90C++%E3%80%91%E3%80%90LeetCode%E3%80%912020.7.1~2020.7.31/index/" rel="next" title="【C++】【LeetCode】2020.7.1~2020.7.31">
+                  【C++】【LeetCode】2020.7.1~2020.7.31 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">VC-ROBOT</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
