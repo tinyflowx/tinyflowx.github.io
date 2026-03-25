@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="前言 阶段一实现了基础的资讯抓取和本地生成，但关键词匹配较为简单，生成的影响总结有时候不够精准。本篇文章记录阶段二的优化过程，包括：增强关键词检测、改进影响总结逻辑、增加更多资讯类型的识别。 声明：该文章由 AI 辅助整理，内容基于实战记录...">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LLM开发实践手记（四）博客自动化发布系统 - 阶段二优化">
+<meta property="og:url" content="http://example.com/2026/03/26/article/LLM/LLM%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E6%89%8B%E8%AE%B0/4-%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F-%E9%98%B6%E6%AE%B5%E4%BA%8C%E4%BC%98%E5%8C%96/index.html">
+<meta property="og:site_name" content="HOME">
+<meta property="og:description" content="前言 阶段一实现了基础的资讯抓取和本地生成，但关键词匹配较为简单，生成的影响总结有时候不够精准。本篇文章记录阶段二的优化过程，包括：增强关键词检测、改进影响总结逻辑、增加更多资讯类型的识别。 声明：该文章由 AI 辅助整理，内容基于实战记录...">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-03-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-03-25T17:46:26.046Z">
+<meta property="article:author" content="VC-ROBOT">
+<meta property="article:tag" content="AI编程">
+<meta property="article:tag" content="Claude">
+<meta property="article:tag" content="RSS">
+<meta property="article:tag" content="关键词匹配">
+<meta property="article:tag" content="博客">
+<meta property="article:tag" content="自动化">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2026/03/26/article/LLM/LLM%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E6%89%8B%E8%AE%B0/4-%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F-%E9%98%B6%E6%AE%B5%E4%BA%8C%E4%BC%98%E5%8C%96/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2026/03/26/article/LLM/LLM%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E6%89%8B%E8%AE%B0/4-%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F-%E9%98%B6%E6%AE%B5%E4%BA%8C%E4%BC%98%E5%8C%96/","path":"2026/03/26/article/LLM/LLM开发实践手记/4-博客自动化发布系统-阶段二优化/","title":"LLM开发实践手记（四）博客自动化发布系统 - 阶段二优化"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>LLM开发实践手记（四）博客自动化发布系统 - 阶段二优化 | HOME</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">HOME</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E9%98%B6%E6%AE%B5%E4%B8%80%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">一、阶段一的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%BD%B1%E5%93%8D%E6%80%BB%E7%BB%93%E8%BF%87%E4%BA%8E%E6%A8%A1%E6%9D%BF%E5%8C%96"><span class="nav-number">2.1.</span> <span class="nav-text">1.1 影响总结过于模板化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E5%88%86%E7%B1%BB%E4%B8%8D%E5%A4%9F%E7%B2%BE%E7%BB%86"><span class="nav-number">2.2.</span> <span class="nav-text">1.2 分类不够精细</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%85%B3%E9%94%AE%E8%AF%8D%E5%A2%9E%E5%BC%BA"><span class="nav-number">3.</span> <span class="nav-text">二、关键词增强</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E6%89%A9%E5%B1%95%E5%BD%B1%E5%93%8D%E5%88%86%E6%9E%90%E5%85%B3%E9%94%AE%E8%AF%8D"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 扩展影响分析关键词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E6%94%B9%E8%BF%9B%E5%BD%B1%E5%93%8D%E6%80%BB%E7%BB%93%E7%94%9F%E6%88%90%E9%80%BB%E8%BE%91"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 改进影响总结生成逻辑</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E8%B5%84%E8%AE%AF%E7%B1%BB%E5%9E%8B%E7%B2%BE%E7%BB%86%E5%8C%96"><span class="nav-number">4.</span> <span class="nav-text">三、资讯类型精细化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E6%96%B0%E5%88%86%E7%B1%BB%E4%BD%93%E7%B3%BB"><span class="nav-number">4.1.</span> <span class="nav-text">3.1 新分类体系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E5%88%86%E7%B1%BB%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">4.2.</span> <span class="nav-text">3.2 分类优先级</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%A0%87%E9%A2%98%E7%BF%BB%E8%AF%91%E5%A2%9E%E5%BC%BA"><span class="nav-number">5.</span> <span class="nav-text">四、标题翻译增强</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E5%85%B3%E9%94%AE%E8%AF%8D%E6%98%A0%E5%B0%84%E8%A1%A8%E6%89%A9%E5%B1%95"><span class="nav-number">5.1.</span> <span class="nav-text">4.1 关键词映射表扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E7%BF%BB%E8%AF%91%E5%88%A4%E6%96%AD%E9%80%BB%E8%BE%91%E4%BC%98%E5%8C%96"><span class="nav-number">5.2.</span> <span class="nav-text">4.2 翻译判断逻辑优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96"><span class="nav-number">6.</span> <span class="nav-text">五、代码优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E6%A8%A1%E5%9D%97%E5%8C%96%E9%87%8D%E6%9E%84"><span class="nav-number">6.1.</span> <span class="nav-text">5.1 模块化重构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E9%85%8D%E7%BD%AE%E5%A4%96%E9%83%A8%E5%8C%96"><span class="nav-number">6.2.</span> <span class="nav-text">5.2 配置外部化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E6%B5%8B%E8%AF%95%E9%AA%8C%E8%AF%81"><span class="nav-number">7.</span> <span class="nav-text">六、测试验证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-%E5%BD%B1%E5%93%8D%E6%80%BB%E7%BB%93%E6%B5%8B%E8%AF%95"><span class="nav-number">7.1.</span> <span class="nav-text">6.1 影响总结测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-%E5%88%86%E7%B1%BB%E6%B5%8B%E8%AF%95"><span class="nav-number">7.2.</span> <span class="nav-text">6.2 分类测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E4%B8%8B%E4%B8%80%E9%98%B6%E6%AE%B5%E8%AE%A1%E5%88%92"><span class="nav-number">8.</span> <span class="nav-text">七、下一阶段计划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">9.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">VC-ROBOT</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/03/26/article/LLM/LLM%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E6%89%8B%E8%AE%B0/4-%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F-%E9%98%B6%E6%AE%B5%E4%BA%8C%E4%BC%98%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="VC-ROBOT">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="LLM开发实践手记（四）博客自动化发布系统 - 阶段二优化 | HOME">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LLM开发实践手记（四）博客自动化发布系统 - 阶段二优化
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-03-26 00:00:00 / 修改时间：01:46:26" itemprop="dateCreated datePublished" datetime="2026-03-26T00:00:00+08:00">2026-03-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/AI%E6%A8%A1%E5%9E%8B/" itemprop="url" rel="index"><span itemprop="name">AI模型</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/AI%E6%A8%A1%E5%9E%8B/LLM/" itemprop="url" rel="index"><span itemprop="name">LLM</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>阶段一实现了基础的资讯抓取和本地生成，但关键词匹配较为简单，生成的影响总结有时候不够精准。本篇文章记录阶段二的优化过程，包括：增强关键词检测、改进影响总结逻辑、增加更多资讯类型的识别。</p>
+<blockquote>
+<p><strong>声明</strong>：该文章由 AI 辅助整理，内容基于实战记录。</p>
+</blockquote>
+<!-- more -->
+
+<h2 id="一、阶段一的问题"><a href="#一、阶段一的问题" class="headerlink" title="一、阶段一的问题"></a>一、阶段一的问题</h2><h3 id="1-1-影响总结过于模板化"><a href="#1-1-影响总结过于模板化" class="headerlink" title="1.1 影响总结过于模板化"></a>1.1 影响总结过于模板化</h3><p>阶段一的影响总结基于简单的关键词匹配，无法理解资讯的深层含义。例如：</p>
+<table>
+<thead>
+<tr>
+<th>原始资讯</th>
+<th>阶段一生成</th>
+<th>问题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>“Waymo relies on firefighters and police to bail out stuck robotaxis”</td>
+<td>AI动态</td>
+<td>应该归类为”自动驾驶”或”行业挑战”</td>
+</tr>
+<tr>
+<td>“Bernie Sanders and AOC propose a ban on data center construction”</td>
+<td>政策法规</td>
+<td>缺少对AI行业的影响分析</td>
+</tr>
+</tbody></table>
+<h3 id="1-2-分类不够精细"><a href="#1-2-分类不够精细" class="headerlink" title="1.2 分类不够精细"></a>1.2 分类不够精细</h3><p>现有分类仅有：产品发布、融资并购、价格变动、政策法规、人事变动、AI动态、科技综合。对于科技日报场景，需要更贴近大众的分类方式。</p>
+<hr>
+<h2 id="二、关键词增强"><a href="#二、关键词增强" class="headerlink" title="二、关键词增强"></a>二、关键词增强</h2><h3 id="2-1-扩展影响分析关键词"><a href="#2-1-扩展影响分析关键词" class="headerlink" title="2.1 扩展影响分析关键词"></a>2.1 扩展影响分析关键词</h3><p>新增更能体现”大众影响”的关键词模式：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 行业影响类</span></span><br><span class="line"><span class="keyword">const</span> impactPatterns = &#123;</span><br><span class="line">  <span class="string">&#x27;自动驾驶&#x27;</span>: <span class="regexp">/waymo|robotaxi|自动驾驶|无人车|tesla/i</span>,</span><br><span class="line">  <span class="string">&#x27;AI音乐&#x27;</span>: <span class="regexp">/lyria|music generation|AI音乐|Suno|Udio/i</span>,</span><br><span class="line">  <span class="string">&#x27;数据中心&#x27;</span>: <span class="regexp">/data center|数据中心|服务器|算力/i</span>,</span><br><span class="line">  <span class="string">&#x27;AI监管&#x27;</span>: <span class="regexp">/regulation|AI act|监管|国会|法案/i</span>,</span><br><span class="line">  <span class="string">&#x27;企业AI&#x27;</span>: <span class="regexp">/enterprise AI|meeting notes|AI助手| Copilot/i</span>,</span><br><span class="line">  <span class="string">&#x27;AI安全&#x27;</span>: <span class="regexp">/safety|alignment|red team|安全/i</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 大众关注点</span></span><br><span class="line"><span class="keyword">const</span>大众关注 = &#123;</span><br><span class="line">  <span class="string">&#x27;价格变动&#x27;</span>: <span class="regexp">/price|sale|deal|discount|降价|涨价|调价|套餐/i</span>,</span><br><span class="line">  <span class="string">&#x27;人员变动&#x27;</span>: <span class="regexp">/CEO|CTO|hiring|layoff|裁员|招聘|加入|离职/i</span>,</span><br><span class="line">  <span class="string">&#x27;融资动态&#x27;</span>: <span class="regexp">/raises|funding|valuation|融资|投资/i</span>,</span><br><span class="line">  <span class="string">&#x27;政策监管&#x27;</span>: <span class="regexp">/court|law|regulation|国会|法院|监管|政策/i</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-改进影响总结生成逻辑"><a href="#2-2-改进影响总结生成逻辑" class="headerlink" title="2.2 改进影响总结生成逻辑"></a>2.2 改进影响总结生成逻辑</h3><p>不再是简单的关键词出现判断，而是分析多条资讯的关联性：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 分析同一主题的多条资讯，生成更精准的影响总结</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">generateImpactSummary</span>(<span class="params">newsList</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> impacts = [];</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 检测自动驾驶相关</span></span><br><span class="line">  <span class="keyword">const</span> autoNews = newsList.<span class="title function_">filter</span>(<span class="function"><span class="params">n</span> =&gt;</span></span><br><span class="line">    <span class="regexp">/waymo|robotaxi|自动驾驶|tesla/i</span>.<span class="title function_">test</span>(n.<span class="property">title</span>)</span><br><span class="line">  );</span><br><span class="line">  <span class="keyword">if</span> (autoNews.<span class="property">length</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> hasChallenge = autoNews.<span class="title function_">some</span>(<span class="function"><span class="params">n</span> =&gt;</span></span><br><span class="line">      <span class="regexp">/firefighter|police|stuck|challenge/i</span>.<span class="title function_">test</span>(n.<span class="property">title</span>)</span><br><span class="line">    );</span><br><span class="line">    <span class="keyword">if</span> (hasChallenge) &#123;</span><br><span class="line">      impacts.<span class="title function_">push</span>(<span class="string">&#x27;**自动驾驶**：&#x27;</span> +</span><br><span class="line">        <span class="string">&#x27;实际运营中仍需要人工介入，短期内完全无人化面临挑战。&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 检测AI音乐相关</span></span><br><span class="line">  <span class="keyword">const</span> musicNews = newsList.<span class="title function_">filter</span>(<span class="function"><span class="params">n</span> =&gt;</span></span><br><span class="line">    <span class="regexp">/lyria|music|song|Udio|Suno/i</span>.<span class="title function_">test</span>(n.<span class="property">title</span> + n.<span class="property">description</span>)</span><br><span class="line">  );</span><br><span class="line">  <span class="keyword">if</span> (musicNews.<span class="property">length</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    impacts.<span class="title function_">push</span>(<span class="string">&#x27;**AI音乐**：&#x27;</span> +</span><br><span class="line">      <span class="string">&#x27;AI音乐生成能力提升，可能影响传统音乐行业格局。&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> impacts;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="三、资讯类型精细化"><a href="#三、资讯类型精细化" class="headerlink" title="三、资讯类型精细化"></a>三、资讯类型精细化</h2><h3 id="3-1-新分类体系"><a href="#3-1-新分类体系" class="headerlink" title="3.1 新分类体系"></a>3.1 新分类体系</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>说明</th>
+<th>关键词示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>自动驾驶</td>
+<td>无人车、ADAS</td>
+<td>waymo, tesla, robotaxi, 自动驾驶</td>
+</tr>
+<tr>
+<td>AI音乐</td>
+<td>AI音乐生成</td>
+<td>lyria, suno, udio, music generation</td>
+</tr>
+<tr>
+<td>企业AI</td>
+<td>商业应用、企业服务</td>
+<td>enterprise, meeting notes, copilot</td>
+</tr>
+<tr>
+<td>数据中心</td>
+<td>基础设施、算力</td>
+<td>data center, GPU, 计算</td>
+</tr>
+<tr>
+<td>AI监管</td>
+<td>政策法规、合规</td>
+<td>regulation, congress, AI act</td>
+</tr>
+<tr>
+<td>产品发布</td>
+<td>新品上市、更新</td>
+<td>launch, release, announce</td>
+</tr>
+<tr>
+<td>融资并购</td>
+<td>投资、估值</td>
+<td>funding, valuation, raises</td>
+</tr>
+<tr>
+<td>人事变动</td>
+<td>高管、招聘、裁员</td>
+<td>CEO, hiring, layoff</td>
+</tr>
+<tr>
+<td>价格变动</td>
+<td>促销、套餐调整</td>
+<td>price, sale, 降价, 涨价</td>
+</tr>
+</tbody></table>
+<h3 id="3-2-分类优先级"><a href="#3-2-分类优先级" class="headerlink" title="3.2 分类优先级"></a>3.2 分类优先级</h3><p>当一条资讯匹配多个分类时，按优先级确定最终分类：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">政策法规 &gt; 人事变动 &gt; 价格变动 &gt; 自动驾驶 &gt; AI音乐 &gt; 企业AI &gt; 产品发布 &gt; 融资并购 &gt; AI动态</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="四、标题翻译增强"><a href="#四、标题翻译增强" class="headerlink" title="四、标题翻译增强"></a>四、标题翻译增强</h2><h3 id="4-1-关键词映射表扩展"><a href="#4-1-关键词映射表扩展" class="headerlink" title="4.1 关键词映射表扩展"></a>4.1 关键词映射表扩展</h3><p>增加更多科技公司和技术术语的翻译：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="property">titleMap</span> = &#123;</span><br><span class="line">  <span class="comment">// 科技公司</span></span><br><span class="line">  <span class="string">&#x27;Google&#x27;</span>: <span class="string">&#x27;谷歌&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;Meta&#x27;</span>: <span class="string">&#x27;Meta&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;Apple&#x27;</span>: <span class="string">&#x27;苹果&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;Microsoft&#x27;</span>: <span class="string">&#x27;微软&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;Amazon&#x27;</span>: <span class="string">&#x27;亚马逊&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;Nvidia&#x27;</span>: <span class="string">&#x27;英伟达&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;Tesla&#x27;</span>: <span class="string">&#x27;特斯拉&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;Samsung&#x27;</span>: <span class="string">&#x27;三星&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;AMD&#x27;</span>: <span class="string">&#x27;AMD&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;Intel&#x27;</span>: <span class="string">&#x27;英特尔&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;Qualcomm&#x27;</span>: <span class="string">&#x27;高通&#x27;</span>,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 机构/人物</span></span><br><span class="line">  <span class="string">&#x27;Sequoia&#x27;</span>: <span class="string">&#x27;红杉资本&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;Bernie Sanders&#x27;</span>: <span class="string">&#x27;伯尼·桑德斯&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;AOC&#x27;</span>: <span class="string">&#x27;AOC&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;Supreme Court&#x27;</span>: <span class="string">&#x27;美国最高法院&#x27;</span>,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 技术术语</span></span><br><span class="line">  <span class="string">&#x27;Lyria&#x27;</span>: <span class="string">&#x27;Lyria&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;GPT&#x27;</span>: <span class="string">&#x27;GPT&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;Gemini&#x27;</span>: <span class="string">&#x27;Gemini&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;Llama&#x27;</span>: <span class="string">&#x27;Llama&#x27;</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-翻译判断逻辑优化"><a href="#4-2-翻译判断逻辑优化" class="headerlink" title="4.2 翻译判断逻辑优化"></a>4.2 翻译判断逻辑优化</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">translateTitle</span>(<span class="params">title</span>) &#123;</span><br><span class="line">  <span class="comment">// 分解标题为单词</span></span><br><span class="line">  <span class="keyword">const</span> words = title.<span class="title function_">split</span>(<span class="regexp">/\s+/</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 统计可翻译词占比</span></span><br><span class="line">  <span class="keyword">const</span> translatableCount = words.<span class="title function_">filter</span>(<span class="function"><span class="params">w</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> clean = w.<span class="title function_">replace</span>(<span class="regexp">/[^a-zA-Z]/g</span>, <span class="string">&#x27;&#x27;</span>).<span class="title function_">toLowerCase</span>();</span><br><span class="line">    <span class="keyword">return</span> clean &amp;&amp; <span class="variable language_">this</span>.<span class="title function_">isTranslatable</span>(clean);</span><br><span class="line">  &#125;).<span class="property">length</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 可翻译词占比超过 70% 才翻译</span></span><br><span class="line">  <span class="keyword">if</span> (translatableCount / words.<span class="property">length</span> &gt;= <span class="number">0.7</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">doTranslate</span>(title);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> title;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="五、代码优化"><a href="#五、代码优化" class="headerlink" title="五、代码优化"></a>五、代码优化</h2><h3 id="5-1-模块化重构"><a href="#5-1-模块化重构" class="headerlink" title="5.1 模块化重构"></a>5.1 模块化重构</h3><p>将 <code>generate-post.js</code> 拆分为更小的模块：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">news-scheduler/</span><br><span class="line">├── config.js              # 配置</span><br><span class="line">├── fetch-news.js          # 抓取</span><br><span class="line">├── generators/</span><br><span class="line">│   ├── impact.js          # 影响总结生成</span><br><span class="line">│   ├── category.js         # 分类判断</span><br><span class="line">│   ├── translator.js       # 标题翻译</span><br><span class="line">│   └── article.js         # 文章组装</span><br><span class="line">├── run-local.js           # 入口</span><br><span class="line">└── package.json</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-配置外部化"><a href="#5-2-配置外部化" class="headerlink" title="5.2 配置外部化"></a>5.2 配置外部化</h3><p>将更多逻辑配置化，减少硬编码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// config.js</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">impactRules</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;自动驾驶&#x27;</span>,</span><br><span class="line">      <span class="attr">keywords</span>: [<span class="string">&#x27;waymo&#x27;</span>, <span class="string">&#x27;robotaxi&#x27;</span>, <span class="string">&#x27;自动驾驶&#x27;</span>, <span class="string">&#x27;tesla&#x27;</span>],</span><br><span class="line">      <span class="attr">indicator</span>: [<span class="string">&#x27;firefighter&#x27;</span>, <span class="string">&#x27;police&#x27;</span>, <span class="string">&#x27;stuck&#x27;</span>, <span class="string">&#x27;challenge&#x27;</span>],</span><br><span class="line">      <span class="attr">summary</span>: <span class="string">&#x27;自动驾驶出租车在实际运营中仍需要人工介入，短期内完全无人化面临挑战。&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// ...更多规则</span></span><br><span class="line">  ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="六、测试验证"><a href="#六、测试验证" class="headerlink" title="六、测试验证"></a>六、测试验证</h2><h3 id="6-1-影响总结测试"><a href="#6-1-影响总结测试" class="headerlink" title="6.1 影响总结测试"></a>6.1 影响总结测试</h3><table>
+<thead>
+<tr>
+<th>测试资讯</th>
+<th>期望输出</th>
+<th>实际输出</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Waymo robotaxi stuck + Bernie data center ban</td>
+<td>自动驾驶+数据中心影响</td>
+<td>✓</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Google Lyria launch + AI music</td>
+<td>AI音乐影响</td>
+<td>✓</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Harvey $11B valuation</td>
+<td>融资热度</td>
+<td>✓</td>
+<td>✅</td>
+</tr>
+</tbody></table>
+<h3 id="6-2-分类测试"><a href="#6-2-分类测试" class="headerlink" title="6.2 分类测试"></a>6.2 分类测试</h3><table>
+<thead>
+<tr>
+<th>标题</th>
+<th>期望分类</th>
+<th>实际分类</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Apple overhauls developer platform</td>
+<td>产品发布</td>
+<td>产品发布</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Senate Democrats codify AI red lines</td>
+<td>政策法规</td>
+<td>政策法规</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Granola raises $125M</td>
+<td>融资并购</td>
+<td>融资并购</td>
+<td>✅</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="七、下一阶段计划"><a href="#七、下一阶段计划" class="headerlink" title="七、下一阶段计划"></a>七、下一阶段计划</h2><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>目标</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>阶段一</td>
+<td>基础抓取与本地生成</td>
+<td>✅ 已完成</td>
+</tr>
+<tr>
+<td>阶段二</td>
+<td>影响总结优化与分类增强</td>
+<td>✅ 本篇完成</td>
+</tr>
+<tr>
+<td>阶段三</td>
+<td>GitHub Actions 自动化发布</td>
+<td>⏳ 待开始</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>阶段二主要优化了影响总结的生成逻辑和资讯分类体系。通过：</p>
+<ol>
+<li>扩展关键词映射表</li>
+<li>改进影响分析的关联性判断</li>
+<li>引入分类优先级机制</li>
+<li>模块化代码结构</li>
+</ol>
+<p>使生成的文章更具可读性，影响总结更贴近大众关注点。</p>
+<hr>
+<p><strong>系列文章</strong>：</p>
+<ul>
+<li><a href="/2026/03/25/article/LLM%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E6%89%8B%E8%AE%B0/1-claude-code%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97/">（一）Claude Code 环境部署指南</a></li>
+<li><a href="/2026/03/26/article/LLM%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E6%89%8B%E8%AE%B0/2-%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F-%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90%E4%B8%8E%E6%96%B9%E6%A1%88%E8%AE%BE%E8%AE%A1/">（二）博客自动化发布系统 - 需求分析与方案设计</a></li>
+<li><a href="/2026/03/26/article/LLM%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E6%89%8B%E8%AE%B0/3-%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F-%E9%98%B6%E6%AE%B5%E4%B8%80%E5%AE%9E%E7%8E%B0/">（三）博客自动化发布系统 - 阶段一实现</a></li>
+<li><a href="/2026/03/26/article/LLM%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E6%89%8B%E8%AE%B0/4-%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F-%E9%98%B6%E6%AE%B5%E4%BA%8C%E4%BC%98%E5%8C%96/">（四）博客自动化发布系统 - 阶段二优化</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Claude/" rel="tag"># Claude</a>
+              <a href="/tags/AI%E7%BC%96%E7%A8%8B/" rel="tag"># AI编程</a>
+              <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/" rel="tag"># 自动化</a>
+              <a href="/tags/%E5%8D%9A%E5%AE%A2/" rel="tag"># 博客</a>
+              <a href="/tags/RSS/" rel="tag"># RSS</a>
+              <a href="/tags/%E5%85%B3%E9%94%AE%E8%AF%8D%E5%8C%B9%E9%85%8D/" rel="tag"># 关键词匹配</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/03/25/article/daily/2026-03-25-ai-daily/" rel="prev" title="AI 科技日报 | 2026年3月26日">
+                  <i class="fa fa-angle-left"></i> AI 科技日报 | 2026年3月26日
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/03/26/article/LLM/LLM%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E6%89%8B%E8%AE%B0/5-%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F-%E9%98%B6%E6%AE%B5%E4%B8%89%E8%87%AA%E5%8A%A8%E5%8C%96/" rel="next" title="LLM开发实践手记（五）博客自动化发布系统 - 阶段三自动化">
+                  LLM开发实践手记（五）博客自动化发布系统 - 阶段三自动化 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">VC-ROBOT</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
