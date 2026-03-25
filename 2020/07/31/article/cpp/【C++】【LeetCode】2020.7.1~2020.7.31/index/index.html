@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="_31\. Next Permutation_ 123456789101112Implement next permutation, which rearranges numbers into the lexicographically n...">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【C++】【LeetCode】2020.7.1~2020.7.31">
+<meta property="og:url" content="http://example.com/2020/07/31/article/cpp/%E3%80%90C++%E3%80%91%E3%80%90LeetCode%E3%80%912020.7.1~2020.7.31/index/index.html">
+<meta property="og:site_name" content="HOME">
+<meta property="og:description" content="_31\. Next Permutation_ 123456789101112Implement next permutation, which rearranges numbers into the lexicographically n...">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-07-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-03-22T18:45:25.789Z">
+<meta property="article:author" content="VC-ROBOT">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2020/07/31/article/cpp/%E3%80%90C++%E3%80%91%E3%80%90LeetCode%E3%80%912020.7.1~2020.7.31/index/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2020/07/31/article/cpp/%E3%80%90C++%E3%80%91%E3%80%90LeetCode%E3%80%912020.7.1~2020.7.31/index/","path":"2020/07/31/article/cpp/【C++】【LeetCode】2020.7.1~2020.7.31/index/","title":"【C++】【LeetCode】2020.7.1~2020.7.31"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【C++】【LeetCode】2020.7.1~2020.7.31 | HOME</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">HOME</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">VC-ROBOT</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/07/31/article/cpp/%E3%80%90C++%E3%80%91%E3%80%90LeetCode%E3%80%912020.7.1~2020.7.31/index/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="VC-ROBOT">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="【C++】【LeetCode】2020.7.1~2020.7.31 | HOME">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【C++】【LeetCode】2020.7.1~2020.7.31
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-07-31 00:00:00" itemprop="dateCreated datePublished" datetime="2020-07-31T00:00:00+08:00">2020-07-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-23 02:45:25" itemprop="dateModified" datetime="2026-03-23T02:45:25+08:00">2026-03-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index"><span itemprop="name">编程语言</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>25k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>46 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><em><strong>31. Next Permutation</strong></em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Implement next permutation, which rearranges numbers into the lexicographically next greater permutation of numbers.</span><br><span class="line"></span><br><span class="line">If such arrangement is not possible, it must rearrange it as the lowest possible order (ie, sorted in ascending order).</span><br><span class="line"></span><br><span class="line">The replacement must be in-place and use only constant extra memory.</span><br><span class="line"></span><br><span class="line">Here are some examples. Inputs are in the left-hand column and its corresponding outputs are in the right-hand column.</span><br><span class="line"></span><br><span class="line">1,2,3 → 1,3,2</span><br><span class="line">3,2,1 → 1,2,3</span><br><span class="line">1,1,5 → 1,5,1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>[cpp] class Solution { public: void nextPermutation(vector<int>&amp; nums) { if (nums.size() &#x3D;&#x3D; 1) return; &#x2F;&#x2F;1 2 3 4 &#x3D;&gt; 1 2 4 3 &#x3D;&gt; 1 3 2 4 &#x3D;&gt; 1 3 4 2 &#x2F;&#x2F;&#x3D;&gt; 1 4 2 3 &#x3D;&gt; 1 4 3 2 &#x3D;&gt; 2 1 3 4 &#x3D;&gt; 2 1 4 3 &#x2F;&#x2F;1.倒序查找第一个升序的位置i &#x2F;&#x2F;2.和比升序位置大的最小数交换位置 &#x2F;&#x2F;3.所有降序位置排序 int start &#x3D; nums.size() - 1; int end &#x3D; nums.size() - 2; for (; end &gt;&#x3D; 0; –end) { if (nums[end] &gt;&#x3D; nums[end + 1]) { continue; } break; } if (end &#x3D;&#x3D; -1) { sort(nums.begin(), nums.end()); return; } int minEnd &#x3D; 9999999; int minIndex &#x3D; 0; for (int i &#x3D; end + 1; i &lt; nums.size(); ++i) { if (nums[i] &gt; nums[end] &amp;&amp; nums[i] &lt; minEnd) { minEnd &#x3D; nums[i]; minIndex &#x3D; i; } } int tmp &#x3D; nums[end]; nums[end] &#x3D; nums[minIndex]; nums[minIndex] &#x3D; tmp; sort(nums.begin() + end + 1, nums.end()); } }; [&#x2F;cpp]</p>
+<hr>
+<p><em><strong>32. Longest Valid Parentheses</strong></em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Given a string containing just the characters &#x27;(&#x27; and &#x27;)&#x27;, find the length of the longest valid (well-formed) parentheses substring.</span><br><span class="line"></span><br><span class="line">Example 1:</span><br><span class="line"></span><br><span class="line">Input: &quot;(()&quot;</span><br><span class="line">Output: 2</span><br><span class="line">Explanation: The longest valid parentheses substring is &quot;()&quot;</span><br><span class="line">Example 2:</span><br><span class="line"></span><br><span class="line">Input: &quot;)()())&quot;</span><br><span class="line">Output: 4</span><br><span class="line">Explanation: The longest valid parentheses substring is &quot;()()&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>[cpp] class Solution { public: &#x2F;&#x2F;()() &#x2F;&#x2F;()(()() &#x2F;&#x2F;())() &#x2F;&#x2F;((())) int longestValidParentheses(string s) { int maxLen &#x3D; 0; vector<int> dp(s.size(), 0); for (int i &#x3D; 0; i &lt; s.size(); ++i) { if (s[i] &#x3D;&#x3D; ‘(‘ || (i &#x3D;&#x3D; 0 &amp;&amp; s[i] &#x3D;&#x3D; ‘)’)) { continue; } &#x2F;&#x2F;dp[i]代表当前i位置的最大匹配数 int matchIndex &#x3D; i - dp[i - 1] - 1; if (matchIndex &lt; 0 || s[matchIndex] &#x3D;&#x3D; ‘)’) { continue; } &#x2F;&#x2F;如果i - dp[i - 1] - 1是左括号的话，dp[i] &#x3D; dp[i - 1] + 2 dp[i] &#x3D; dp[i - 1] + 2; &#x2F;&#x2F;考虑()()的情况dp[i]还要加上上一段匹配长度 if (i - dp[i] &gt; 0) { dp[i] +&#x3D; dp[i - dp[i]]; } maxLen &#x3D; dp[i] &gt; maxLen ? dp[i] : maxLen; }</p>
+<p>return maxLen; } }; [&#x2F;cpp]</p>
+<hr>
+<p><em><strong>33. Search in Rotated Sorted Array</strong></em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.</span><br><span class="line"></span><br><span class="line">(i.e., [0,1,2,4,5,6,7] might become [4,5,6,7,0,1,2]).</span><br><span class="line"></span><br><span class="line">You are given a target value to search. If found in the array return its index, otherwise return -1.</span><br><span class="line"></span><br><span class="line">You may assume no duplicate exists in the array.</span><br><span class="line"></span><br><span class="line">Your algorithm&#x27;s runtime complexity must be in the order of O(log n).</span><br><span class="line"></span><br><span class="line">Example 1:</span><br><span class="line"></span><br><span class="line">Input: nums = [4,5,6,7,0,1,2], target = 0</span><br><span class="line">Output: 4</span><br><span class="line">Example 2:</span><br><span class="line"></span><br><span class="line">Input: nums = [4,5,6,7,0,1,2], target = 3</span><br><span class="line">Output: -1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>[cpp] class Solution { public: int bt_search(vector<int>&amp; nums, int left, int right, int target) { if (left &gt; right) { return -1; } int mid &#x3D; (left + right) &#x2F; 2; if (nums[left] &#x3D;&#x3D; target) return left; if (nums[right] &#x3D;&#x3D; target) return right; if (nums[mid] &#x3D;&#x3D; target) return mid; &#x2F;&#x2F;7 0 1 2 4 5 6 find 3 &#x2F;&#x2F;4 5 6 7 0 1 2 find 3 if (nums[left] &lt; nums[mid]) { &#x2F;&#x2F;有序 if (nums[left] &lt; target &amp;&amp; nums[mid] &gt; target) { return bt_search(nums, left + 1, mid - 1, target); } else { return bt_search(nums, mid + 1, right - 1, target); } } else { &#x2F;&#x2F;有序 if (nums[mid] &lt; target &amp;&amp; nums[right] &gt; target) { return bt_search(nums, mid + 1, right - 1, target); } else { return bt_search(nums, left + 1, mid - 1, target); } } } int search(vector<int>&amp; nums, int target) { if (nums.size() &#x3D;&#x3D; 0) { return -1; } if (nums.size() &#x3D;&#x3D; 1) { return nums[0] &#x3D;&#x3D; target ? 0 : -1; }</p>
+<p>return bt_search(nums, 0, nums.size() - 1, target); } }; [&#x2F;cpp]</p>
+<hr>
+<p><em><strong>34. Find First and Last Position of Element in Sorted Array</strong></em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Given an array of integers nums sorted in ascending order, find the starting and ending position of a given target value.</span><br><span class="line"></span><br><span class="line">Your algorithm&#x27;s runtime complexity must be in the order of O(log n).</span><br><span class="line"></span><br><span class="line">If the target is not found in the array, return [-1, -1].</span><br><span class="line"></span><br><span class="line">Example 1:</span><br><span class="line"></span><br><span class="line">Input: nums = [5,7,7,8,8,10], target = 8</span><br><span class="line">Output: [3,4]</span><br><span class="line">Example 2:</span><br><span class="line"></span><br><span class="line">Input: nums = [5,7,7,8,8,10], target = 6</span><br><span class="line">Output: [-1,-1]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>[cpp] class Solution { public: int bt_search(vector<int> &amp;nums, int target, int left, int right, int mode) { &#x2F;&#x2F;0,1,2,3,4,5,6,7,8 &#x2F;&#x2F;5,7,7,8,8,8,8,8,10 if (mode &lt; 0) { if (right - left &lt;&#x3D; 1) { return nums[left] &#x3D;&#x3D; target ? left : (nums[right] &#x3D;&#x3D; target ? right : -1); } int mid &#x3D; (left + right) &#x2F; 2; if (nums[mid] &lt; target) { return bt_search(nums, target, mid + 1, right, mode); } else { return bt_search(nums, target, left, mid, mode); } } else { if (right - left &lt;&#x3D; 1) { return nums[right] &#x3D;&#x3D; target ? right : (nums[left] &#x3D;&#x3D; target ? left : -1); } int mid &#x3D; (left + right) &#x2F; 2 ; if (nums[mid] &lt;&#x3D; target) { return bt_search(nums, target, mid, right, mode); } else { return bt_search(nums, target, left, mid - 1, mode); } } } vector<int> searchRange(vector<int>&amp; nums, int target) { if (nums.size() &#x3D;&#x3D; 0) { return {-1,-1}; } int left &#x3D; bt_search(nums, target, 0, nums.size() - 1, -1); int right &#x3D; bt_search(nums, target, 0, nums.size() - 1, 1); return { left,right }; } }; [&#x2F;cpp]</p>
+<hr>
+<p><em><strong>35. Search Insert Position</strong></em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Given a sorted array and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.</span><br><span class="line"></span><br><span class="line">You may assume no duplicates in the array.</span><br><span class="line"></span><br><span class="line">Example 1:</span><br><span class="line"></span><br><span class="line">Input: [1,3,5,6], 5</span><br><span class="line">Output: 2</span><br><span class="line">Example 2:</span><br><span class="line"></span><br><span class="line">Input: [1,3,5,6], 2</span><br><span class="line">Output: 1</span><br><span class="line">Example 3:</span><br><span class="line"></span><br><span class="line">Input: [1,3,5,6], 7</span><br><span class="line">Output: 4</span><br><span class="line">Example 4:</span><br><span class="line"></span><br><span class="line">Input: [1,3,5,6], 0</span><br><span class="line">Output: 0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>[cpp] class Solution { public: int bt_search(vector<int>&amp; nums, int target, int left, int right) { &#x2F;&#x2F; 0 1 2 3 &#x2F;&#x2F; 1 3 5 6 find 2 if (right - left &lt;&#x3D; 1) { if (nums[left] &#x3D;&#x3D; target) { return left; } else if (nums[right] &#x3D;&#x3D; target) { return right; } else { return nums[left] &gt; target ? left : right; } } int mid &#x3D; (left + right) &#x2F; 2; if (nums[mid] &lt; target) { return bt_search(nums, target, mid, right); } else { return bt_search(nums, target, left, mid); } } int searchInsert(vector<int>&amp; nums, int target) { if (nums.size() &#x3D;&#x3D; 0) { return 0; } if (target &gt; nums[nums.size() - 1]) { return nums.size(); } if (target &lt; nums[0]) { return 0; } return bt_search(nums, target, 0, nums.size() - 1); } }; [&#x2F;cpp]</p>
+<hr>
+<p><em><strong>36. Valid Sudoku</strong></em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">Determine if a 9x9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:</span><br><span class="line"></span><br><span class="line">Each row must contain the digits 1-9 without repetition.</span><br><span class="line">Each column must contain the digits 1-9 without repetition.</span><br><span class="line">Each of the 9 3x3 sub-boxes of the grid must contain the digits 1-9 without repetition.</span><br><span class="line"></span><br><span class="line">A partially filled sudoku which is valid.</span><br><span class="line"></span><br><span class="line">The Sudoku board could be partially filled, where empty cells are filled with the character &#x27;.&#x27;.</span><br><span class="line"></span><br><span class="line">Example 1:</span><br><span class="line"></span><br><span class="line">Input:</span><br><span class="line">[</span><br><span class="line">  [&quot;5&quot;,&quot;3&quot;,&quot;.&quot;,&quot;.&quot;,&quot;7&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;],</span><br><span class="line">  [&quot;6&quot;,&quot;.&quot;,&quot;.&quot;,&quot;1&quot;,&quot;9&quot;,&quot;5&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;],</span><br><span class="line">  [&quot;.&quot;,&quot;9&quot;,&quot;8&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;6&quot;,&quot;.&quot;],</span><br><span class="line">  [&quot;8&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;6&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;3&quot;],</span><br><span class="line">  [&quot;4&quot;,&quot;.&quot;,&quot;.&quot;,&quot;8&quot;,&quot;.&quot;,&quot;3&quot;,&quot;.&quot;,&quot;.&quot;,&quot;1&quot;],</span><br><span class="line">  [&quot;7&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;2&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;6&quot;],</span><br><span class="line">  [&quot;.&quot;,&quot;6&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;2&quot;,&quot;8&quot;,&quot;.&quot;],</span><br><span class="line">  [&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;4&quot;,&quot;1&quot;,&quot;9&quot;,&quot;.&quot;,&quot;.&quot;,&quot;5&quot;],</span><br><span class="line">  [&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;8&quot;,&quot;.&quot;,&quot;.&quot;,&quot;7&quot;,&quot;9&quot;]</span><br><span class="line">]</span><br><span class="line">Output: true</span><br><span class="line">Example 2:</span><br><span class="line"></span><br><span class="line">Input:</span><br><span class="line">[</span><br><span class="line">  [&quot;8&quot;,&quot;3&quot;,&quot;.&quot;,&quot;.&quot;,&quot;7&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;],</span><br><span class="line">  [&quot;6&quot;,&quot;.&quot;,&quot;.&quot;,&quot;1&quot;,&quot;9&quot;,&quot;5&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;],</span><br><span class="line">  [&quot;.&quot;,&quot;9&quot;,&quot;8&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;6&quot;,&quot;.&quot;],</span><br><span class="line">  [&quot;8&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;6&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;3&quot;],</span><br><span class="line">  [&quot;4&quot;,&quot;.&quot;,&quot;.&quot;,&quot;8&quot;,&quot;.&quot;,&quot;3&quot;,&quot;.&quot;,&quot;.&quot;,&quot;1&quot;],</span><br><span class="line">  [&quot;7&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;2&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;6&quot;],</span><br><span class="line">  [&quot;.&quot;,&quot;6&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;2&quot;,&quot;8&quot;,&quot;.&quot;],</span><br><span class="line">  [&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;4&quot;,&quot;1&quot;,&quot;9&quot;,&quot;.&quot;,&quot;.&quot;,&quot;5&quot;],</span><br><span class="line">  [&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;8&quot;,&quot;.&quot;,&quot;.&quot;,&quot;7&quot;,&quot;9&quot;]</span><br><span class="line">]</span><br><span class="line">Output: false</span><br><span class="line">Explanation: Same as Example 1, except with the 5 in the top left corner being </span><br><span class="line">    modified to 8. Since there are two 8&#x27;s in the top left 3x3 sub-box, it is invalid.</span><br><span class="line">Note:</span><br><span class="line"></span><br><span class="line">A Sudoku board (partially filled) could be valid but is not necessarily solvable.</span><br><span class="line">Only the filled cells need to be validated according to the mentioned rules.</span><br><span class="line">The given board contain only digits 1-9 and the character &#x27;.&#x27;.</span><br><span class="line">The given board size is always 9x9.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>[cpp] class Solution { public: typedef uint16_t STYPE; bool bitJudge(const STYPE&amp; num, int index) { assert(index &lt; sizeof(STYPE) * 8); return (num &amp; (0x01 &lt;&lt; index)) &#x3D;&#x3D; 0 ? false : true; } void bitSet(STYPE&amp; num, int index) { assert(index &lt; sizeof(STYPE) * 8); num &#x3D; num | (0x01 &lt;&lt; index); } bool isValidSudoku(vector&lt;vector<char>&gt;&amp; board) { vector<STYPE> row(9, 0);&#x2F;&#x2F;列 vector<STYPE> column(9, 0);&#x2F;&#x2F;行 &#x2F;&#x2F;0,0 0,1 0,2 &#x2F;&#x2F;1,0 1,1 1,2 &#x2F;&#x2F;2,0 2,1 2,2 vector<STYPE> square(9, 0);&#x2F;&#x2F;九宫格 bool res &#x3D; true; for (int i_column &#x3D; 0; i_column &lt; board.size(); ++i_column) { for (int j_row &#x3D; 0; j_row &lt; board[i_column].size(); ++j_row) { if (board[i_column][j_row] &#x3D;&#x3D; ‘.’) { continue; } int num &#x3D; board[i_column][j_row] - ‘0’; if (bitJudge(row[j_row], num)) { return false; } if (bitJudge(column[i_column], num)) { return false; } int square_index &#x3D; (i_column &#x2F; 3) * 3 + j_row &#x2F; 3; if (bitJudge(square[square_index], num)) { return false; }</p>
+<p>bitSet(row[j_row], num); bitSet(column[i_column], num); bitSet(square[square_index], num); } }</p>
+<p>return true; } }; [&#x2F;cpp]</p>
+<hr>
+<p><em><strong>37. Sudoku Solver</strong></em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Write a program to solve a Sudoku puzzle by filling the empty cells.</span><br><span class="line"></span><br><span class="line">A sudoku solution must satisfy all of the following rules:</span><br><span class="line"></span><br><span class="line">Each of the digits 1-9 must occur exactly once in each row.</span><br><span class="line">Each of the digits 1-9 must occur exactly once in each column.</span><br><span class="line">Each of the the digits 1-9 must occur exactly once in each of the 9 3x3 sub-boxes of the grid.</span><br><span class="line">Empty cells are indicated by the character &#x27;.&#x27;.</span><br><span class="line"></span><br><span class="line">A sudoku puzzle...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>[cpp]</p>
+<p>class Solution { public:</p>
+<p>bool isValid(vector&lt;vector<char>&gt;&amp; board, int column, int row, char val) { &#x2F;&#x2F; 0 1 2 3 4 5 6 &#x2F;&#x2F; 0 0 1 2 3 4 5 6 &#x2F;&#x2F; 1 0 1 2 3 4 5 6 &#x2F;&#x2F; 2 0 1 2 3 4 5 6 &#x2F;&#x2F; 3 0 1 2 3 4 5 6 for (int i &#x3D; 0; i &lt; 9; ++i) { if (board[i][row] !&#x3D; ‘.’ &amp;&amp; board[i][row] &#x3D;&#x3D; val) { return false; } if (board[column][i] !&#x3D; ‘.’ &amp;&amp; board[column][i] &#x3D;&#x3D; val) { return false; } char c_tmp &#x3D; board[column &#x2F; 3 * 3 + i &#x2F; 3][row &#x2F; 3 * 3 + i % 3]; if (c_tmp !&#x3D; ‘.’ &amp;&amp; c_tmp &#x3D;&#x3D; val) { return false; } } return true; } bool solve(vector&lt;vector<char>&gt;&amp; board, int index) { if (index &gt;&#x3D; 81) { return true; }</p>
+<p>int i &#x3D; index &#x2F; 9; int j &#x3D; index - i * 9;</p>
+<p>char &amp;tmp &#x3D; board[i][j]; if (tmp !&#x3D; ‘.’) { &#x2F;&#x2F;当前位置非数字，直接判断下一个 return solve(board, index + 1); }</p>
+<p>&#x2F;&#x2F;尝试标记 for (int k &#x3D; 1; k &lt;&#x3D; 9; ++k) { if (isValid(board, i, j, k + ‘0’)) { tmp &#x3D; k + ‘0’; if (solve(board, index + 1)) { return true; } &#x2F;&#x2F;失败，回退 tmp &#x3D; ‘.’; } } return false; } void solveSudoku(vector&lt;vector<char>&gt;&amp; board) { solve(board, 0); } }; [&#x2F;cpp]</p>
+<hr>
+<p><em><strong>38. Count and Say</strong></em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">The count-and-say sequence is the sequence of integers with the first five terms as following:</span><br><span class="line"></span><br><span class="line">1. 1</span><br><span class="line">2. 11</span><br><span class="line">3. 21</span><br><span class="line">4. 1211</span><br><span class="line">5. 111221</span><br><span class="line">1 is read off as &quot;one 1&quot; or 11.</span><br><span class="line">11 is read off as &quot;two 1s&quot; or 21.</span><br><span class="line">21 is read off as &quot;one 2, then one 1&quot; or 1211.</span><br><span class="line"></span><br><span class="line">Given an integer n where 1 ≤ n ≤ 30, generate the nth term of the count-and-say sequence. You can do so recursively, in other words from the previous member read off the digits, counting the number of digits in groups of the same digit.</span><br><span class="line"></span><br><span class="line">Note: Each term of the sequence of integers will be represented as a string.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>[cpp] class Solution { public: string countAndSay(int n) { &#x2F;&#x2F;1 -&gt; 11 -&gt; 21 -&gt; 1211 -&gt; 111221 -&gt; 312211 -&gt; 13112221 -&gt; 1113213211 string res &#x3D; “”; for (int i &#x3D; 0; i &lt; n; ++i) { if (res &#x3D;&#x3D; “”) { res &#x3D; “1”; continue; } vector<char> tmp; int k &#x3D; 1, count &#x3D; 1; char c &#x3D; res[0]; while (k &lt; res.size() + 1) { if (k &gt;&#x3D; res.size()) { tmp.push_back(count + ‘0’); tmp.push_back(c); break; } else if (res[k] !&#x3D; c) { tmp.push_back(count + ‘0’); tmp.push_back(c); c &#x3D; res[k]; count &#x3D; 1; } else { count++; } k++; } res.assign(tmp.begin(), tmp.end()); } return res; } }; [&#x2F;cpp]</p>
+<hr>
+<p><em><strong>39. Combination Sum</strong></em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">Given a set of candidate numbers (candidates) (without duplicates) and a target number (target), find all unique combinations in candidates where the candidate numbers sums to target.</span><br><span class="line"></span><br><span class="line">The same repeated number may be chosen from candidates unlimited number of times.</span><br><span class="line"></span><br><span class="line">Note:</span><br><span class="line"></span><br><span class="line">All numbers (including target) will be positive integers.</span><br><span class="line">The solution set must not contain duplicate combinations.</span><br><span class="line">Example 1:</span><br><span class="line"></span><br><span class="line">Input: candidates = [2,3,6,7], target = 7,</span><br><span class="line">A solution set is:</span><br><span class="line">[</span><br><span class="line">  [7],</span><br><span class="line">  [2,2,3]</span><br><span class="line">]</span><br><span class="line">Example 2:</span><br><span class="line"></span><br><span class="line">Input: candidates = [2,3,5], target = 8,</span><br><span class="line">A solution set is:</span><br><span class="line">[</span><br><span class="line">  [2,2,2,2],</span><br><span class="line">  [2,3,3],</span><br><span class="line">  [3,5]</span><br><span class="line">]</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">Constraints:</span><br><span class="line"></span><br><span class="line">1 &lt;= candidates.length &lt;= 30</span><br><span class="line">1 &lt;= candidates[i] &lt;= 200</span><br><span class="line">Each element of candidate is unique.</span><br><span class="line">1 &lt;= target &lt;= 500</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>[cpp] class Solution { public: void findRes(int index, const vector<int>&amp; candidates, vector<int>&amp; oneRes, vector&lt;vector<int>&gt;&amp; res, int target) { if (target &lt; 0) { return; } if (target &#x3D;&#x3D; 0) { res.push_back(oneRes); return; } for (int i &#x3D; index; i &gt;&#x3D; 0; –i) { int delta_value &#x3D; target - candidates[i]; if (delta_value !&#x3D; 0 &amp;&amp; delta_value &lt; candidates[0]) { continue; } oneRes.push_back(candidates[i]); findRes(i, candidates, oneRes, res, delta_value); &#x2F;&#x2F;oneRes.erase(oneRes.begin() + oneRes.size() - 1); &#x2F;&#x2F;自己测试发现popback比erase快5倍左右 oneRes.pop_back(); } } vector&lt;vector<int>&gt; combinationSum(vector<int>&amp; candidates, int target) { vector&lt;vector<int>&gt; res; if (candidates.size() &#x3D;&#x3D; 0) { return res; } sort(candidates.begin(), candidates.end()); vector<int> oneRes; findRes(candidates.size() - 1, candidates, oneRes, res, target); return res; } }; [&#x2F;cpp]</p>
+<hr>
+<p><em><strong>40. Combination Sum II</strong></em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">Given a collection of candidate numbers (candidates) and a target number (target), find all unique combinations in candidates where the candidate numbers sums to target.</span><br><span class="line"></span><br><span class="line">Each number in candidates may only be used once in the combination.</span><br><span class="line"></span><br><span class="line">Note:</span><br><span class="line"></span><br><span class="line">All numbers (including target) will be positive integers.</span><br><span class="line">The solution set must not contain duplicate combinations.</span><br><span class="line">Example 1:</span><br><span class="line"></span><br><span class="line">Input: candidates = [10,1,2,7,6,1,5], target = 8,</span><br><span class="line">A solution set is:</span><br><span class="line">[</span><br><span class="line">  [1, 7],</span><br><span class="line">  [1, 2, 5],</span><br><span class="line">  [2, 6],</span><br><span class="line">  [1, 1, 6]</span><br><span class="line">]</span><br><span class="line">Example 2:</span><br><span class="line"></span><br><span class="line">Input: candidates = [2,5,2,1,2], target = 5,</span><br><span class="line">A solution set is:</span><br><span class="line">[</span><br><span class="line">  [1,2,2],</span><br><span class="line">  [5]</span><br><span class="line">]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>[cpp] class Solution { public: bool findRes(int index, const vector<int>&amp; candidates, vector<int>&amp; oneRes, vector&lt;vector<int>&gt;&amp; res, int target) { if (target &lt; 0) { return false; } if (target &#x3D;&#x3D; 0) { res.push_back(oneRes); return true; } for (int i &#x3D; index; i &gt;&#x3D; 0; –i) { int delta_value &#x3D; target - candidates[i]; if (delta_value !&#x3D; 0 &amp;&amp; delta_value &lt; candidates[0]) { continue; } oneRes.push_back(candidates[i]); if (findRes(i - 1, candidates, oneRes, res, delta_value)) { int j &#x3D; i - 1; while (j &gt;&#x3D; 0 &amp;&amp; candidates[j] &#x3D;&#x3D; candidates[i]) { j–; } i &#x3D; j + 1; } &#x2F;&#x2F;oneRes.erase(oneRes.begin() + oneRes.size() - 1); oneRes.pop_back(); } return true; } vector&lt;vector<int>&gt; combinationSum2(vector<int>&amp; candidates, int target) { vector&lt;vector<int>&gt; res; if (candidates.size() &#x3D;&#x3D; 0) { return res; } sort(candidates.begin(), candidates.end()); vector<int> oneRes; findRes(candidates.size() - 1, candidates, oneRes, res, target); return res; } }; [&#x2F;cpp]</p>
+<hr>
+<p><em><strong>41. First Missing Positive</strong></em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Given an unsorted integer array, find the smallest missing positive integer.</span><br><span class="line"></span><br><span class="line">Example 1:</span><br><span class="line"></span><br><span class="line">Input: [1,2,0]</span><br><span class="line">Output: 3</span><br><span class="line">Example 2:</span><br><span class="line"></span><br><span class="line">Input: [3,4,-1,1]</span><br><span class="line">Output: 2</span><br><span class="line">Example 3:</span><br><span class="line"></span><br><span class="line">Input: [7,8,9,11,12]</span><br><span class="line">Output: 1</span><br><span class="line">Note:</span><br><span class="line"></span><br><span class="line">Your algorithm should run in O(n) time and uses constant extra space.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>[cpp] class Solution { public: void exchange(int &amp;a, int &amp;b) { int tmp &#x3D; a; a &#x3D; b; b &#x3D; tmp; } int firstMissingPositive(vector<int>&amp; nums) { int len &#x3D; nums.size(); for (int i &#x3D; 0; i &lt; len; ++i) { int&amp; nowValue &#x3D; nums[i]; if (nowValue &lt;&#x3D; 0 || nowValue &gt; len) { continue; } else if (nowValue !&#x3D; nums[nowValue - 1]) { exchange(nowValue, nums[nowValue - 1]); i–;&#x2F;&#x2F;交换过去的数字是对的，但是交换过来的数字一定不对，需要再次交换 } } for (int i &#x3D; 0; i &lt; len; ++i) { if (i + 1 !&#x3D; nums[i]) { return i + 1; } } return len + 1; } }; [&#x2F;cpp]</p>
+<hr>
+<p><em><strong>42. Trapping Rain Water</strong></em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.</span><br><span class="line"></span><br><span class="line">The above elevation map is represented by array [0,1,0,2,1,0,1,3,2,1,2,1]. In this case, 6 units of rain water (blue section) are being trapped. Thanks Marcos for contributing this image!</span><br><span class="line"></span><br><span class="line">Example:</span><br><span class="line"></span><br><span class="line">Input: [0,1,0,2,1,0,1,3,2,1,2,1]</span><br><span class="line">Output: 6</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>[cpp] class Solution { public: int trap(vector<int>&amp; height) { &#x2F;&#x2F;某一个点x,左边最大和右边最大都比他大时 &#x2F;&#x2F;他这一格一定会收集min(左最大,右最大) - 当前高度的水 if (height.size() &lt;&#x3D; 2) { return 0; } int res &#x3D; 0; vector<int> dp; int maxh &#x3D; 0; for (int i &#x3D; 0; i &lt; height.size(); ++i) { dp.push_back(maxh);&#x2F;&#x2F;只记录左边最大，不包括自己 if (height[i] &gt; maxh) { maxh &#x3D; height[i]; } } maxh &#x3D; 0; for (int i &#x3D; height.size() - 1; i &gt;&#x3D; 0; –i) { if (height[i] &lt; maxh &amp;&amp; height[i] &lt; dp[i]) { int minh &#x3D; maxh &lt; dp[i] ? maxh : dp[i]; res +&#x3D; minh - height[i]; } if (height[i] &gt; maxh) { maxh &#x3D; height[i]; } } return res; } }; [&#x2F;cpp]</p>
+<hr>
+<p><em><strong>43. Multiply Strings</strong></em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Given two non-negative integers num1 and num2 represented as strings, return the product of num1 and num2, also represented as a string.</span><br><span class="line"></span><br><span class="line">Example 1:</span><br><span class="line"></span><br><span class="line">Input: num1 = &quot;2&quot;, num2 = &quot;3&quot;</span><br><span class="line">Output: &quot;6&quot;</span><br><span class="line">Example 2:</span><br><span class="line"></span><br><span class="line">Input: num1 = &quot;123&quot;, num2 = &quot;456&quot;</span><br><span class="line">Output: &quot;56088&quot;</span><br><span class="line">Note:</span><br><span class="line"></span><br><span class="line">The length of both num1 and num2 is &lt; 110.</span><br><span class="line">Both num1 and num2 contain only digits 0-9.</span><br><span class="line">Both num1 and num2 do not contain any leading zero, except the number 0 itself.</span><br><span class="line">You must not use any built-in BigInteger library or convert the inputs to integer directly.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>[cpp] class Solution { public: string multiply(string num1, string num2) { int len1 &#x3D; num1.size(); int len2 &#x3D; num2.size(); if (len1 &#x3D;&#x3D; 0 || len2 &#x3D;&#x3D; 0) { return “”; } if (num1 &#x3D;&#x3D; “0” || num2 &#x3D;&#x3D; “0”) { return “0”; } string result(len1 + len2, ‘0’); for (int i &#x3D; len1 - 1; i &gt;&#x3D; 0; –i) { &#x2F;&#x2F; 99 x 99 &#x2F;* len1:2,len2:2 result:0000 891 891 *&#x2F; int flag &#x3D; 0; for (int j &#x3D; len2 - 1; j &gt;&#x3D; 0; –j) { int val1 &#x3D; num1[i] - ‘0’; int val2 &#x3D; num2[j] - ‘0’; int val3 &#x3D; result[i + j + 1] - ‘0’; int tmp &#x3D; val1 * val2 + flag + val3; flag &#x3D; tmp &#x2F; 10; result[i + j + 1] &#x3D; tmp % 10 + ‘0’; } result[i] &#x3D; flag + ‘0’; } int sta &#x3D; 0; for (; sta &lt; result.size(); ++sta) { if (result[sta] !&#x3D; ‘0’) { break; } } return result.substr(sta); } }; [&#x2F;cpp]</p>
+<hr>
+<p><em><strong>44. Wildcard Matching</strong></em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for &#x27;?&#x27; and &#x27;*&#x27;.</span><br><span class="line"></span><br><span class="line">&#x27;?&#x27; Matches any single character.</span><br><span class="line">&#x27;*&#x27; Matches any sequence of characters (including the empty sequence).</span><br><span class="line">The matching should cover the entire input string (not partial).</span><br><span class="line"></span><br><span class="line">Note:</span><br><span class="line"></span><br><span class="line">s could be empty and contains only lowercase letters a-z.</span><br><span class="line">p could be empty and contains only lowercase letters a-z, and characters like ? or *.</span><br><span class="line">Example 1:</span><br><span class="line"></span><br><span class="line">Input:</span><br><span class="line">s = &quot;aa&quot;</span><br><span class="line">p = &quot;a&quot;</span><br><span class="line">Output: false</span><br><span class="line">Explanation: &quot;a&quot; does not match the entire string &quot;aa&quot;.</span><br><span class="line">Example 2:</span><br><span class="line"></span><br><span class="line">Input:</span><br><span class="line">s = &quot;aa&quot;</span><br><span class="line">p = &quot;*&quot;</span><br><span class="line">Output: true</span><br><span class="line">Explanation: &#x27;*&#x27; matches any sequence.</span><br><span class="line">Example 3:</span><br><span class="line"></span><br><span class="line">Input:</span><br><span class="line">s = &quot;cb&quot;</span><br><span class="line">p = &quot;?a&quot;</span><br><span class="line">Output: false</span><br><span class="line">Explanation: &#x27;?&#x27; matches &#x27;c&#x27;, but the second letter is &#x27;a&#x27;, which does not match &#x27;b&#x27;.</span><br><span class="line">Example 4:</span><br><span class="line"></span><br><span class="line">Input:</span><br><span class="line">s = &quot;adceb&quot;</span><br><span class="line">p = &quot;*a*b&quot;</span><br><span class="line">Output: true</span><br><span class="line">Explanation: The first &#x27;*&#x27; matches the empty sequence, while the second &#x27;*&#x27; matches the substring &quot;dce&quot;.</span><br><span class="line">Example 5:</span><br><span class="line"></span><br><span class="line">Input:</span><br><span class="line">s = &quot;acdcb&quot;</span><br><span class="line">p = &quot;a*c?b&quot;</span><br><span class="line">Output: false</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>[cpp] class Solution { public: bool isMatch(string s, string p) { int s_idx &#x3D; 0; int p_idx &#x3D; 0; int s_last &#x3D; -1; int p_star &#x3D; 0; while (s_idx &lt; s.size()) { if (p_idx &lt; p.size() &amp;&amp; (s[s_idx] &#x3D;&#x3D; p[p_idx] || p[p_idx] &#x3D;&#x3D; ‘?’)) { s_idx++; p_idx++; } else if (p_idx &lt; p.size() &amp;&amp; p[p_idx] &#x3D;&#x3D; ‘*‘) { s_last &#x3D; s_idx; p_star &#x3D; p_idx; p_idx++; } else if (s_last &gt;&#x3D; 0) { p_idx &#x3D; p_star + 1; s_idx &#x3D; ++s_last; } else { return false; } } while (p_idx &lt; p.size()) { if (p[p_idx++] !&#x3D; ‘*‘) { return false; } } return true; } }; [&#x2F;cpp]</p>
+<hr>
+<p><em><strong>45. Jump Game II</strong></em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Given an array of non-negative integers, you are initially positioned at the first index of the array.</span><br><span class="line"></span><br><span class="line">Each element in the array represents your maximum jump length at that position.</span><br><span class="line"></span><br><span class="line">Your goal is to reach the last index in the minimum number of jumps.</span><br><span class="line"></span><br><span class="line">Example:</span><br><span class="line"></span><br><span class="line">Input: [2,3,1,1,4]</span><br><span class="line">Output: 2</span><br><span class="line">Explanation: The minimum number of jumps to reach the last index is 2.</span><br><span class="line">    Jump 1 step from index 0 to 1, then 3 steps to the last index.</span><br><span class="line">Note:</span><br><span class="line"></span><br><span class="line">You can assume that you can always reach the last index.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>[cpp] class Solution { public: int jump(vector<int>&amp; nums) { &#x2F;&#x2F; 2 4 3 3 3 2 10 1 1 1 &#x2F;&#x2F;贪心，当前位置+可达最远位置值最大则当前跳一定是最小移动步数 if (nums.size() &lt;&#x3D; 1) { return 0; } int nowPos &#x3D; 0; int nextPos &#x3D; 0; int nextMax &#x3D; 0; int stepCount &#x3D; 0; while (nowPos &lt; nums.size() - 1) { int nextStep &#x3D; nums[nowPos]; for (int i &#x3D; nowPos + 1; i &lt; nowPos + 1 + nextStep; ++i) { if (i &gt;&#x3D; nums.size() - 1) { nextPos &#x3D; i; break; } else if (nextMax &lt; i + nums[i]) { nextMax &#x3D; i + nums[i]; nextPos &#x3D; i; } } stepCount++; nowPos &#x3D; nextPos; }</p>
+<p>return stepCount; } }; [&#x2F;cpp]</p>
+<hr>
+<p><em><strong>46. Permutations</strong></em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Given a collection of distinct integers, return all possible permutations.</span><br><span class="line"></span><br><span class="line">Example:</span><br><span class="line"></span><br><span class="line">Input: [1,2,3]</span><br><span class="line">Output:</span><br><span class="line">[</span><br><span class="line">  [1,2,3],</span><br><span class="line">  [1,3,2],</span><br><span class="line">  [2,1,3],</span><br><span class="line">  [2,3,1],</span><br><span class="line">  [3,1,2],</span><br><span class="line">  [3,2,1]</span><br><span class="line">]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>[cpp] class Solution { public: void dfs(vector&lt;vector<int>&gt;&amp; result, vector<int>&amp; nums, vector<int>&amp; visit, vector<int>&amp; tmp) { if (tmp.size() &#x3D;&#x3D; nums.size()) { result.push_back(tmp); return; } for (int i &#x3D; 0; i &lt; nums.size(); ++i) { if (visit[i] &#x3D;&#x3D; 0) { tmp.push_back(nums[i]); visit[i] &#x3D; 1; dfs(result, nums, visit, tmp); tmp.pop_back(); visit[i] &#x3D; 0; } } } vector&lt;vector<int>&gt; permute(vector<int>&amp; nums) { vector&lt;vector<int>&gt; result; vector<int> visit(nums.size(), 0); vector<int> tmp;</p>
+<p>dfs(result, nums, visit, tmp);</p>
+<p>return result; } }; [&#x2F;cpp]</p>
+<hr>
+<p><em><strong>47. Permutations II</strong></em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Given a collection of numbers that might contain duplicates, return all possible unique permutations.</span><br><span class="line"></span><br><span class="line">Example:</span><br><span class="line"></span><br><span class="line">Input: [1,1,2]</span><br><span class="line">Output:</span><br><span class="line">[</span><br><span class="line">  [1,1,2],</span><br><span class="line">  [1,2,1],</span><br><span class="line">  [2,1,1]</span><br><span class="line">]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>[cpp] class Solution { public: void dfs(vector&lt;vector<int>&gt;&amp; result, vector<int>&amp; nums, vector<int>&amp; visit, vector<int>&amp; tmp) { if (tmp.size() &#x3D;&#x3D; nums.size()) { result.push_back(tmp); return; } for (int i &#x3D; 0; i &lt; nums.size(); ++i) { if (visit[i] &#x3D;&#x3D; 0) { tmp.push_back(nums[i]); visit[i] &#x3D; 1; dfs(result, nums, visit, tmp); tmp.pop_back(); visit[i] &#x3D; 0; while(i + 1 &lt; nums.size() &amp;&amp; nums[i] &#x3D;&#x3D; nums[i + 1]) { ++i; } } } } vector&lt;vector<int>&gt; permuteUnique(vector<int>&amp; nums) { sort(nums.begin(), nums.end()); vector&lt;vector<int>&gt; result; vector<int> visit(nums.size(), 0); vector<int> tmp;</p>
+<p>dfs(result, nums, visit, tmp);</p>
+<p>return result; } }; [&#x2F;cpp]</p>
+<hr>
+<p><em><strong>48. Rotate Image</strong></em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">You are given an n x n 2D matrix representing an image.</span><br><span class="line"></span><br><span class="line">Rotate the image by 90 degrees (clockwise).</span><br><span class="line"></span><br><span class="line">Note:</span><br><span class="line"></span><br><span class="line">You have to rotate the image in-place, which means you have to modify the input 2D matrix directly. DO NOT allocate another 2D matrix and do the rotation.</span><br><span class="line"></span><br><span class="line">Example 1:</span><br><span class="line"></span><br><span class="line">Given input matrix = </span><br><span class="line">[</span><br><span class="line">  [1,2,3],</span><br><span class="line">  [4,5,6],</span><br><span class="line">  [7,8,9]</span><br><span class="line">],</span><br><span class="line"></span><br><span class="line">rotate the input matrix in-place such that it becomes:</span><br><span class="line">[</span><br><span class="line">  [7,4,1],</span><br><span class="line">  [8,5,2],</span><br><span class="line">  [9,6,3]</span><br><span class="line">]</span><br><span class="line">Example 2:</span><br><span class="line"></span><br><span class="line">Given input matrix =</span><br><span class="line">[</span><br><span class="line">  [ 5, 1, 9,11],</span><br><span class="line">  [ 2, 4, 8,10],</span><br><span class="line">  [13, 3, 6, 7],</span><br><span class="line">  [15,14,12,16]</span><br><span class="line">], </span><br><span class="line"></span><br><span class="line">rotate the input matrix in-place such that it becomes:</span><br><span class="line">[</span><br><span class="line">  [15,13, 2, 5],</span><br><span class="line">  [14, 3, 4, 1],</span><br><span class="line">  [12, 6, 8, 9],</span><br><span class="line">  [16, 7,10,11]</span><br><span class="line">]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>[cpp] class Solution { public: void rotate(vector&lt;vector<int>&gt;&amp; matrix) { &#x2F;&#x2F; 0,0 0,1 … 0,n-1 -&gt; 0,n-1 1,n-1 … n-1,n-1 -&gt; n-1,n-1 n-2,n-1 … 0,n-1 -&gt; 0,n-1 0,n-1 … 0,0 &#x2F;&#x2F;i,j -&gt; j,n-i-1 &#x2F;* 5 1 9 11 15 13 2 5 14 15 2 5 2 4 8 10 14 3 4 1 4 13 8 1 13 3 6 7 12 6 8 9 12 3 6 9 15 14 12 16 16 7 10 11 16 7 10 11 *&#x2F; int n &#x3D; matrix.size(); int start_pos_x &#x3D; 0; int start_pos_y &#x3D; 0; vector<int> tmp_val(n, 0); while (n &gt; 1) { for (int i &#x3D; 0; i &lt; n - 1; ++i) { &#x2F;&#x2F;1,1-&gt;2,1-&gt;2,2-&gt;1,2-&gt;1,1 int x &#x3D; i, y &#x3D; 0;&#x2F;&#x2F; n - start_pos_y - 1, start_pox + i int temp &#x3D; matrix[start_pos_x + x][start_pos_y + y]; for (int j &#x3D; 0; j &lt; 4; ++j) { if (j &#x3D;&#x3D; 3) { matrix[x + start_pos_x][y + start_pos_y] &#x3D; temp; break; } int next_x &#x3D; n - y - 1; int next_y &#x3D; x; matrix[x + start_pos_x][y + start_pos_y] &#x3D; matrix[next_x + start_pos_x][next_y + start_pos_y]; x &#x3D; next_x; y &#x3D; next_y;</p>
+<p>} } start_pos_x++; start_pos_y++; n -&#x3D; 2; } } }; [&#x2F;cpp]</p>
+<hr>
+<p><em><strong>49. Group Anagrams</strong></em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Given an array of strings, group anagrams together.</span><br><span class="line"></span><br><span class="line">Example:</span><br><span class="line"></span><br><span class="line">Input: [&quot;eat&quot;, &quot;tea&quot;, &quot;tan&quot;, &quot;ate&quot;, &quot;nat&quot;, &quot;bat&quot;],</span><br><span class="line">Output:</span><br><span class="line">[</span><br><span class="line">  [&quot;ate&quot;,&quot;eat&quot;,&quot;tea&quot;],</span><br><span class="line">  [&quot;nat&quot;,&quot;tan&quot;],</span><br><span class="line">  [&quot;bat&quot;]</span><br><span class="line">]</span><br><span class="line">Note:</span><br><span class="line"></span><br><span class="line">All inputs will be in lowercase.</span><br><span class="line">The order of your output does not matter.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>[cpp] class Solution { public: vector&lt;vector<string>&gt; groupAnagrams(vector<string>&amp; strs) { vector&lt;vector<string>&gt; result; map&lt;string, int&gt; str2idx; int count &#x3D; 0; for (int i &#x3D; 0; i &lt; strs.size(); ++i) { string tmp &#x3D; strs[i]; sort(tmp.begin(), tmp.end()); if (str2idx.find(tmp) &#x3D;&#x3D; str2idx.end()) { str2idx.insert(make_pair(tmp, count++)); result.push_back({ strs[i] }); } else { result[str2idx[tmp]].push_back(strs[i]); } } return result; } }; [&#x2F;cpp]</p>
+<hr>
+<p><em><strong>32. Longest Valid Parentheses</strong></em></p>
+<p>[cpp]</p>
+<p>[&#x2F;cpp]</p>
+<hr>
+<p><em><strong>32. Longest Valid Parentheses</strong></em></p>
+<p>[cpp]</p>
+<p>[&#x2F;cpp]</p>
+<hr>
+<p><em><strong>32. Longest Valid Parentheses</strong></em></p>
+<p>[cpp]</p>
+<p>[&#x2F;cpp]</p>
+<hr>
+<p><em><strong>32. Longest Valid Parentheses</strong></em></p>
+<p>[cpp]</p>
+<p>[&#x2F;cpp]</p>
+<hr>
+<p><em><strong>32. Longest Valid Parentheses</strong></em></p>
+<p>[cpp]</p>
+<p>[&#x2F;cpp]</p>
+<hr>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/05/12/article/cpp/%E3%80%90c%E3%80%91%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8B%B7%E8%B4%9D-%E5%86%85%E5%AD%98%E6%8B%B7%E8%B4%9D%E7%9A%84%E5%BA%94%E7%94%A8/index/" rel="prev" title="【C++】字符串拷贝&#x2F;内存拷贝的应用">
+                  <i class="fa fa-angle-left"></i> 【C++】字符串拷贝/内存拷贝的应用
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/01/08/article/cpp/%E3%80%90c%E3%80%91%E5%B8%B8%E7%94%A8%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AE%9E%E4%BE%8B2-%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F-%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B/index/" rel="next" title="【C++】(常用的设计模式实例2——工厂模式) &amp; (不同类型结构体继承同一父类方法)">
+                  【C++】(常用的设计模式实例2——工厂模式) & (不同类型结构体继承同一父类方法) <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">VC-ROBOT</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="前言 本系列文章记录我用 AI 辅助开发博客自动化发布系统的完整过程。作为一个实战记录，我会真实呈现从需求分析到方案设计、从踩坑到调优的每一步。 声明：该文章由 AI 生成，内容基于 Claude Code 辅助编写与整理。 一、项目背景与...">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LLM开发实践手记（二）博客自动化发布系统 - 需求分析与方案设计">
+<meta property="og:url" content="http://example.com/2026/03/26/article/LLM/LLM%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E6%89%8B%E8%AE%B0/2-%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F-%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90%E4%B8%8E%E6%96%B9%E6%A1%88%E8%AE%BE%E8%AE%A1/index.html">
+<meta property="og:site_name" content="HOME">
+<meta property="og:description" content="前言 本系列文章记录我用 AI 辅助开发博客自动化发布系统的完整过程。作为一个实战记录，我会真实呈现从需求分析到方案设计、从踩坑到调优的每一步。 声明：该文章由 AI 生成，内容基于 Claude Code 辅助编写与整理。 一、项目背景与...">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-03-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-03-25T16:08:21.359Z">
+<meta property="article:author" content="VC-ROBOT">
+<meta property="article:tag" content="AI编程">
+<meta property="article:tag" content="Claude">
+<meta property="article:tag" content="博客">
+<meta property="article:tag" content="自动化">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2026/03/26/article/LLM/LLM%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E6%89%8B%E8%AE%B0/2-%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F-%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90%E4%B8%8E%E6%96%B9%E6%A1%88%E8%AE%BE%E8%AE%A1/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2026/03/26/article/LLM/LLM%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E6%89%8B%E8%AE%B0/2-%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F-%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90%E4%B8%8E%E6%96%B9%E6%A1%88%E8%AE%BE%E8%AE%A1/","path":"2026/03/26/article/LLM/LLM开发实践手记/2-博客自动化发布系统-需求分析与方案设计/","title":"LLM开发实践手记（二）博客自动化发布系统 - 需求分析与方案设计"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>LLM开发实践手记（二）博客自动化发布系统 - 需求分析与方案设计 | HOME</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">HOME</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E9%A1%B9%E7%9B%AE%E8%83%8C%E6%99%AF%E4%B8%8E%E7%9B%AE%E6%A0%87"><span class="nav-number">2.</span> <span class="nav-text">一、项目背景与目标</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%81%9A%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%8A%A8%E5%8C%96"><span class="nav-number">2.1.</span> <span class="nav-text">1.1 为什么要做博客自动化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E6%9C%80%E7%BB%88%E7%9B%AE%E6%A0%87"><span class="nav-number">2.2.</span> <span class="nav-text">1.2 最终目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E6%88%91%E5%B7%B2%E6%9C%89%E7%9A%84%E5%9F%BA%E7%A1%80"><span class="nav-number">2.3.</span> <span class="nav-text">1.3 我已有的基础</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%8E%B0%E7%8A%B6%E5%88%86%E6%9E%90"><span class="nav-number">3.</span> <span class="nav-text">二、现状分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E5%BD%93%E5%89%8D%E5%8D%9A%E5%AE%A2%E5%86%99%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 当前博客写作流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-AI-%E8%BE%85%E5%8A%A9%E7%9A%84%E5%8F%AF%E8%83%BD%E6%80%A7"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 AI 辅助的可能性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E9%9C%80%E6%B1%82%E6%8B%86%E8%A7%A3"><span class="nav-number">4.</span> <span class="nav-text">三、需求拆解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%8A%9F%E8%83%BD%E6%80%A7%E9%9C%80%E6%B1%82"><span class="nav-number">4.1.</span> <span class="nav-text">3.1 功能性需求</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD"><span class="nav-number">4.1.1.</span> <span class="nav-text">3.1.1 核心功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-2-%E9%9D%9E%E5%8A%9F%E8%83%BD%E6%80%A7%E9%9C%80%E6%B1%82"><span class="nav-number">4.1.2.</span> <span class="nav-text">3.1.2 非功能性需求</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E7%94%A8%E6%88%B7%E4%BA%A4%E4%BA%92%E8%AE%BE%E8%AE%A1"><span class="nav-number">4.2.</span> <span class="nav-text">3.2 用户交互设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-%E6%9C%80%E5%B0%8F%E5%8F%AF%E7%94%A8%E4%BA%A4%E4%BA%92"><span class="nav-number">4.2.1.</span> <span class="nav-text">3.2.1 最小可用交互</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88%E8%AE%BE%E8%AE%A1"><span class="nav-number">5.</span> <span class="nav-text">四、技术方案设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84"><span class="nav-number">5.1.</span> <span class="nav-text">4.1 系统架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97"><span class="nav-number">5.2.</span> <span class="nav-text">4.2 核心模块</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-1-%E6%96%87%E7%AB%A0%E7%94%9F%E6%88%90%E6%A8%A1%E5%9D%97"><span class="nav-number">5.2.1.</span> <span class="nav-text">4.2.1 文章生成模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-2-%E8%B4%A8%E9%87%8F%E8%87%AA%E5%AE%A1%E6%A8%A1%E5%9D%97"><span class="nav-number">5.2.2.</span> <span class="nav-text">4.2.2 质量自审模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-3-%E5%8F%91%E5%B8%83%E6%89%A7%E8%A1%8C%E6%A8%A1%E5%9D%97"><span class="nav-number">5.2.3.</span> <span class="nav-text">4.2.3 发布执行模块</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E6%95%B0%E6%8D%AE%E6%B5%81%E8%AE%BE%E8%AE%A1"><span class="nav-number">5.3.</span> <span class="nav-text">4.3 数据流设计</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%AE%9E%E7%8E%B0%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92"><span class="nav-number">6.</span> <span class="nav-text">五、实现路径规划</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E6%B8%90%E8%BF%9B%E5%BC%8F%E5%AE%9E%E7%8E%B0%E8%AE%A1%E5%88%92"><span class="nav-number">6.1.</span> <span class="nav-text">5.1 渐进式实现计划</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%E8%AF%A6%E7%BB%86%E8%AE%A1%E5%88%92"><span class="nav-number">6.2.</span> <span class="nav-text">5.2 第一阶段详细计划</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E9%A3%8E%E9%99%A9%E4%B8%8E%E5%AF%B9%E7%AD%96"><span class="nav-number">7.</span> <span class="nav-text">六、风险与对策</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-%E6%8A%80%E6%9C%AF%E9%A3%8E%E9%99%A9"><span class="nav-number">7.1.</span> <span class="nav-text">6.1 技术风险</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-%E9%9D%9E%E6%8A%80%E6%9C%AF%E9%A3%8E%E9%99%A9"><span class="nav-number">7.2.</span> <span class="nav-text">6.2 非技术风险</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E6%95%88%E6%9E%9C%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87"><span class="nav-number">8.</span> <span class="nav-text">七、效果评估指标</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-%E6%A0%B8%E5%BF%83%E6%8C%87%E6%A0%87"><span class="nav-number">8.1.</span> <span class="nav-text">7.1 核心指标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-%E7%9B%91%E6%8E%A7%E6%96%B9%E6%A1%88"><span class="nav-number">8.2.</span> <span class="nav-text">7.2 监控方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E4%B8%8B%E4%B8%80%E6%AD%A5%E8%A1%8C%E5%8A%A8"><span class="nav-number">9.</span> <span class="nav-text">八、下一步行动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">10.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">VC-ROBOT</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/03/26/article/LLM/LLM%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E6%89%8B%E8%AE%B0/2-%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F-%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90%E4%B8%8E%E6%96%B9%E6%A1%88%E8%AE%BE%E8%AE%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="VC-ROBOT">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="LLM开发实践手记（二）博客自动化发布系统 - 需求分析与方案设计 | HOME">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LLM开发实践手记（二）博客自动化发布系统 - 需求分析与方案设计
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-03-26 00:00:00 / 修改时间：00:08:21" itemprop="dateCreated datePublished" datetime="2026-03-26T00:00:00+08:00">2026-03-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/AI%E6%A8%A1%E5%9E%8B/" itemprop="url" rel="index"><span itemprop="name">AI模型</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/AI%E6%A8%A1%E5%9E%8B/LLM/" itemprop="url" rel="index"><span itemprop="name">LLM</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>10 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本系列文章记录我用 AI 辅助开发博客自动化发布系统的完整过程。作为一个实战记录，我会真实呈现从需求分析到方案设计、从踩坑到调优的每一步。</p>
+<blockquote>
+<p><strong>声明</strong>：该文章由 AI 生成，内容基于 Claude Code 辅助编写与整理。</p>
+</blockquote>
+<!-- more -->
+
+<h2 id="一、项目背景与目标"><a href="#一、项目背景与目标" class="headerlink" title="一、项目背景与目标"></a>一、项目背景与目标</h2><h3 id="1-1-为什么要做博客自动化"><a href="#1-1-为什么要做博客自动化" class="headerlink" title="1.1 为什么要做博客自动化"></a>1.1 为什么要做博客自动化</h3><p>作为一名技术博主，我经常面临以下困扰：</p>
+<table>
+<thead>
+<tr>
+<th>痛点</th>
+<th>描述</th>
+<th>频率</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>写作效率低</td>
+<td>从构思到发布需要 2-3 小时</td>
+<td>每篇</td>
+</tr>
+<tr>
+<td>排版耗时</td>
+<td>Markdown 编写后需要手动调整格式</td>
+<td>每篇</td>
+</tr>
+<tr>
+<td>发布流程繁琐</td>
+<td>hexo g、hexo d 多步操作</td>
+<td>每篇</td>
+</tr>
+<tr>
+<td>难以坚持</td>
+<td>写作成本高导致更新断断续续</td>
+<td>长期</td>
+</tr>
+</tbody></table>
+<p><strong>核心诉求</strong>：降低写作门槛，让”写博客”这件事变得轻松可持续。</p>
+<h3 id="1-2-最终目标"><a href="#1-2-最终目标" class="headerlink" title="1.2 最终目标"></a>1.2 最终目标</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">愿景：用 AI 把&quot;一个想法&quot;变成&quot;一篇发布好的博客&quot;，全程几乎不需要人工介入。</span><br></pre></td></tr></table></figure>
+
+<p><strong>具体指标</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>目标值</th>
+<th>当前值（估算）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>单篇耗时</td>
+<td>&lt; 30 分钟</td>
+<td>2-3 小时</td>
+</tr>
+<tr>
+<td>AI 生成可用率</td>
+<td>&gt; 70%</td>
+<td>未知</td>
+</tr>
+<tr>
+<td>月产出</td>
+<td>4-8 篇</td>
+<td>1-2 篇</td>
+</tr>
+<tr>
+<td>Token 成本</td>
+<td>&lt; 50 元&#x2F;月</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<h3 id="1-3-我已有的基础"><a href="#1-3-我已有的基础" class="headerlink" title="1.3 我已有的基础"></a>1.3 我已有的基础</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">✅ Hexo 博客框架</span><br><span class="line">✅ Claude Code 使用经验</span><br><span class="line">✅ MiniMax API 接入意向</span><br><span class="line">✅ GitHub Pages 发布流程</span><br><span class="line">✅ 约 50 篇历史文章积累</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="二、现状分析"><a href="#二、现状分析" class="headerlink" title="二、现状分析"></a>二、现状分析</h2><h3 id="2-1-当前博客写作流程"><a href="#2-1-当前博客写作流程" class="headerlink" title="2.1 当前博客写作流程"></a>2.1 当前博客写作流程</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">【人工】构思主题</span><br><span class="line">    ↓</span><br><span class="line">【人工】撰写 Markdown（1-2小时）</span><br><span class="line">    ↓</span><br><span class="line">【人工】排版与配图</span><br><span class="line">    ↓</span><br><span class="line">【人工】预览检查</span><br><span class="line">    ↓</span><br><span class="line">【人工】执行 hexo g &amp;&amp; hexo d</span><br><span class="line">    ↓</span><br><span class="line">【完成】发布</span><br></pre></td></tr></table></figure>
+
+<p><strong>问题诊断</strong>：</p>
+<ol>
+<li><strong>人工环节过多</strong>：每个环节都需要人工介入</li>
+<li><strong>上下文切换成本高</strong>：写作时切换任务破坏思路</li>
+<li><strong>发布流程机械</strong>：hexo g &amp;&amp; hexo d 是固定操作，天然适合自动化</li>
+</ol>
+<h3 id="2-2-AI-辅助的可能性"><a href="#2-2-AI-辅助的可能性" class="headerlink" title="2.2 AI 辅助的可能性"></a>2.2 AI 辅助的可能性</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">AI 擅长的：</span><br><span class="line">- 文本生成（初稿、扩写、缩写）</span><br><span class="line">- 格式转换（ Markdown → 格式化文本）</span><br><span class="line">- 结构优化（标题层次、段落重组）</span><br><span class="line">- 重复性操作（执行固定命令）</span><br><span class="line"></span><br><span class="line">AI 不擅长的：</span><br><span class="line">- 创意构思（完全依赖人的输入）</span><br><span class="line">- 专业判断（需要人工审核内容准确性）</span><br><span class="line">- 情感表达（需要人工润色）</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="三、需求拆解"><a href="#三、需求拆解" class="headerlink" title="三、需求拆解"></a>三、需求拆解</h2><h3 id="3-1-功能性需求"><a href="#3-1-功能性需求" class="headerlink" title="3.1 功能性需求"></a>3.1 功能性需求</h3><h4 id="3-1-1-核心功能"><a href="#3-1-1-核心功能" class="headerlink" title="3.1.1 核心功能"></a>3.1.1 核心功能</h4><table>
+<thead>
+<tr>
+<th>需求编号</th>
+<th>功能描述</th>
+<th>优先级</th>
+<th>难度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>F1</td>
+<td>用户输入主题，AI 生成文章初稿</td>
+<td>P0</td>
+<td>★★☆</td>
+</tr>
+<tr>
+<td>F2</td>
+<td>AI 自动进行质量自审</td>
+<td>P1</td>
+<td>★★★</td>
+</tr>
+<tr>
+<td>F3</td>
+<td>一键发布到 GitHub Pages</td>
+<td>P0</td>
+<td>★☆☆</td>
+</tr>
+<tr>
+<td>F4</td>
+<td>支持文章分类和标签自动建议</td>
+<td>P1</td>
+<td>★★☆</td>
+</tr>
+<tr>
+<td>F5</td>
+<td>生成文章摘要和 SEO 优化</td>
+<td>P2</td>
+<td>★★☆</td>
+</tr>
+</tbody></table>
+<h4 id="3-1-2-非功能性需求"><a href="#3-1-2-非功能性需求" class="headerlink" title="3.1.2 非功能性需求"></a>3.1.2 非功能性需求</h4><table>
+<thead>
+<tr>
+<th>需求编号</th>
+<th>需求描述</th>
+<th>优先级</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>N1</td>
+<td>单次生成时间 &lt; 5 分钟</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>N2</td>
+<td>成本可控（Token 消耗）</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>N3</td>
+<td>输出质量稳定</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>N4</td>
+<td>可追溯（保留生成历史）</td>
+<td>P2</td>
+</tr>
+</tbody></table>
+<h3 id="3-2-用户交互设计"><a href="#3-2-用户交互设计" class="headerlink" title="3.2 用户交互设计"></a>3.2 用户交互设计</h3><h4 id="3-2-1-最小可用交互"><a href="#3-2-1-最小可用交互" class="headerlink" title="3.2.1 最小可用交互"></a>3.2.1 最小可用交互</h4><p><strong>方案 A：纯命令行模式</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输入主题</span></span><br><span class="line">$ claude <span class="string">&quot;写一篇关于 Claude Code 使用的博客&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># AI 生成初稿</span></span><br><span class="line"><span class="comment"># AI 询问确认</span></span><br><span class="line"><span class="comment"># 用户确认后自动发布</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>方案 B：配置文件模式</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 创建配置文件 input.toml</span></span><br><span class="line">title = <span class="string">&quot;Claude Code 入门指南&quot;</span></span><br><span class="line">category = <span class="string">&quot;AI编程&quot;</span></span><br><span class="line">tags = [<span class="string">&quot;Claude&quot;</span>, <span class="string">&quot;教程&quot;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 执行生成</span></span><br><span class="line">$ blog-auto --config input.toml</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. AI 生成 → 用户审核 → 自动发布</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>方案 C：渐进式对话模式</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ claude</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对话式交互</span></span><br><span class="line">你：帮我写一篇博客，主题是 Claude Code 入门</span><br><span class="line">AI：好的，请提供更多信息：</span><br><span class="line">    - 目标读者是谁？</span><br><span class="line">    - 希望涵盖哪些要点？</span><br><span class="line">    - 大概多长？</span><br><span class="line">你：初学者，涵盖安装和基础使用，1500字左右</span><br><span class="line">AI：[生成初稿]</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p><strong>决策</strong>：采用<strong>方案 C（渐进式对话）</strong>，因为：</p>
+<ol>
+<li>与 Claude Code 深度集成</li>
+<li>降低使用门槛</li>
+<li>便于迭代优化 Prompt</li>
+</ol>
+<hr>
+<h2 id="四、技术方案设计"><a href="#四、技术方案设计" class="headerlink" title="四、技术方案设计"></a>四、技术方案设计</h2><h3 id="4-1-系统架构"><a href="#4-1-系统架构" class="headerlink" title="4.1 系统架构"></a>4.1 系统架构</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────────────────────────────────────────────────┐</span><br><span class="line">│                     用户交互层                              │</span><br><span class="line">│                   （Claude Code CLI）                        │</span><br><span class="line">└─────────────────────────────────────────────────────────────┘</span><br><span class="line">                              │</span><br><span class="line">                              ▼</span><br><span class="line">┌─────────────────────────────────────────────────────────────┐</span><br><span class="line">│                     AI 处理层                                │</span><br><span class="line">│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    │</span><br><span class="line">│  │ Claude Code  │    │  MiniMax     │    │ 自审模块    │    │</span><br><span class="line">│  │ （主生成）   │    │ （辅助生成） │    │ （质量控制） │    │</span><br><span class="line">│  └─────────────┘    └─────────────┘    └─────────────┘    │</span><br><span class="line">└─────────────────────────────────────────────────────────────┘</span><br><span class="line">                              │</span><br><span class="line">                              ▼</span><br><span class="line">┌─────────────────────────────────────────────────────────────┐</span><br><span class="line">│                     自动化执行层                             │</span><br><span class="line">│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    │</span><br><span class="line">│  │ Hexo 生成   │    │ Git 提交    │    │ GitHub 推送 │    │</span><br><span class="line">│  └─────────────┘    └─────────────┘    └─────────────┘    │</span><br><span class="line">└─────────────────────────────────────────────────────────────┘</span><br><span class="line">                              │</span><br><span class="line">                              ▼</span><br><span class="line">┌─────────────────────────────────────────────────────────────┐</span><br><span class="line">│                     博客平台                                 │</span><br><span class="line">│                   （GitHub Pages）                           │</span><br><span class="line">└─────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-核心模块"><a href="#4-2-核心模块" class="headerlink" title="4.2 核心模块"></a>4.2 核心模块</h3><h4 id="4-2-1-文章生成模块"><a href="#4-2-1-文章生成模块" class="headerlink" title="4.2.1 文章生成模块"></a>4.2.1 文章生成模块</h4><p><strong>输入</strong>：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">主题:</span> <span class="string">Claude</span> <span class="string">Code</span> <span class="string">入门指南</span></span><br><span class="line"><span class="string">目标读者:</span> <span class="string">初学者</span></span><br><span class="line"><span class="string">字数要求:</span> <span class="number">1500</span><span class="string">字左右</span></span><br><span class="line"><span class="string">风格:</span> <span class="string">技术教程，简洁明了</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>处理流程</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. 主题分析 → 生成大纲</span><br><span class="line">2. 大纲确认 → 分段生成</span><br><span class="line">3. 段落组合 → 整体优化</span><br><span class="line">4. 格式转换 → Markdown 输出</span><br></pre></td></tr></table></figure>
+
+<p><strong>输出</strong>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: &quot;Claude Code 入门指南&quot;</span><br><span class="line">date: 2026-03-26</span><br><span class="line">categories:</span><br><span class="line"><span class="bullet">  -</span> AI编程</span><br><span class="line">tags:</span><br><span class="line"><span class="bullet">  -</span> Claude</span><br><span class="line"><span class="section">  - 教程</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 前言</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-2-2-质量自审模块"><a href="#4-2-2-质量自审模块" class="headerlink" title="4.2.2 质量自审模块"></a>4.2.2 质量自审模块</h4><p><strong>检查维度</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>检查项</th>
+<th>检查内容</th>
+<th>处理方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>标题质量</td>
+<td>是否清晰、有吸引力</td>
+<td>建议修改</td>
+</tr>
+<tr>
+<td>内容完整性</td>
+<td>是否覆盖承诺的要点</td>
+<td>补充缺失部分</td>
+</tr>
+<tr>
+<td>格式规范</td>
+<td>Markdown 语法是否正确</td>
+<td>自动修复</td>
+</tr>
+<tr>
+<td>敏感词</td>
+<td>是否包含敏感内容</td>
+<td>标记警告</td>
+</tr>
+<tr>
+<td>SEO 优化</td>
+<td>title、description 是否完善</td>
+<td>自动补充</td>
+</tr>
+</tbody></table>
+<h4 id="4-2-3-发布执行模块"><a href="#4-2-3-发布执行模块" class="headerlink" title="4.2.3 发布执行模块"></a>4.2.3 发布执行模块</h4><p><strong>执行步骤</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 创建文章文件</span></span><br><span class="line">$ hexo new <span class="string">&quot;文章标题&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 写入生成的内容</span></span><br><span class="line">$ <span class="built_in">cat</span> &gt; article.md &lt;&lt; <span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">...</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 生成静态文件</span></span><br><span class="line">$ hexo g</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 提交到 Git</span></span><br><span class="line">$ git add .</span><br><span class="line">$ git commit -m <span class="string">&quot;发布文章：xxx&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. 推送到 GitHub</span></span><br><span class="line">$ git push</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3-数据流设计"><a href="#4-3-数据流设计" class="headerlink" title="4.3 数据流设计"></a>4.3 数据流设计</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">用户输入</span><br><span class="line">    │</span><br><span class="line">    ▼</span><br><span class="line">┌─────────────────┐</span><br><span class="line">│  主题/需求解析  │</span><br><span class="line">└─────────────────┘</span><br><span class="line">    │</span><br><span class="line">    ▼</span><br><span class="line">┌─────────────────┐     ┌─────────────────┐</span><br><span class="line">│  Prompt 构造    │────▶│  AI 模型调用    │</span><br><span class="line">└─────────────────┘     └─────────────────┘</span><br><span class="line">                               │</span><br><span class="line">                               ▼</span><br><span class="line">                        ┌─────────────────┐</span><br><span class="line">                        │  内容生成       │</span><br><span class="line">                        └─────────────────┘</span><br><span class="line">                               │</span><br><span class="line">              ┌────────────────┴────────────────┐</span><br><span class="line">              ▼                                 ▼</span><br><span class="line">     ┌─────────────────┐               ┌─────────────────┐</span><br><span class="line">     │  质量自审       │               │  直接输出       │</span><br><span class="line">     └─────────────────┘               └─────────────────┘</span><br><span class="line">              │                                 │</span><br><span class="line">              ▼                                 ▼</span><br><span class="line">     ┌─────────────────┐               ┌─────────────────┐</span><br><span class="line">     │  修改/优化       │               │  用户确认       │</span><br><span class="line">     └─────────────────┘               └─────────────────┘</span><br><span class="line">              │                                 │</span><br><span class="line">              └────────────────┬────────────────┘</span><br><span class="line">                               ▼</span><br><span class="line">                        ┌─────────────────┐</span><br><span class="line">                        │  发布执行       │</span><br><span class="line">                        └─────────────────┘</span><br><span class="line">                               │</span><br><span class="line">                               ▼</span><br><span class="line">                        ┌─────────────────┐</span><br><span class="line">                        │  发布成功       │</span><br><span class="line">                        └─────────────────┘</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="五、实现路径规划"><a href="#五、实现路径规划" class="headerlink" title="五、实现路径规划"></a>五、实现路径规划</h2><h3 id="5-1-渐进式实现计划"><a href="#5-1-渐进式实现计划" class="headerlink" title="5.1 渐进式实现计划"></a>5.1 渐进式实现计划</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">阶段一：半自动模式（1-2周）</span><br><span class="line">┌─────────────────────────────────────────────────────────────┐</span><br><span class="line">│ 用户输入：文章主题/大纲                                      │</span><br><span class="line">│ AI 生成：初稿（Markdown）                                   │</span><br><span class="line">│ 用户审核：修改/补充                                         │</span><br><span class="line">│ 用户命令：发布                                              │</span><br><span class="line">│ AI 执行：hexo g &amp;&amp; hexo d                                  │</span><br><span class="line">└─────────────────────────────────────────────────────────────┘</span><br><span class="line"></span><br><span class="line">阶段二：AI 自审环节（2-3周）</span><br><span class="line">┌─────────────────────────────────────────────────────────────┐</span><br><span class="line">│ AI 生成初稿                                                 │</span><br><span class="line">│ AI 自审（检查质量、格式、SEO）                              │</span><br><span class="line">│ 用户确认修改建议                                            │</span><br><span class="line">│ 用户最终确认发布                                            │</span><br><span class="line">└─────────────────────────────────────────────────────────────┘</span><br><span class="line"></span><br><span class="line">阶段三：持续优化（持续迭代）</span><br><span class="line">┌─────────────────────────────────────────────────────────────┐</span><br><span class="line">│ Prompt 自动调参                                             │</span><br><span class="line">│ 效果评估与迭代                                              │</span><br><span class="line">│ 成本监控与优化                                              │</span><br><span class="line">└─────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-第一阶段详细计划"><a href="#5-2-第一阶段详细计划" class="headerlink" title="5.2 第一阶段详细计划"></a>5.2 第一阶段详细计划</h3><p><strong>目标</strong>：实现最小可用闭环</p>
+<table>
+<thead>
+<tr>
+<th>任务</th>
+<th>描述</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>T1.1</td>
+<td>设计博客生成的 Prompt 模板</td>
+<td>待开始</td>
+</tr>
+<tr>
+<td>T1.2</td>
+<td>实现 Claude Code 调用脚本</td>
+<td>待开始</td>
+</tr>
+<tr>
+<td>T1.3</td>
+<td>实现 Hexo 文章创建脚本</td>
+<td>待开始</td>
+</tr>
+<tr>
+<td>T1.4</td>
+<td>实现 Git 自动提交脚本</td>
+<td>待开始</td>
+</tr>
+<tr>
+<td>T1.5</td>
+<td>端到端联调测试</td>
+<td>待开始</td>
+</tr>
+<tr>
+<td>T1.6</td>
+<td>第一篇 AI 辅助博客发布</td>
+<td>待开始</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="六、风险与对策"><a href="#六、风险与对策" class="headerlink" title="六、风险与对策"></a>六、风险与对策</h2><h3 id="6-1-技术风险"><a href="#6-1-技术风险" class="headerlink" title="6.1 技术风险"></a>6.1 技术风险</h3><table>
+<thead>
+<tr>
+<th>风险</th>
+<th>可能性</th>
+<th>影响</th>
+<th>对策</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AI 生成内容质量不稳定</td>
+<td>中</td>
+<td>高</td>
+<td>加入人工审核环节</td>
+</tr>
+<tr>
+<td>API 调用失败&#x2F;超时</td>
+<td>中</td>
+<td>中</td>
+<td>添加重试机制和错误处理</td>
+</tr>
+<tr>
+<td>生成内容偏离主题</td>
+<td>低</td>
+<td>高</td>
+<td>Prompt 优化 + 审核机制</td>
+</tr>
+<tr>
+<td>Token 消耗超出预期</td>
+<td>中</td>
+<td>中</td>
+<td>添加用量监控和预警</td>
+</tr>
+</tbody></table>
+<h3 id="6-2-非技术风险"><a href="#6-2-非技术风险" class="headerlink" title="6.2 非技术风险"></a>6.2 非技术风险</h3><table>
+<thead>
+<tr>
+<th>风险</th>
+<th>可能性</th>
+<th>影响</th>
+<th>对策</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>用户过于依赖 AI</td>
+<td>中</td>
+<td>中</td>
+<td>保持人工审核和修改</td>
+</tr>
+<tr>
+<td>内容同质化</td>
+<td>中</td>
+<td>中</td>
+<td>加入个人经验和独特视角</td>
+</tr>
+<tr>
+<td>长期成本不可控</td>
+<td>低</td>
+<td>高</td>
+<td>定期评估和优化</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="七、效果评估指标"><a href="#七、效果评估指标" class="headerlink" title="七、效果评估指标"></a>七、效果评估指标</h2><h3 id="7-1-核心指标"><a href="#7-1-核心指标" class="headerlink" title="7.1 核心指标"></a>7.1 核心指标</h3><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>计算方式</th>
+<th>目标</th>
+<th>当前基线</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>单篇耗时</td>
+<td>从输入主题到发布的时间</td>
+<td>&lt; 30 分钟</td>
+<td>2-3 小时</td>
+</tr>
+<tr>
+<td>AI 可用率</td>
+<td>无需修改直接发布的比例</td>
+<td>&gt; 70%</td>
+<td>未知</td>
+</tr>
+<tr>
+<td>月产出量</td>
+<td>每月成功发布的文章数</td>
+<td>4-8 篇</td>
+<td>1-2 篇</td>
+</tr>
+<tr>
+<td>成本效率</td>
+<td>每篇文章的平均 Token 成本</td>
+<td>&lt; 2 元</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<h3 id="7-2-监控方案"><a href="#7-2-监控方案" class="headerlink" title="7.2 监控方案"></a>7.2 监控方案</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 每次生成的元数据记录</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;date&quot;:</span> <span class="string">&quot;2026-03-26&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;topic&quot;:</span> <span class="string">&quot;xxx&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;duration_seconds&quot;:</span> <span class="number">300</span>,</span><br><span class="line">  <span class="attr">&quot;token_used&quot;:</span> <span class="number">5000</span>,</span><br><span class="line">  <span class="attr">&quot;cost&quot;:</span> <span class="number">1.5</span>,</span><br><span class="line">  <span class="attr">&quot;direct_publish&quot;:</span> <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">&quot;manual_edits&quot;:</span> [<span class="string">&quot;标题优化&quot;</span>, <span class="string">&quot;补充代码示例&quot;</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="八、下一步行动"><a href="#八、下一步行动" class="headerlink" title="八、下一步行动"></a>八、下一步行动</h2><ol>
+<li><p><strong>设计博客生成的 Prompt 模板</strong></p>
+<ul>
+<li>确定文章结构模板</li>
+<li>设计引导式提问 Prompt</li>
+<li>测试不同风格的效果</li>
+</ul>
+</li>
+<li><p><strong>实现 Claude Code 调用脚本</strong></p>
+<ul>
+<li>使用 Claude Code CLI 接口</li>
+<li>处理标准输入&#x2F;输出</li>
+<li>错误处理和重试机制</li>
+</ul>
+</li>
+<li><p><strong>端到端测试</strong></p>
+<ul>
+<li>用真实主题测试完整流程</li>
+<li>收集时间和成本数据</li>
+<li>根据结果优化</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文详细分析了博客自动化发布系统的需求和方案设计：</p>
+<ol>
+<li><strong>背景与目标</strong>：降低写作门槛，提升产出效率</li>
+<li><strong>现状分析</strong>：识别痛点和 AI 辅助可能性</li>
+<li><strong>需求拆解</strong>：功能性需求和用户交互设计</li>
+<li><strong>技术方案</strong>：系统架构和核心模块设计</li>
+<li><strong>实现路径</strong>：三阶段渐进式计划</li>
+<li><strong>风险与对策</strong>：技术和非技术风险评估</li>
+<li><strong>效果评估</strong>：核心指标和监控方案</li>
+</ol>
+<p><strong>下一篇文章</strong>将记录<strong>阶段一的实现过程</strong>，包括 Prompt 设计、脚本开发和端到端测试的完整实战经验。</p>
+<hr>
+<blockquote>
+<p><strong>声明</strong>：该文章由 AI 生成，内容基于 Claude Code 辅助编写与整理。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Claude/" rel="tag"># Claude</a>
+              <a href="/tags/AI%E7%BC%96%E7%A8%8B/" rel="tag"># AI编程</a>
+              <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/" rel="tag"># 自动化</a>
+              <a href="/tags/%E5%8D%9A%E5%AE%A2/" rel="tag"># 博客</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/03/25/article/LLM/LLM%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E6%89%8B%E8%AE%B0/1-claude-code%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97/" rel="prev" title="LLM开发实践手记（一）Claude Code 环境部署指南">
+                  <i class="fa fa-angle-left"></i> LLM开发实践手记（一）Claude Code 环境部署指南
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">VC-ROBOT</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

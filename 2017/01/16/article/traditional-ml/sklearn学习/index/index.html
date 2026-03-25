@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="1.前言 正值寒假时期，借此机会学习sklearn，同时记录自己的学习经历，以便将来复习。 Scikitlearn学习必要条件： Python（ &#x3D; 2.6或 &#x3D; 3.3）， NumPy（ &#x3D; 1.6.1）， SciPy（ &#x3D; 0.9）。 ...">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sklearn学习">
+<meta property="og:url" content="http://example.com/2017/01/16/article/traditional-ml/sklearn%E5%AD%A6%E4%B9%A0/index/index.html">
+<meta property="og:site_name" content="HOME">
+<meta property="og:description" content="1.前言 正值寒假时期，借此机会学习sklearn，同时记录自己的学习经历，以便将来复习。 Scikitlearn学习必要条件： Python（ &#x3D; 2.6或 &#x3D; 3.3）， NumPy（ &#x3D; 1.6.1）， SciPy（ &#x3D; 0.9）。 ...">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/load_dataset.png">
+<meta property="og:image" content="http://example.com/images/shape_array_example.png">
+<meta property="og:image" content="http://example.com/images/sklearn_example.png">
+<meta property="og:image" content="http://example.com/images/sphx_glr_plot_digits_last_image_001.png">
+<meta property="og:image" content="http://example.com/images/sklearn-example-0.png">
+<meta property="og:image" content="http://example.com/images/sphx_glr_plot_ols_001.png">
+<meta property="og:image" content="http://example.com/images/sklearn-example-1.png">
+<meta property="og:image" content="http://example.com/images/sphx_glr_plot_ols_ridge_variance_001.png">
+<meta property="og:image" content="http://example.com/images/sphx_glr_plot_ols_ridge_variance_002.png">
+<meta property="article:published_time" content="2017-01-15T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-03-22T18:22:37.215Z">
+<meta property="article:author" content="VC-ROBOT">
+<meta property="article:tag" content="sklearn">
+<meta property="article:tag" content="数据挖掘">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/load_dataset.png">
+
+
+<link rel="canonical" href="http://example.com/2017/01/16/article/traditional-ml/sklearn%E5%AD%A6%E4%B9%A0/index/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2017/01/16/article/traditional-ml/sklearn%E5%AD%A6%E4%B9%A0/index/","path":"2017/01/16/article/traditional-ml/sklearn学习/index/","title":"sklearn学习"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>sklearn学习 | HOME</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">HOME</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">1.前言</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E5%80%BC%E5%AF%92%E5%81%87%E6%97%B6%E6%9C%9F%EF%BC%8C%E5%80%9F%E6%AD%A4%E6%9C%BA%E4%BC%9A%E5%AD%A6%E4%B9%A0sklearn%EF%BC%8C%E5%90%8C%E6%97%B6%E8%AE%B0%E5%BD%95%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%BB%8F%E5%8E%86%EF%BC%8C%E4%BB%A5%E4%BE%BF%E5%B0%86%E6%9D%A5%E5%A4%8D%E4%B9%A0%E3%80%82"><span class="nav-number">1.1.</span> <span class="nav-text">正值寒假时期，借此机会学习sklearn，同时记录自己的学习经历，以便将来复习。</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E4%BD%BF%E7%94%A8scikit-learn%E8%BF%9B%E8%A1%8C%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">2.使用scikit-learn进行机器学习的介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AB%A0%E8%8A%82%E5%86%85%E5%AE%B9"><span class="nav-number">2.1.</span> <span class="nav-text">章节内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%9A%E9%97%AE%E9%A2%98%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.2.</span> <span class="nav-text">机器学习：问题设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83%E9%9B%86%E5%92%8C%E6%B5%8B%E8%AF%95%E9%9B%86"><span class="nav-number">2.2.1.</span> <span class="nav-text">训练集和测试集</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E8%BD%BD%E7%A4%BA%E4%BE%8B%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number">2.3.</span> <span class="nav-text">加载示例数据集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E7%9A%84shape%EF%BC%88%E5%BD%A2%E7%8A%B6%EF%BC%89%E5%B1%9E%E6%80%A7"><span class="nav-number">2.3.1.</span> <span class="nav-text">数组的shape（形状）属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E5%8F%8A%E9%A2%84%E6%B5%8B"><span class="nav-number">2.3.2.</span> <span class="nav-text">学习及预测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E8%A7%84%E5%88%99"><span class="nav-number">2.3.3.</span> <span class="nav-text">默认规则</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E9%92%88%E5%AF%B9%E7%A7%91%E5%AD%A6%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E7%9A%84%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">3.针对科学数据处理的统计学习教程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%EF%BC%9Ascikit-learn%E4%B8%AD%E7%9A%84%E8%AE%BE%E7%BD%AE%E4%B8%8E%E8%AF%84%E4%BC%B0%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1"><span class="nav-number">3.1.</span> <span class="nav-text">一、统计学习：scikit-learn中的设置与评估函数对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number">3.1.1.</span> <span class="nav-text">（1）数据集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BC%B0%E8%AE%A1%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1"><span class="nav-number">3.1.2.</span> <span class="nav-text">(2)估计函数对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%9C%89%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%EF%BC%9A%E4%BB%8E%E9%AB%98%E7%BB%B4%E8%A7%82%E5%AF%9F%E6%95%B0%E6%8D%AE%E9%A2%84%E6%B5%8B%E8%BE%93%E5%87%BA%E5%8F%98%E9%87%8F"><span class="nav-number">3.2.</span> <span class="nav-text">二、有监督学习：从高维观察数据预测输出变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E8%BF%91%E9%82%BB%E5%92%8C%E9%AB%98%E7%BB%B4%E7%81%BE%E9%9A%BE"><span class="nav-number">3.2.1.</span> <span class="nav-text">（1）近邻和高维灾难</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B%EF%BC%9A%E4%BB%8E%E5%9B%9E%E5%BD%92%E5%88%B0%E7%A8%80%E7%96%8F%E6%80%A7"><span class="nav-number">3.2.2.</span> <span class="nav-text">（2）线性模型：从回归到稀疏性</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">VC-ROBOT</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/01/16/article/traditional-ml/sklearn%E5%AD%A6%E4%B9%A0/index/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="VC-ROBOT">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="sklearn学习 | HOME">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          sklearn学习
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-01-16 00:00:00" itemprop="dateCreated datePublished" datetime="2017-01-16T00:00:00+08:00">2017-01-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-23 02:22:37" itemprop="dateModified" datetime="2026-03-23T02:22:37+08:00">2026-03-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/AI%E6%A8%A1%E5%9E%8B/" itemprop="url" rel="index"><span itemprop="name">AI模型</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/AI%E6%A8%A1%E5%9E%8B/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>12 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h1><h4 id="正值寒假时期，借此机会学习sklearn，同时记录自己的学习经历，以便将来复习。"><a href="#正值寒假时期，借此机会学习sklearn，同时记录自己的学习经历，以便将来复习。" class="headerlink" title="正值寒假时期，借此机会学习sklearn，同时记录自己的学习经历，以便将来复习。"></a>正值寒假时期，借此机会学习sklearn，同时记录自己的学习经历，以便将来复习。</h4><p>Scikit-learn学习必要条件： Python（&gt; &#x3D; 2.6或&gt; &#x3D; 3.3）， NumPy（&gt; &#x3D; 1.6.1）， SciPy（&gt; &#x3D; 0.9）。 参考<a target="_blank" rel="noopener" href="http://blog.csdn.net/pfanaya/article/details/7451815">windows下python安装NumPy和SciPy模块</a></p>
+<p>下载地址： Python：<a target="_blank" rel="noopener" href="https://www.python.org/">https://www.python.org/</a> NumPy：<a target="_blank" rel="noopener" href="http://www.numpy.org/">http://www.numpy.org/</a> SciPy：<a target="_blank" rel="noopener" href="http://www.scipy.org/">http://www.scipy.org/</a> Scikit-learn：<a target="_blank" rel="noopener" href="http://scikit-learn.org/stable/">http://scikit-learn.org/stable/</a> Matploylib：<a target="_blank" rel="noopener" href="http://matplotlib.org/">http://matplotlib.org/</a> 根据自身实际情况，所有文件都能在这里下载： <a target="_blank" rel="noopener" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/">http://www.lfd.uci.edu/~gohlke&#x2F;pythonlibs&#x2F;</a></p>
+<p>系统环境： Windows：64位 4核 6GB RAM Python：64位 2.7.13 NumPy：numpy-1.11.3+mkl-cp27-cp27m-win_amd64（注意含有mkl，否则导入sklearn部分包会出错） SciPy：scipy-0.19.0-cp27-cp27m-win_amd64 Scikit-learn：scikit_learn-0.18.1-cp27-cp27m-win_amd64 Matplotlib：matplotlib-1.5.3-cp27-cp27m-win_amd64 相关教程网上有很多，大致看了下numpy，其他内容等实际用到的时候再针对学习。</p>
+<h1 id="2-使用scikit-learn进行机器学习的介绍"><a href="#2-使用scikit-learn进行机器学习的介绍" class="headerlink" title="2.使用scikit-learn进行机器学习的介绍"></a>2.使用scikit-learn进行机器学习的介绍</h1><p>翻译自<a target="_blank" rel="noopener" href="http://scikit-learn.org/stable/tutorial/basic/tutorial.html">http://scikit-learn.org/stable/tutorial/basic/tutorial.html</a>，内容有删改</p>
+<h2 id="章节内容"><a href="#章节内容" class="headerlink" title="章节内容"></a>章节内容</h2><p>在本节中介绍在scikit-learn中使用的机器学习词汇，并给出一个简单的学习示例。</p>
+<h2 id="机器学习：问题设置"><a href="#机器学习：问题设置" class="headerlink" title="机器学习：问题设置"></a>机器学习：问题设置</h2><p>一般来说，学习问题考虑一组n个数据样本，然后尝试预测未知数据的属性。如果每个样本不仅仅是单个数字，并且有例如多维条目（也称为多变量数据），则称其具有若干属性或特征。 我们可以把学习问题划分为几个大的种类：</p>
+<p>**监督学习：**数据带有我们想要预测的附加属性，监督学习包含：</p>
+<p>**分类：**样本属于两个或更多个类，并且我们想从已经标记的数据中学习如何预测未标记数据的类。分类问题的一个例子是手写数字的识别，其中目的是将每个输入向量分配给数量有限的离散类别中的一个。另一种理解分类的方式是将其作为监督学习的离散（而不是连续）形式，一个是让提供的每一个n样本具有有限数量的类别，一个是尝试用正确的类别或分组来标记它们 。</p>
+<p>**回归：**如果期望的输出由一个或多个连续变量组成，则任务称为回归。回归问题的一个例子是鲑鱼的长度作为函数预测年龄和体重。</p>
+<p><strong>无监督学习：<strong>训练数据由一组没有任何相应目标值的输入向量x组成。问题的目标可以是将数据中发现相似的分组，称为</strong>聚类</strong>；或者确定在输入空间内的数据的分布，称为<strong>密度估计</strong>；或者将数据从高维空间下降到2维或3维以便于可视化。</p>
+<h3 id="训练集和测试集"><a href="#训练集和测试集" class="headerlink" title="训练集和测试集"></a>训练集和测试集</h3><p>机器学习是关于学习已知数据集的一些属性并将它们应用到新数据。这就是为什么在机器学习评估算法的常见做法是将手头的数据分成两组，一组我们称为训练集，我们在其上学习数据属性，一组我们称为测试集，我们测试这些属性。</p>
+<h2 id="加载示例数据集"><a href="#加载示例数据集" class="headerlink" title="加载示例数据集"></a>加载示例数据集</h2><p>scikit-learn附带了一些标准数据集，例如用于分类的<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Iris_flower_data_set">iris</a>数据集和<a target="_blank" rel="noopener" href="http://archive.ics.uci.edu/ml/datasets/Pen-Based+Recognition+of+Handwritten+Digits">digit</a>数据集以及用于回归的<a target="_blank" rel="noopener" href="http://archive.ics.uci.edu/ml/datasets/Housing">boston house prices</a>数据集。</p>
+<p>接下来，使用Python解释器，加载iris和digits数据集：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line">iris=datasets.load_iris()</span><br><span class="line">digits=datasets.load_digits()</span><br></pre></td></tr></table></figure>
+
+<p>数据集是一个类似字典的对象，它保存所有数据和一些有关数据的元数据。此数据存储在.data成员中，这是一个n_sample，n_feature（n个样本，n个特征）的数组。在有监督的情况下，一个或多个相应变量存储在.target成员中。例如，在使用digit数据集的情况下，digits.data允许访问可用于对数字样本进行分类的特征，digits.target给出了数字数据集的真实标注（该数据属于哪个类别），即对应于我们试图学习的每个数字图像的数字：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">digits.data</span><br><span class="line">digits.target</span><br></pre></td></tr></table></figure>
+
+<p>下图为测试输出digits.data和digits.target</p>
+<p><a target="_blank" rel="noopener" href="http://www.mrtblog.cn/wp-content/uploads/2017/01/load_dataset.png"><img src="/images/load_dataset.png"></a></p>
+<h3 id="数组的shape（形状）属性"><a href="#数组的shape（形状）属性" class="headerlink" title="数组的shape（形状）属性"></a>数组的shape（形状）属性</h3><p>尽管原始数据可能具有不同的形状，数据始终是二维数组，且形状为（n_samples，n_features）。考虑digit数据集，每个原始样本是shape（8,8）的图像，并且可以使用以下访问：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">digits.images[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="http://www.mrtblog.cn/wp-content/uploads/2017/01/shape_array_example.png"><img src="/images/shape_array_example.png"></a> 这个样例展示了如何从原始问题开始，通过sklearn塑造数据并使用。</p>
+<h3 id="学习及预测"><a href="#学习及预测" class="headerlink" title="学习及预测"></a>学习及预测</h3><p>使用digit数据集，给定图像，预测其表示哪个数字。我们给出了10个可能的类（数字0到9）中的每一个的样本，调整评估器以能够预测未知样本所属的类。 在scikit-learn中，分类的评估器是实现方法fit（x，y）和predict（T）的Python对象。 评估器的一个示例是实现支持向量机（SVM）分类的类sklearn.svm.SVC。评估器的构造函数采用模型的参数作为参数，但暂时，我们将把评估器视为一个黑盒：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> svm</span><br><span class="line">clf = svm.SVC(gamma=<span class="number">0.001</span>, C=<span class="number">100.</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>选择模型的参数</strong> 在这个例子中，我们手动设置gamma的值。通过使用诸如网格搜索和交叉验证的工具，可以自动地为参数找到好的值。 创建的评估器实例clf，它是一个分类器，必须从模型中学习，这是通过将我们的训练集传递给fit方法来完成。作为训练集，我们使用除了最后一个数据集之外的所有数据集的图像。用[:-1] Python语法选择这个训练集，它产生一个新数组，其中包含digits.data的最后一个条目：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">clf.fit(digits.data[:-<span class="number">1</span>], digits.target[:-<span class="number">1</span>])</span><br><span class="line">OUTPUT：</span><br><span class="line">SVC(C=<span class="number">100.0</span>, cache_size=<span class="number">200</span>, class_weight=<span class="literal">None</span>, coef0=<span class="number">0.0</span>,</span><br><span class="line">decision_function_shape=<span class="literal">None</span>, degree=<span class="number">3</span>, gamma=<span class="number">0.001</span>, kernel=<span class="string">&#x27;rbf&#x27;</span>,</span><br><span class="line">max_iter=-<span class="number">1</span>, probability=<span class="literal">False</span>, random_state=<span class="literal">None</span>, shrinking=<span class="literal">True</span>,</span><br><span class="line">tol=<span class="number">0.001</span>, verbose=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+<p>现在你可以问分类器在digits数据集中最后一个图像的数字是什么（最后这一项没有用来训练分类器）：</p>
+<p><a target="_blank" rel="noopener" href="http://www.mrtblog.cn/wp-content/uploads/2017/01/sklearn_example.png"><img src="/images/sklearn_example.png"></a> 可以看到即使图像分辨率很差，但是分类评估器给出的答案还是令人信服的。 <strong>模型持久性</strong> 在之后的3.4部分仔细学习，略</p>
+<h3 id="默认规则"><a href="#默认规则" class="headerlink" title="默认规则"></a>默认规则</h3><p>scikit-learn评估器遵循某些规则，使他们的行为更具预测性。 <strong>默认数据类型</strong> 除非另有说明，否则输入将被转换为float64 <strong>修改和更新参数</strong> 在通过sklearn.pipeline.Pipeline.set_params方法构造之后，可以更新评估器的参数。多次调用fit（）会覆盖任何以前的fit（）的内容。 <strong>多类与多标签拟合</strong> 当使用多类分类器时，执行的学习和预测任务取决于适合的目标数据的格式</p>
+<h1 id="3-针对科学数据处理的统计学习教程"><a href="#3-针对科学数据处理的统计学习教程" class="headerlink" title="3.针对科学数据处理的统计学习教程"></a>3.针对科学数据处理的统计学习教程</h1><p>发现网上已经有人翻译官方文献了，在这个基础上稍作修改，让翻译变得适合自己的风格。 官方原文： <a target="_blank" rel="noopener" href="http://scikit-learn.org/stable/tutorial/statistical_inference/index.html">http://scikit-learn.org/stable/tutorial/statistical_inference&#x2F;index.html</a> 翻译原文： <a target="_blank" rel="noopener" href="http://www.cnblogs.com/taceywong/p/4570155.html">http://www.cnblogs.com/taceywong/p/4570155.html</a>  个人根据实际情况有删改</p>
+<h2 id="一、统计学习：scikit-learn中的设置与评估函数对象"><a href="#一、统计学习：scikit-learn中的设置与评估函数对象" class="headerlink" title="一、统计学习：scikit-learn中的设置与评估函数对象"></a>一、统计学习：scikit-learn中的设置与评估函数对象</h2><h3 id="（1）数据集"><a href="#（1）数据集" class="headerlink" title="（1）数据集"></a>（1）数据集</h3><p>scikit-learn 从二维数组描述的数据中学习信息。他们可以被理解成多维观测数据的列表。如（n,m），n表示样例轴，y表示特征轴。</p>
+<p><strong>使用scikit-learn加载一个简单的样例：iris数据集</strong>（相同的内容不截图了，上回已经截过）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&gt;&gt;&gt;<span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line">&gt;&gt;&gt;iris = datasets.load_iris()</span><br><span class="line">&gt;&gt;&gt;data = iris.data </span><br><span class="line">&gt;&gt;&gt;data.shape</span><br><span class="line">(<span class="number">150</span>, <span class="number">4</span>)</span><br></pre></td></tr></table></figure>
+
+<p>它有150个iris观测数据构成，每一个样例有四个特征：萼片、花瓣长度、花瓣宽度；具体的信息可以通过iris.DESCR查看。</p>
+<p>当数据初始时不是(n样例，n特征)样式时，需要将其预处理以被scikit-learn使用。</p>
+<p><strong>通过数字数据集说明数据变形</strong> digits数据集由1797个8x8手写数字图片组成</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&gt;&gt;&gt;digits = datasets.load_digits()</span><br><span class="line">&gt;&gt;&gt;digits.images.shape</span><br><span class="line">(<span class="number">1797</span>, <span class="number">8</span>, <span class="number">8</span>) </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> pylab <span class="keyword">as</span> pl </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>pl.imshow(digits.images[-<span class="number">1</span>], cmap=pl.cm.gray_r)</span><br><span class="line">&lt;matplotlib.image.AxesImage <span class="built_in">object</span> at ...&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/sphx_glr_plot_digits_last_image_001.png"> 在scikit-learn中使用这个数据集，我们需要将其每一个8x8图片转换成长64的特征向量</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&gt;&gt;&gt;data = digits.images.reshape((digits.images.shape[<span class="number">0</span>],-<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-估计函数对象"><a href="#2-估计函数对象" class="headerlink" title="(2)估计函数对象"></a>(2)估计函数对象</h3><p><strong>拟合数据</strong>：scikit-learn实现的主要API是估计函数。估计函数是用以从数据中学习的对象。它可能是分类、回归、聚类算法，或者提取过滤数据特征的转换器。 一个估计函数带有一个<strong>fit</strong>方法，以dataset作为参数（一般是个二维数组）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&gt;&gt;&gt;estimator.fit(data)</span><br></pre></td></tr></table></figure>
+
+<p><strong>估计函数对象的参数</strong>：每一个估测器对象在实例化或者修改其相应的属性，其参数都会被设置。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&gt;&gt;&gt;estimator = Estimator(param1=<span class="number">1</span>, param2=<span class="number">2</span>)</span><br><span class="line">&gt;&gt;&gt;estimator.param1</span><br><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>估测后的参数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&gt;&gt;&gt;estimator.estimated_param_</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、有监督学习：从高维观察数据预测输出变量"><a href="#二、有监督学习：从高维观察数据预测输出变量" class="headerlink" title="二、有监督学习：从高维观察数据预测输出变量"></a>二、有监督学习：从高维观察数据预测输出变量</h2><h3 id="（1）近邻和高维灾难"><a href="#（1）近邻和高维灾难" class="headerlink" title="（1）近邻和高维灾难"></a>（1）近邻和高维灾难</h3><p><strong>iris分类</strong>： iris分类是根据花瓣、萼片长度、萼片宽度来识别三种不同类型的iris的分类任务:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&gt;&gt; <span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">&gt;&gt; <span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line">&gt;&gt; iris = datasets.load_iris()</span><br><span class="line">&gt;&gt; iris_X = iris.data</span><br><span class="line">&gt;&gt; iris_y = iris.target</span><br><span class="line">&gt;&gt; np.unique(iris_y)</span><br><span class="line">array([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+
+<p>最邻近分类器： 近邻也许是最简的分类器：得到一个新的观测数据X-test，从训练集的观测数据中寻找特征最相近的向量。KNN(最近邻)分类示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#coding=utf-8   含有中文必须规定编码格式</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">count</span>(<span class="params">a1,a2,yes,no</span>):<span class="comment">#统计正确数与错误数</span></span><br><span class="line">    i=<span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> i &lt; a1.size: </span><br><span class="line">        <span class="keyword">if</span> a1[i] != a2[i]:</span><br><span class="line">            no += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            yes += <span class="number">1</span></span><br><span class="line">    i += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> yes,no</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">calrate</span>(<span class="params">origin,predict</span>):</span><br><span class="line">    <span class="built_in">print</span> <span class="string">&quot;origin array:\n %s&quot;</span>%(origin)</span><br><span class="line">    <span class="built_in">print</span> <span class="string">&quot;predict array:\n %s&quot;</span>%(predict)</span><br><span class="line">    yes,no = <span class="number">0</span>,<span class="number">0</span></span><br><span class="line">    yes,no = count(origin,predict,yes,no)</span><br><span class="line">    rate = <span class="built_in">float</span>(<span class="number">100</span> * yes) / <span class="built_in">float</span>(yes + no) <span class="comment"># 正确率</span></span><br><span class="line">    <span class="built_in">print</span> <span class="string">&quot;\nyes:%d no:%d \naccuracy rate:%f%%\n&quot;</span>%(yes,no,rate)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    iris = datasets.load_iris()</span><br><span class="line">    iris_X = iris.data</span><br><span class="line">    iris_Y = iris.target</span><br><span class="line">    np.random.seed(<span class="number">0</span>)</span><br><span class="line">    indices = np.random.permutation(<span class="built_in">len</span>(iris_X))</span><br><span class="line">    iris_X_train = iris_X[indices[:-<span class="number">10</span>]]</span><br><span class="line">    iris_Y_train = iris_Y[indices[:-<span class="number">10</span>]]</span><br><span class="line">    iris_X_test = iris_X[indices[-<span class="number">10</span>:]]</span><br><span class="line">    iris_Y_test=iris_Y[indices[-<span class="number">10</span>:]]</span><br><span class="line">    <span class="keyword">from</span> sklearn.neighbors <span class="keyword">import</span> KNeighborsClassifier</span><br><span class="line">    knn = KNeighborsClassifier()</span><br><span class="line">    knn.fit(iris_X_train,iris_Y_train)</span><br><span class="line">    predict = knn.predict(iris_X_test)</span><br><span class="line">    origin = iris_Y_test</span><br><span class="line">    calRate(origin,predict)</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="http://www.mrtblog.cn/wp-content/uploads/2017/01/sklearn-example-0.png"><img src="/images/sklearn-example-0.png"></a> <strong>高维灾难（翻译有问题）：</strong> 为了使估计器有效，需要相邻点之间的距离小于某个值d，这取决于具体问题。在一个维度上，这需要平均n〜1 &#x2F; d点。在上述k-NN示例的上下文中，如果数据只有一个具有范围从0到1的值的特征，并且具有n个训练观察样本，则新数据将不会比1 &#x2F; n更远。因此，一旦1 &#x2F; n小于类间特征变化的规模，则最近邻居判定规则将是有效的。 如果特征数为p，则现在需要n〜1 &#x2F; d ^ p个点。假设我们在一个维度上需要10个点：现在在P维度中需要10 ^ p个点来铺设[0，1]空间。随着p变大，良好估计量所需的训练点数量呈指数增长。 例如，如果每个点只是单个数字（8字节），则p-20维度中的有效k-NN估计器将需要比整个因特网的当前估计大小更多的训练数据（±1000埃比字节）。 这被称为维度灾难，是机器学习的核心问题。</p>
+<h3 id="（2）线性模型：从回归到稀疏性"><a href="#（2）线性模型：从回归到稀疏性" class="headerlink" title="（2）线性模型：从回归到稀疏性"></a>（2）线性模型：从回归到稀疏性</h3><p>Diabets数据集（糖尿病数据集） 糖尿病数据集包含442个患者的10个生理特征（年龄，性别、体重、血压）和一年以后疾病级数指标。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">diabetes = datasets.load_diabetes()</span><br><span class="line">diabetes_X_train = diabetes.data[:-<span class="number">20</span>]</span><br><span class="line">diabetes_X_test = diabetes.data[-<span class="number">20</span>:]</span><br><span class="line">diabetes_y_train = diabetes.target[:-<span class="number">20</span>]</span><br><span class="line">diabetes_y_test = diabetes.target[-<span class="number">20</span>:]</span><br></pre></td></tr></table></figure>
+
+<p>我们的任务是从生理特征预测疾病级数 <strong>线性回归</strong> 【线性回归】的最简单形式给数据集拟合一个线性模型，主要是通过调整一系列的参数以使得模型的残差平方和尽量小 线性模型：y &#x3D; βX+b X:数据 y：目标变量 β：回归系数 b:观测噪声（bias，偏差） <img src="/images/sphx_glr_plot_ols_001.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> linear_model</span><br><span class="line">regr = linear_model.LinearRegression()</span><br><span class="line">regr.fit(diabetes_X_train, diabetes_y_train)</span><br><span class="line"><span class="built_in">print</span>(regr.coef_)</span><br><span class="line">np.mean((regr.predict(diabetes_X_test)-diabetes_y_test)**<span class="number">2</span>)<span class="comment">#均方误差</span></span><br><span class="line"><span class="built_in">print</span>(regr.score(diabetes_X_test, diabetes_y_test))<span class="comment">#1代表最佳预测，0表示x与y没有线性关系</span></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="http://www.mrtblog.cn/wp-content/uploads/2017/01/sklearn-example-1.png"><img src="/images/sklearn-example-1.png"></a></p>
+<p><strong>收缩</strong> 如果每一维的数据点很少，噪声将会造成很大的偏差影响： <img src="/images/sphx_glr_plot_ols_ridge_variance_001.png"> 高维统计学习的一个解决方案是将回归系数缩小到0：观测数据中随机选择的两个数据集近似不相关。这被称为岭回归（Ridge Regression）： <img src="/images/sphx_glr_plot_ols_ridge_variance_002.png"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/sklearn/" rel="tag"># sklearn</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/" rel="tag"># 数据挖掘</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/12/20/article/game/unity%E5%AF%BC%E5%85%A5artoolkit%E5%8F%91%E5%B8%83android%E9%A1%B9%E7%9B%AE%E6%8A%A5%E9%94%99-plugins-colliding-with-each-other/index/" rel="prev" title="Unity发布android项目报错 Plugins colliding with each other">
+                  <i class="fa fa-angle-left"></i> Unity发布android项目报错 Plugins colliding with each other
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/01/16/article/others/%E5%AD%A6%E7%A7%91%E8%AE%A1%E5%88%92/index/" rel="next" title="新任务！新起点！">
+                  新任务！新起点！ <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">VC-ROBOT</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

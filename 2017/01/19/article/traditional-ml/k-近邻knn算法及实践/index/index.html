@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="_参考书籍《机器学习实战》_ K近邻算法概述 简单来说，k近邻算法采用测量不同特征值之间的距离方法进行分类 k近邻算法 优点：精度高，对异常值不敏感、无数据输入假定 缺点：计算复杂度高、空间复杂度高 适用数据范围：数据型和标称型 工作原理是...">
+<meta property="og:type" content="article">
+<meta property="og:title" content="K-近邻(KNN)算法及实践">
+<meta property="og:url" content="http://example.com/2017/01/19/article/traditional-ml/k-%E8%BF%91%E9%82%BBknn%E7%AE%97%E6%B3%95%E5%8F%8A%E5%AE%9E%E8%B7%B5/index/index.html">
+<meta property="og:site_name" content="HOME">
+<meta property="og:description" content="_参考书籍《机器学习实战》_ K近邻算法概述 简单来说，k近邻算法采用测量不同特征值之间的距离方法进行分类 k近邻算法 优点：精度高，对异常值不敏感、无数据输入假定 缺点：计算复杂度高、空间复杂度高 适用数据范围：数据型和标称型 工作原理是...">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/KNN-example-table.png">
+<meta property="og:image" content="http://example.com/images/KNN-example-table2.png">
+<meta property="og:image" content="http://example.com/images/KNN-run-example-test.png">
+<meta property="og:image" content="http://example.com/images/KNN-run-digits-example.png">
+<meta property="article:published_time" content="2017-01-18T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-03-22T18:22:30.462Z">
+<meta property="article:author" content="VC-ROBOT">
+<meta property="article:tag" content="knn">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/KNN-example-table.png">
+
+
+<link rel="canonical" href="http://example.com/2017/01/19/article/traditional-ml/k-%E8%BF%91%E9%82%BBknn%E7%AE%97%E6%B3%95%E5%8F%8A%E5%AE%9E%E8%B7%B5/index/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2017/01/19/article/traditional-ml/k-%E8%BF%91%E9%82%BBknn%E7%AE%97%E6%B3%95%E5%8F%8A%E5%AE%9E%E8%B7%B5/index/","path":"2017/01/19/article/traditional-ml/k-近邻knn算法及实践/index/","title":"K-近邻(KNN)算法及实践"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>K-近邻(KNN)算法及实践 | HOME</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">HOME</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#K-%E8%BF%91%E9%82%BB%E7%AE%97%E6%B3%95%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">K-近邻算法概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Python%E5%AE%9E%E7%8E%B0KNN%E7%AE%97%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">使用Python实现KNN算法</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">VC-ROBOT</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/01/19/article/traditional-ml/k-%E8%BF%91%E9%82%BBknn%E7%AE%97%E6%B3%95%E5%8F%8A%E5%AE%9E%E8%B7%B5/index/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="VC-ROBOT">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="K-近邻(KNN)算法及实践 | HOME">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          K-近邻(KNN)算法及实践
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-01-19 00:00:00" itemprop="dateCreated datePublished" datetime="2017-01-19T00:00:00+08:00">2017-01-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-23 02:22:30" itemprop="dateModified" datetime="2026-03-23T02:22:30+08:00">2026-03-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/AI%E6%A8%A1%E5%9E%8B/" itemprop="url" rel="index"><span itemprop="name">AI模型</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/AI%E6%A8%A1%E5%9E%8B/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><em>参考书籍《机器学习实战》</em></p>
+<h3 id="K-近邻算法概述"><a href="#K-近邻算法概述" class="headerlink" title="K-近邻算法概述"></a>K-近邻算法概述</h3><p>简单来说，k近邻算法采用测量不同特征值之间的距离方法进行分类</p>
+<p><strong>k-近邻算法</strong> 优点：精度高，对异常值不敏感、无数据输入假定 缺点：计算复杂度高、空间复杂度高 适用数据范围：数据型和标称型</p>
+<p>工作原理是：存在一个样本数据集合，也称作训练样本集，并且样本集中每个数据都存在标签，即我们知道样本集中每一数据与所属分类的对应关系。输人没有标签的新数据后，将新数据的每个特征与样本集中数据对应的特征进行比较，然后算法提取样本集中特征最相似数据（最近邻）的分类标签。一般来说，我们只选择样本数据集中前k个最相似的数据，这就是k-近邻算法中k的出处，通常k是不大于20的整数。最后，选择k个最相似数据中出现次数最多的分类，作为新数据的分类。</p>
+<p>以电影分类为例，统计电影打斗镜头数和接吻镜头数以及电影评估类型如表2-1： <a target="_blank" rel="noopener" href="http://www.mrtblog.cn/wp-content/uploads/2017/01/KNN-example-table.png"><img src="/images/KNN-example-table.png"></a></p>
+<p>即使不知道未知电影属于哪种类型，我们也可以通过某种方法计算出来。首先计算未知电影与样本集中其他电影的距离，如表2-2所示。此处暂时不要关心如何计算得到这些距离值，使用Python实现电影分类应用时，会提供具体的计算方法 <a target="_blank" rel="noopener" href="http://www.mrtblog.cn/wp-content/uploads/2017/01/KNN-example-table2.png"><img src="/images/KNN-example-table2.png"></a></p>
+<p>现在我们得到了样本集中所有电影与未知电影的距离，按照距离递增排序，可以找到k个距离最近的电影。假定k&#x3D;3，则三个最靠近的电影依次是He’s Not Really into Dudes、Beautiful Woman和California Man。k-近邻算法按照距离最近的三部电影的类型，决定未知电影的类型，而这三部电影全是爱情片，因此我们判定未知电影是爱情片。</p>
+<p><strong>k-近邻算法的一般流程</strong> (1)收集数据：可以使用任何方法。 (2)准备数据：距离计算所需要的数值，最好是结构化的数据格式。 (3)分析数据：可以使用任何方法。 (4)训练算法：此步驟不适用于k-近邻算法。 (5)测试算法：计算错误率。 (6)使用算法：首先需要输入样本数据和结构化的输出结果，然后运行k-近邻算法判定输入数据分别属于哪个分类，最后应用对计算出的分类执行后续的处理。</p>
+<h4 id="使用Python实现KNN算法"><a href="#使用Python实现KNN算法" class="headerlink" title="使用Python实现KNN算法"></a>使用Python实现KNN算法</h4><p>创建文件KNN.py，定义创建数据集函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> operator</span><br><span class="line"><span class="comment"># 训练数据以及对应的类别</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">createDataSet</span>():</span><br><span class="line">    group = array([[<span class="number">1.0</span>,<span class="number">1.1</span>],[<span class="number">1.0</span>,<span class="number">1.0</span>],[<span class="number">0.0</span>,<span class="number">0.0</span>],[<span class="number">0.0</span>,<span class="number">0.1</span>]])</span><br><span class="line">    labels = [<span class="string">&#x27;A&#x27;</span>,<span class="string">&#x27;A&#x27;</span>,<span class="string">&#x27;B&#x27;</span>,<span class="string">&#x27;B&#x27;</span>]</span><br><span class="line">    <span class="keyword">return</span> group,labels</span><br></pre></td></tr></table></figure>
+
+<p>定义KNN分类函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#KNN分类算法</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">classify0</span>(<span class="params">inX,dataSet,label,k</span>):</span><br><span class="line">dataSize = dataSet.shape[<span class="number">0</span>] <span class="comment">#数据集的样本数量</span></span><br><span class="line"><span class="comment">###计算欧式距离</span></span><br><span class="line">diffMat = tile(inX,(dataSize,<span class="number">1</span>)) - dataSet<span class="comment">#每个训练样本与测试样本坐标相减</span></span><br><span class="line">sqDiffMat = diffMat ** <span class="number">2</span><span class="comment">#相减结果求平方</span></span><br><span class="line">squareDist = <span class="built_in">sum</span>(sqDiffMat,axis = <span class="number">1</span>)<span class="comment">#平方相加</span></span><br><span class="line">dist = squareDist ** <span class="number">0.5</span><span class="comment">#对平方和开根号</span></span><br><span class="line"><span class="comment">###对距离进行排序</span></span><br><span class="line">sortedDistIndex = argsort(dist)<span class="comment">#argsort()根据元素的值从小到大对元素进行排序，返回下标</span></span><br><span class="line">classCount = &#123;&#125;<span class="comment">#统计近距离的该类别个数</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(k):<span class="comment">#统计各类别的次数</span></span><br><span class="line">        voteLabel = label[sortedDistIndex[i]]</span><br><span class="line">        classCount[voteLabel] = classCount.get(voteLabel,<span class="number">0</span>) + <span class="number">1</span></span><br><span class="line">        sortedClassCount = <span class="built_in">sorted</span>(classCount.iteritems(),</span><br><span class="line">        key = operator.itergetter(<span class="number">1</span>),reverse=<span class="literal">True</span>)</span><br><span class="line">        <span class="keyword">return</span> sortedClassCount[<span class="number">0</span>][<span class="number">0</span>]<span class="comment">#返回标签</span></span><br></pre></td></tr></table></figure>
+
+<p>inX为输入的测试数据，dataSet为训练集，label是训练集对应的标签，k表示邻近值。 欧氏距离即两点间的直线距离，例如（0,0）与（3,4）距离为sqrt(3^2+4^2)&#x3D;5 之后使用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">KNN.classify0([<span class="number">0</span>,<span class="number">0</span>], group, labels, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+<p>验证结果 <a target="_blank" rel="noopener" href="http://www.mrtblog.cn/wp-content/uploads/2017/01/KNN-run-example-test.png"><img src="/images/KNN-run-example-test.png"></a></p>
+<hr>
+<p>上一次做到KNN简单的示例，训练集只有4个数据。这一次使用digits数据集，把1600个数据作为训练集输入，200个数据作为测试集输入，使用KNN预测并尝试调整k值使结果更精确。得到的训练结果如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>K值</strong></th>
+<th><strong>正确数</strong></th>
+<th><strong>错误数</strong></th>
+<th><strong>准确率</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>191</td>
+<td>9</td>
+<td>95.500000%</td>
+</tr>
+<tr>
+<td>2~3</td>
+<td>190</td>
+<td>10</td>
+<td>95.000000%</td>
+</tr>
+<tr>
+<td>4</td>
+<td>191</td>
+<td>9</td>
+<td>95.500000%</td>
+</tr>
+<tr>
+<td>5</td>
+<td>189</td>
+<td>11</td>
+<td>94.500000%</td>
+</tr>
+<tr>
+<td>6</td>
+<td>191</td>
+<td>9</td>
+<td>95.500000%</td>
+</tr>
+<tr>
+<td>7</td>
+<td>188</td>
+<td>12</td>
+<td>94.000000%</td>
+</tr>
+<tr>
+<td>8</td>
+<td>187</td>
+<td>13</td>
+<td>93.500000%</td>
+</tr>
+<tr>
+<td>9</td>
+<td>186</td>
+<td>14</td>
+<td>93.000000%</td>
+</tr>
+<tr>
+<td>10</td>
+<td>187</td>
+<td>13</td>
+<td>93.500000%</td>
+</tr>
+<tr>
+<td>11</td>
+<td>186</td>
+<td>14</td>
+<td>93.000000%</td>
+</tr>
+<tr>
+<td>12</td>
+<td>187</td>
+<td>13</td>
+<td>93.500000%</td>
+</tr>
+<tr>
+<td>13~16</td>
+<td>186</td>
+<td>14</td>
+<td>93.000000%</td>
+</tr>
+<tr>
+<td>17~18</td>
+<td>187</td>
+<td>13</td>
+<td>93.500000%</td>
+</tr>
+<tr>
+<td>19~20</td>
+<td>186</td>
+<td>14</td>
+<td>93.000000%</td>
+</tr>
+<tr>
+<td>30</td>
+<td>186</td>
+<td>14</td>
+<td>93.000000%</td>
+</tr>
+<tr>
+<td>50</td>
+<td>183</td>
+<td>17</td>
+<td>91.500000%</td>
+</tr>
+<tr>
+<td>100</td>
+<td>180</td>
+<td>20</td>
+<td>90.000000%</td>
+</tr>
+</tbody></table>
+<p>K取值2~6时，准确率达到95以上，超过20以后准确率明显下降。网上对K取值问题讨论不一，这个问题留给之后有大样本输入再思考吧。</p>
+<p>测试代码： KNN.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> operator</span><br><span class="line"></span><br><span class="line"><span class="comment">#训练数据以及对应的类别</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">createDataSet</span>():</span><br><span class="line">group = array([[<span class="number">1.0</span>,<span class="number">1.1</span>],[<span class="number">1.0</span>,<span class="number">1.0</span>],[<span class="number">0.0</span>,<span class="number">0.0</span>],[<span class="number">0.0</span>,<span class="number">0.1</span>]])</span><br><span class="line">labels = [<span class="string">&#x27;A&#x27;</span>,<span class="string">&#x27;A&#x27;</span>,<span class="string">&#x27;B&#x27;</span>,<span class="string">&#x27;B&#x27;</span>]</span><br><span class="line"><span class="keyword">return</span> group,labels</span><br></pre></td></tr></table></figure>
+
+<p>testKNN.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#coding=utf-8	含有中文必须规定编码格式</span></span><br><span class="line"><span class="keyword">import</span> KNN</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">count</span>(<span class="params">a1,a2,yes,no</span>):<span class="comment">#统计正确数与错误数</span></span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> i &lt; a1.size:</span><br><span class="line">        <span class="keyword">if</span> a1[i] != a2[i]:</span><br><span class="line">            no += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            yse += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> yes,no</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    digits = datasets.load_digits()<span class="comment">#读取digits数据集</span></span><br><span class="line">    n = <span class="number">200</span><span class="comment">#后n项为测试集，其他为训练集</span></span><br><span class="line">    test = digits.data[-n:]<span class="comment">#测试集</span></span><br><span class="line">    train = digits.data[:-n]<span class="comment">#训练集</span></span><br><span class="line">    np.set_printoptions(threshold=<span class="string">&#x27;nan&#x27;</span>)<span class="comment">#完全打印</span></span><br><span class="line">    origin=digits.target[-n:]<span class="comment">#正确结果</span></span><br><span class="line">    predict = np.array(KNN.classify0(test, train, digits.target[:-n], <span class="number">200</span>))<span class="comment">#预测结果</span></span><br><span class="line">    <span class="built_in">print</span> <span class="string">&quot;origin array:\n%s&quot;</span>%(origin)</span><br><span class="line">    <span class="built_in">print</span> <span class="string">&quot;predict array:\n%s&quot;</span>%(predict)</span><br><span class="line">    yes,no = <span class="number">0</span>,<span class="number">0</span></span><br><span class="line">    yes,no = count(origin,predict,yes,no)</span><br><span class="line">    rate = <span class="built_in">float</span>(<span class="number">100</span> * yes) / <span class="built_in">float</span>(yes + no)<span class="comment">#正确率</span></span><br><span class="line">    <span class="built_in">print</span> <span class="string">&quot;\nyes:%d no:%d \naccuracy rate:%f%%\n&quot;</span>%(yes,no,rate)</span><br></pre></td></tr></table></figure>
+
+<p>运行结果： <a target="_blank" rel="noopener" href="http://www.mrtblog.cn/wp-content/uploads/2017/01/KNN-run-digits-example.png"><img src="/images/KNN-run-digits-example.png"></a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/knn/" rel="tag"># knn</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/01/16/article/others/%E5%AD%A6%E7%A7%91%E8%AE%A1%E5%88%92/index/" rel="prev" title="新任务！新起点！">
+                  <i class="fa fa-angle-left"></i> 新任务！新起点！
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/01/23/article/traditional-ml/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95%E5%8F%8A%E5%AE%9E%E8%B7%B5/index/" rel="next" title="决策树算法及实践">
+                  决策树算法及实践 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">VC-ROBOT</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
