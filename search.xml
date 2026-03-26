@@ -1724,11 +1724,11 @@
     <title>LLM开发实践手记</title>
     <url>/2026/03/25/article/LLM/LLM%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E6%89%8B%E8%AE%B0/index/</url>
     <content><![CDATA[<h2 id="系列文章"><a href="#系列文章" class="headerlink" title="系列文章"></a>系列文章</h2><h3 id="环境部署系列"><a href="#环境部署系列" class="headerlink" title="环境部署系列"></a>环境部署系列</h3><ul>
-<li><a href="/2026/03/25/article/LLM%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E6%89%8B%E8%AE%B0/1-claude-code%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97/">（一）Claude Code 环境部署指南</a></li>
-<li><a href="/2026/03/26/article/LLM%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E6%89%8B%E8%AE%B0/2-%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F-%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90%E4%B8%8E%E6%96%B9%E6%A1%88%E8%AE%BE%E8%AE%A1/">（二）博客自动化发布系统 - 需求分析与方案设计</a></li>
-<li><a href="/2026/03/26/article/LLM%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E6%89%8B%E8%AE%B0/3-%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F-%E9%98%B6%E6%AE%B5%E4%B8%80%E5%AE%9E%E7%8E%B0/">（三）博客自动化发布系统 - 阶段一实现</a></li>
-<li><a href="/2026/03/26/article/LLM%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E6%89%8B%E8%AE%B0/4-%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F-%E9%98%B6%E6%AE%B5%E4%BA%8C%E4%BC%98%E5%8C%96/">（四）博客自动化发布系统 - 阶段二优化</a></li>
-<li><a href="/2026/03/26/article/LLM%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E6%89%8B%E8%AE%B0/5-%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F-%E9%98%B6%E6%AE%B5%E4%B8%89%E8%87%AA%E5%8A%A8%E5%8C%96/">（五）博客自动化发布系统 - 阶段三自动化</a></li>
+<li><a href="/2026/03/25/1-claude-code%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97/">（一）Claude Code 环境部署指南</a></li>
+<li><a href="/2026/03/26/2-%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F-%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90%E4%B8%8E%E6%96%B9%E6%A1%88%E8%AE%BE%E8%AE%A1/">（二）博客自动化发布系统 - 需求分析与方案设计</a></li>
+<li><a href="/2026/03/26/3-%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F-%E9%98%B6%E6%AE%B5%E4%B8%80%E5%AE%9E%E7%8E%B0/">（三）博客自动化发布系统 - 阶段一实现</a></li>
+<li><a href="/2026/03/26/4-%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F-%E9%98%B6%E6%AE%B5%E4%BA%8C%E4%BC%98%E5%8C%96/">（四）博客自动化发布系统 - 阶段二优化</a></li>
+<li><a href="/2026/03/26/5-%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F-%E9%98%B6%E6%AE%B5%E4%B8%89%E8%87%AA%E5%8A%A8%E5%8C%96/">（五）博客自动化发布系统 - 阶段三自动化</a></li>
 </ul>
 <blockquote>
 <p>本系列持续更新中…</p>
