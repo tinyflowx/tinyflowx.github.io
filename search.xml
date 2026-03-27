@@ -1,117 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>AI 科技日报 | 2026年3月26日</title>
-    <url>/2026/03/25/article/daily/2026-03-25-ai-daily/</url>
-    <content><![CDATA[<blockquote>
-<p>本日报由自动化脚本生成，每日定时抓取科技资讯整理发布。</p>
-</blockquote>
-<!-- more -->
-
-<h2 id="今日要闻"><a href="#今日要闻" class="headerlink" title="今日要闻"></a>今日要闻</h2><p>今天是 <strong>2026年3月26日</strong>，科技圈主要动态如下：</p>
-<ul>
-<li><strong>自动驾驶</strong>：Waymo 等自动驾驶出租车在实际运营中仍需要消防员和警察介入救援，短期内完全无人化面临挑战。</li>
-<li><strong>AI音乐</strong>：谷歌等公司提升 AI 音乐生成能力，音乐创作门槛降低，可能影响传统音乐行业格局。</li>
-<li><strong>企业AI</strong>：AI 正在加速向企业领域渗透，会议记录、AI助手等工具获得市场认可。</li>
-<li><strong>法律裁定</strong>：美国最高法院就盗版音乐案件做出裁定，可能对相关行业法律责任界定产生深远影响。</li>
-<li><strong>AI监管</strong>：美国国会民主党人推动立法，欲为 AI 公司划定红线，禁止自主武器和大规模监控。</li>
-<li><strong>数据中心</strong>：伯尼·桑德斯和 AOC 等议员提议禁止建设数据中心，可能影响 AI 基础设施扩展。</li>
-<li><strong>融资热度</strong>：AI 公司持续获得融资（11亿、125百万美元），显示资本对 AI 领域的持续看好。</li>
-<li><strong>产品更新</strong>：谷歌发布新一代 AI 音乐生成模型，可创作更长的个性化音乐。</li>
-<li><strong>人事变动</strong>：多家科技公司宣布裁员，市场就业形势引发关注。</li>
-<li><strong>高管动态</strong>：科技公司高管人事变动，相关企业战略调整受关注。</li>
-</ul>
-<hr>
-<p><strong>资讯来源</strong>：TechCrunch、The Verge、36kr、虎嗅等科技媒体 | 由脚本自动整理</p>
-<h2 id="资讯详情"><a href="#资讯详情" class="headerlink" title="资讯详情"></a>资讯详情</h2><h3 id="Apple-overhauls-its-app-developer-platform-with-100-new-metrics-more-tools"><a href="#Apple-overhauls-its-app-developer-platform-with-100-new-metrics-more-tools" class="headerlink" title="Apple overhauls its app developer platform with 100 new metrics, more tools"></a>Apple overhauls its app developer platform with 100 new metrics, more tools</h3><blockquote>
-<p>来源：TechCrunch | 2026&#x2F;3&#x2F;26 01:26:46 | 标签：AI动态</p>
-</blockquote>
-<p><a href="https://techcrunch.com/2026/03/25/apple-overhauls-its-app-developer-platform-with-100-new-metrics-more-tools/">阅读原文</a></p>
-<hr>
-<h3 id="Bernie-Sanders-and-AOC-propose-a-ban-on-data-center-construction"><a href="#Bernie-Sanders-and-AOC-propose-a-ban-on-data-center-construction" class="headerlink" title="Bernie Sanders and AOC propose a ban on data center construction"></a>Bernie Sanders and AOC propose a ban on data center construction</h3><blockquote>
-<p>来源：TechCrunch | 2026&#x2F;3&#x2F;26 01:15:50 | 标签：政策法规</p>
-</blockquote>
-<p><a href="https://techcrunch.com/2026/03/25/bernie-sanders-and-aoc-propose-a-ban-on-data-center-construction/">阅读原文</a></p>
-<hr>
-<h3 id="The-TSA-is-broken-—-is-privatization-next"><a href="#The-TSA-is-broken-—-is-privatization-next" class="headerlink" title="The TSA is broken — is privatization next?"></a>The TSA is broken — is privatization next?</h3><blockquote>
-<p>来源：The Verge | 2026&#x2F;3&#x2F;26 01:13:39 | 标签：AI动态</p>
-</blockquote>
-<p><a href="https://www.theverge.com/transportation/900510/airport-tsa-seurity-wait-privatization-trump-mullin">阅读原文</a></p>
-<hr>
-<h3 id="Cox-Communications-not-liable-for-pirated-music-Supreme-Court-rules"><a href="#Cox-Communications-not-liable-for-pirated-music-Supreme-Court-rules" class="headerlink" title="Cox Communications not liable for pirated music, Supreme Court rules"></a>Cox Communications not liable for pirated music, Supreme Court rules</h3><blockquote>
-<p>来源：The Verge | 2026&#x2F;3&#x2F;26 01:03:20 | 标签：政策法规</p>
-</blockquote>
-<p><a href="https://www.theverge.com/policy/900502/cox-communications-music-labels-piracy-supreme-court">阅读原文</a></p>
-<hr>
-<h3 id="Seiko-resurrected-a-44-year-old-digital-watch-NASA-astronauts-wore-to-space"><a href="#Seiko-resurrected-a-44-year-old-digital-watch-NASA-astronauts-wore-to-space" class="headerlink" title="Seiko resurrected a 44-year-old digital watch NASA astronauts wore to space"></a>Seiko resurrected a 44-year-old digital watch NASA astronauts wore to space</h3><blockquote>
-<p>来源：The Verge | 2026&#x2F;3&#x2F;26 00:43:07 | 标签：AI动态</p>
-</blockquote>
-<p><a href="https://www.theverge.com/tech/900428/seiko-rotocall-digital-watch-retro-nasa-astronauts">阅读原文</a></p>
-<hr>
-<h3 id="Google-launches-Lyria-3-Pro-music-generation-model"><a href="#Google-launches-Lyria-3-Pro-music-generation-model" class="headerlink" title="Google launches Lyria 3 Pro music generation model"></a>Google launches Lyria 3 Pro music generation model</h3><blockquote>
-<p>来源：TechCrunch | 2026&#x2F;3&#x2F;26 00:37:43 | 标签：产品发布</p>
-</blockquote>
-<p><a href="https://techcrunch.com/2026/03/25/google-launches-lyria-3-pro-music-generation-model/">阅读原文</a></p>
-<hr>
-<h3 id="Waymo-relies-on-firefighters-and-police-to-bail-out-stuck-robotaxis"><a href="#Waymo-relies-on-firefighters-and-police-to-bail-out-stuck-robotaxis" class="headerlink" title="Waymo relies on firefighters and police to bail out stuck robotaxis"></a>Waymo relies on firefighters and police to bail out stuck robotaxis</h3><blockquote>
-<p>来源：TechCrunch | 2026&#x2F;3&#x2F;26 00:30:37 | 标签：AI动态</p>
-</blockquote>
-<p><a href="https://techcrunch.com/2026/03/25/waymo-relies-on-firefighters-and-police-to-bail-out-stuck-robotaxis/">阅读原文</a></p>
-<hr>
-<h3 id="Google-Lyria-3-Pro-makes-longer-AI-songs"><a href="#Google-Lyria-3-Pro-makes-longer-AI-songs" class="headerlink" title="Google Lyria 3 Pro makes longer AI songs"></a>Google Lyria 3 Pro makes longer AI songs</h3><blockquote>
-<p>来源：The Verge | 2026&#x2F;3&#x2F;26 00:00:00 | 标签：AI动态</p>
-</blockquote>
-<p><a href="https://www.theverge.com/ai-artificial-intelligence/900425/google-lyria-3-pro-ai-music">阅读原文</a></p>
-<hr>
-<h3 id="How-soap-opera-TikTok-hybrids-became-a-billion-dollar-business"><a href="#How-soap-opera-TikTok-hybrids-became-a-billion-dollar-business" class="headerlink" title="How soap opera-TikTok hybrids became a billion-dollar business"></a>How soap opera-TikTok hybrids became a billion-dollar business</h3><blockquote>
-<p>来源：TechCrunch | 2026&#x2F;3&#x2F;25 23:30:00 | 标签：政策法规</p>
-</blockquote>
-<p><a href="https://techcrunch.com/video/how-soap-opera-tiktok-hybrids-became-a-billion-dollar-business/">阅读原文</a></p>
-<hr>
-<h3 id="Harvey-confirms-11B-valuation-Sequoia-triples-down"><a href="#Harvey-confirms-11B-valuation-Sequoia-triples-down" class="headerlink" title="Harvey confirms $11B valuation: Sequoia triples down"></a>Harvey confirms $11B valuation: Sequoia triples down</h3><blockquote>
-<p>来源：TechCrunch | 2026&#x2F;3&#x2F;25 23:27:15 | 标签：融资并购</p>
-</blockquote>
-<p><a href="https://techcrunch.com/2026/03/25/harvey-confirms-11b-valuation-sequoia-triples-down/">阅读原文</a></p>
-<hr>
-<h3 id="Live-service-games-are-such-a-mess-even-Fortnite-is-struggling"><a href="#Live-service-games-are-such-a-mess-even-Fortnite-is-struggling" class="headerlink" title="Live-service games are such a mess even Fortnite is struggling"></a>Live-service games are such a mess even Fortnite is struggling</h3><blockquote>
-<p>来源：The Verge | 2026&#x2F;3&#x2F;25 23:22:22 | 标签：人事变动</p>
-</blockquote>
-<p><a href="https://www.theverge.com/games/900389/live-service-games-mess-fortnite-layoffs">阅读原文</a></p>
-<hr>
-<h3 id="Senate-Democrats-are-trying-to-‘codify’-Anthropic-8217-s-red-lines-on-autonomous-weapons-and-mass-surveillance"><a href="#Senate-Democrats-are-trying-to-‘codify’-Anthropic-8217-s-red-lines-on-autonomous-weapons-and-mass-surveillance" class="headerlink" title="Senate Democrats are trying to ‘codify’ Anthropic&#8217;s red lines on autonomous weapons and mass surveillance"></a>Senate Democrats are trying to ‘codify’ Anthropic&#8217;s red lines on autonomous weapons and mass surveillance</h3><blockquote>
-<p>来源：The Verge | 2026&#x2F;3&#x2F;25 23:05:46 | 标签：政策法规</p>
-</blockquote>
-<p><a href="https://www.theverge.com/policy/900341/senator-schiff-anthropic-autonomous-weapons-mass-surveillance">阅读原文</a></p>
-<hr>
-<h3 id="You-can-install-these-wireless-security-cameras-over-half-a-mile-away"><a href="#You-can-install-these-wireless-security-cameras-over-half-a-mile-away" class="headerlink" title="You can install these wireless security cameras over half a mile away"></a>You can install these wireless security cameras over half a mile away</h3><blockquote>
-<p>来源：The Verge | 2026&#x2F;3&#x2F;25 23:00:00 | 标签：AI动态</p>
-</blockquote>
-<p><a href="https://www.theverge.com/tech/898980/xthings-ulticam-security-camera-wi-fi-halow-wireless">阅读原文</a></p>
-<hr>
-<h3 id="Granola-raises-125M-hits-1-5B-valuation-as-it-expands-from-meeting-notetaker-to-enterprise-AI-app"><a href="#Granola-raises-125M-hits-1-5B-valuation-as-it-expands-from-meeting-notetaker-to-enterprise-AI-app" class="headerlink" title="Granola raises $125M, hits $1.5B valuation as it expands from meeting notetaker to enterprise AI app"></a>Granola raises $125M, hits $1.5B valuation as it expands from meeting notetaker to enterprise AI app</h3><blockquote>
-<p>来源：TechCrunch | 2026&#x2F;3&#x2F;25 22:48:40 | 标签：融资并购</p>
-</blockquote>
-<p><a href="https://techcrunch.com/2026/03/25/granola-raises-125m-hits-1-5b-valuation-as-it-expands-from-meeting-notetaker-to-enterprise-ai-app/">阅读原文</a></p>
-<hr>
-<h3 id="Meta-launches-new-initiative-to-support-entrepreneurship-drive-AI-adoption"><a href="#Meta-launches-new-initiative-to-support-entrepreneurship-drive-AI-adoption" class="headerlink" title="Meta launches new initiative to support entrepreneurship, drive AI adoption"></a>Meta launches new initiative to support entrepreneurship, drive AI adoption</h3><blockquote>
-<p>来源：TechCrunch | 2026&#x2F;3&#x2F;25 22:45:20 | 标签：产品发布</p>
-</blockquote>
-<p><a href="https://techcrunch.com/2026/03/25/meta-launches-new-initiative-to-support-entrepreneurship-drive-ai-adoption/">阅读原文</a></p>
-<hr>
-<blockquote>
-<p><strong>声明</strong>：本文章由自动化脚本生成，内容基于 RSS 订阅源抓取的资讯整理。如有侵权请联系删除。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>AI科技日报</category>
-      </categories>
-      <tags>
-        <tag>AI日报</tag>
-        <tag>科技资讯</tag>
-        <tag>每日精选</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>LLM开发实践手记（三）博客自动化发布系统 - 阶段一实现</title>
     <url>/2026/03/26/article/LLM/LLM%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E6%89%8B%E8%AE%B0/3-%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8F%91%E5%B8%83%E7%B3%BB%E7%BB%9F-%E9%98%B6%E6%AE%B5%E4%B8%80%E5%AE%9E%E7%8E%B0/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本篇文章记录博客自动化发布系统<strong>阶段一</strong>的完整实现过程。内容包括：订阅源测试、方案选型、技术实现、踩坑与解决。</p>
@@ -4685,86 +4574,111 @@
 
 <h2 id="今日要闻"><a href="#今日要闻" class="headerlink" title="今日要闻"></a>今日要闻</h2><p>今天是 <strong>2026年3月27日</strong>，科技圈主要动态如下：</p>
 <ul>
-<li>「照片模式顾问帮助您拍摄更好的视频游戏屏幕截图」：死亡搁浅。|图片： Ludovic “Shinobi” Helme三个孩子凝视着战场上破旧不堪的遗迹，树木和人造建筑大多被夷为平地，只有一架坚固的单人投石机。这是《瘟疫故事：天真无邪》中流血事件的深思…</li>
+<li>「The photo mode consultant helping you take better video game screenshots」：Death Stranding. | Image: Ludovic “Shinobi” Helme Three children stare at the dilapidated remains of…</li>
+<li>「OpenAI shuts down Sora while Meta gets shut out in court」：When an 82-year-old Kentucky woman was offered $26 million from an AI company that wanted to build a…</li>
 <li>「钉钉CLI以Apache-2.0协议开源」：36氪获悉，3月27日，钉钉CLI开源项目上架Github社区，项目以Apache-2.0协议开源，首批开放AI表格、日历、日志、待办、机器人、通讯录、DING消息、考勤、开放平台文档、工作台共10项…</li>
-<li>「参议员希望美国能源信息机构监测数据中心用电情况」：在一封信中，参议员们敦促强制要求每年披露数据中心的电力信息。</li>
-<li>「我们挑选了$ 50以下的24个最佳大春季促销优惠」：尽管春季通常不会有大幅折扣，但亚马逊似乎热衷于将每个季节都变成一个充满优惠的季节。举个例子？这家零售商目前正在举办春季促销活动，活动将持续到美国东部时间4月1日凌晨2:59。百思买、沃尔玛和New等零…</li>
-<li>「ICE特工因停工拖延而挫败机场工作人员」：纽约的一名航空公司工作人员说： “ICE在这里，他们实际上没有做任何事情来提供帮助。”</li>
-<li>「苹果仍计划在100岁时销售iPhone」：随着这家科技巨头年满50岁，《连线》杂志向高管们讲述了他们计划如何在人工智能时代获胜。</li>
-<li>「苹果在其高价、经常被忽视的Mac Pro台式机上拔掉插头」：M2 Ultra Mac Pro不再销售，苹果表示没有计划更换。</li>
-<li>「摩托罗拉的Razr Ultra 2026可能比去年的版本更浓密」：Razr Ultra 2026的渲染图显示的手机比去年的型号稍厚。|图片： XpertPick&#x2F;OnLeaks虽然近年来大多数旗舰手机都在稳步变薄，但即将推出的2026版摩托罗拉Razr Ultra最…</li>
+<li>「Senators want US energy information agency to monitor data center electricity usage」：In a letter, senators press for mandated annual electricity disclosure for data …</li>
+<li>「We handpicked the 24 best Big Spring Sale deals under $50」：Despite the fact that spring isn’t often associated with big discounts, Amazon seems keen to turn ev…</li>
+<li>「The best deals we’ve found from Amazon’s Big Spring Sale (so far)」：Amazon loves to manufacture an event. March is historically a dry spell for deals; however, with Ama…</li>
+<li>「Rivian gets another $1B from Volkswagen」：The two companies have been collaborating on a joint venture that would see Rivi…</li>
+<li>「Iranian hackers claim breach of FBI director Kash Patel’s personal email account」：Handala, a pro-Iranian hacking group allegedly working for Iran’s government, pu…</li>
 </ul>
 <hr>
 <p><strong>资讯来源</strong>：TechCrunch、The Verge、36kr、虎嗅等科技媒体 | 由脚本自动整理</p>
-<h2 id="资讯详情"><a href="#资讯详情" class="headerlink" title="资讯详情"></a>资讯详情</h2><h3 id="ICE特工因停工拖延而挫败机场工作人员"><a href="#ICE特工因停工拖延而挫败机场工作人员" class="headerlink" title="ICE特工因停工拖延而挫败机场工作人员"></a>ICE特工因停工拖延而挫败机场工作人员</h3><blockquote>
+<h2 id="资讯详情"><a href="#资讯详情" class="headerlink" title="资讯详情"></a>资讯详情</h2><h3 id="Rivian-gets-another-1B-from-Volkswagen"><a href="#Rivian-gets-another-1B-from-Volkswagen" class="headerlink" title="Rivian gets another $1B from Volkswagen"></a>Rivian gets another $1B from Volkswagen</h3><blockquote>
+<p>来源：TechCrunch | 2026&#x2F;3&#x2F;27 23:47:03 | 标签：科技综合</p>
+</blockquote>
+<p>The two companies have been collaborating on a joint venture that would see Rivi…<br><a href="https://techcrunch.com/2026/03/27/rivian-gets-another-1b-from-volkswagen/">阅读原文</a></p>
+<hr>
+<h3 id="Iranian-hackers-claim-breach-of-FBI-director-Kash-Patel’s-personal-email-account"><a href="#Iranian-hackers-claim-breach-of-FBI-director-Kash-Patel’s-personal-email-account" class="headerlink" title="Iranian hackers claim breach of FBI director Kash Patel’s personal email account"></a>Iranian hackers claim breach of FBI director Kash Patel’s personal email account</h3><blockquote>
+<p>来源：TechCrunch | 2026&#x2F;3&#x2F;27 23:39:07 | 标签：政策法规</p>
+</blockquote>
+<p>Handala, a pro-Iranian hacking group allegedly working for Iran’s government, pu…<br><a href="https://techcrunch.com/2026/03/27/iranian-hackers-claim-breach-of-fbi-director-kash-patels-personal-email-account/">阅读原文</a></p>
+<hr>
+<h3 id="This-modular-crafting-machine-can-create-custom-shirts-phone-cases-and-molds"><a href="#This-modular-crafting-machine-can-create-custom-shirts-phone-cases-and-molds" class="headerlink" title="This modular crafting machine can create custom shirts, phone cases, and molds"></a>This modular crafting machine can create custom shirts, phone cases, and molds</h3><blockquote>
+<p>来源：The Verge | 2026&#x2F;3&#x2F;27 23:32:57 | 标签：AI动态</p>
+</blockquote>
+<p>With swappable modules the WonderPress can function as a heat press, vacuum former, and compact oven…<br><a href="https://www.theverge.com/tech/902369/xtool-wonderpress-heat-press-vacuum-former-oven-crafting-preorder">阅读原文</a></p>
+<hr>
+<h3 id="ICE-Agents-Frustrate-Airport-Workers-as-Shutdown-Drags-On"><a href="#ICE-Agents-Frustrate-Airport-Workers-as-Shutdown-Drags-On" class="headerlink" title="ICE Agents Frustrate Airport Workers as Shutdown Drags On"></a>ICE Agents Frustrate Airport Workers as Shutdown Drags On</h3><blockquote>
 <p>来源：Wired | 2026&#x2F;3&#x2F;27 23:18:19 | 标签：AI动态</p>
 </blockquote>
-<p>纽约的一名航空公司工作人员说： “ICE在这里，他们实际上没有做任何事情来提供帮助。”<br><a href="https://www.wired.com/story/ice-agents-frustrate-airport-employees-as-shutdown-drags-on/">阅读原文</a></p>
+<p>“ICE are here and they’re doing literally nothing to help,” said an airline work…<br><a href="https://www.wired.com/story/ice-agents-frustrate-airport-employees-as-shutdown-drags-on/">阅读原文</a></p>
 <hr>
-<h3 id="苹果仍计划在100岁时销售iPhone"><a href="#苹果仍计划在100岁时销售iPhone" class="headerlink" title="苹果仍计划在100岁时销售iPhone"></a>苹果仍计划在100岁时销售iPhone</h3><blockquote>
+<h3 id="Apple-Still-Plans-to-Sell-iPhones-When-It-Turns-100"><a href="#Apple-Still-Plans-to-Sell-iPhones-When-It-Turns-100" class="headerlink" title="Apple Still Plans to Sell iPhones When It Turns 100"></a>Apple Still Plans to Sell iPhones When It Turns 100</h3><blockquote>
 <p>来源：Wired | 2026&#x2F;3&#x2F;27 23:00:00 | 标签：人事变动</p>
 </blockquote>
-<p>随着这家科技巨头年满50岁，《连线》杂志向高管们讲述了他们计划如何在人工智能时代获胜。<br><a href="https://www.wired.com/story/apple-50-year-anniversary-artificial-intelligence-iphone/">阅读原文</a></p>
+<p>As the tech giant turns 50, WIRED spoke to executives about how they plan to win…<br><a href="https://www.wired.com/story/apple-50-year-anniversary-artificial-intelligence-iphone/">阅读原文</a></p>
 <hr>
-<h3 id="我们挑选了-50以下的24个最佳大春季促销优惠"><a href="#我们挑选了-50以下的24个最佳大春季促销优惠" class="headerlink" title="我们挑选了$ 50以下的24个最佳大春季促销优惠"></a>我们挑选了$ 50以下的24个最佳大春季促销优惠</h3><blockquote>
+<h3 id="We-handpicked-the-24-best-Big-Spring-Sale-deals-under-50"><a href="#We-handpicked-the-24-best-Big-Spring-Sale-deals-under-50" class="headerlink" title="We handpicked the 24 best Big Spring Sale deals under $50"></a>We handpicked the 24 best Big Spring Sale deals under $50</h3><blockquote>
 <p>来源：The Verge | 2026&#x2F;3&#x2F;27 22:54:46 | 标签：价格变动</p>
 </blockquote>
-<p>尽管春季通常不会有大幅折扣，但亚马逊似乎热衷于将每个季节都变成一个充满优惠的季节。举个例子？这家零售商目前正在举办春季促销活动，活动将持续到美国东部时间4月1日凌晨2:59。百思买、沃尔玛和New等零…<br><a href="https://www.theverge.com/gadgets/901519/best-cheap-tech-deals-under-50-amazon-big-spring-sale-2026">阅读原文</a></p>
+<p>Despite the fact that spring isn’t often associated with big discounts, Amazon seems keen to turn ev…<br><a href="https://www.theverge.com/gadgets/901519/best-cheap-tech-deals-under-50-amazon-big-spring-sale-2026">阅读原文</a></p>
 <hr>
-<h3 id="苹果在其高价、经常被忽视的Mac-Pro台式机上拔掉插头"><a href="#苹果在其高价、经常被忽视的Mac-Pro台式机上拔掉插头" class="headerlink" title="苹果在其高价、经常被忽视的Mac Pro台式机上拔掉插头"></a>苹果在其高价、经常被忽视的Mac Pro台式机上拔掉插头</h3><blockquote>
+<h3 id="Apple-pulls-the-plug-on-its-high-priced-oft-neglected-Mac-Pro-desktop"><a href="#Apple-pulls-the-plug-on-its-high-priced-oft-neglected-Mac-Pro-desktop" class="headerlink" title="Apple pulls the plug on its high-priced, oft-neglected Mac Pro desktop"></a>Apple pulls the plug on its high-priced, oft-neglected Mac Pro desktop</h3><blockquote>
 <p>来源：Ars Technica | 2026&#x2F;3&#x2F;27 22:47:03 | 标签：价格变动</p>
 </blockquote>
-<p>M2 Ultra Mac Pro不再销售，苹果表示没有计划更换。<br><a href="https://arstechnica.com/gadgets/2026/03/apple-has-finally-discontinued-the-mac-pro-desktop-after-years-of-fitful-effort/">阅读原文</a></p>
+<p>M2 Ultra Mac Pro is no longer for sale, and Apple says no replacement is planned…<br><a href="https://arstechnica.com/gadgets/2026/03/apple-has-finally-discontinued-the-mac-pro-desktop-after-years-of-fitful-effort/">阅读原文</a></p>
 <hr>
-<h3 id="摩托罗拉的Razr-Ultra-2026可能比去年的版本更浓密"><a href="#摩托罗拉的Razr-Ultra-2026可能比去年的版本更浓密" class="headerlink" title="摩托罗拉的Razr Ultra 2026可能比去年的版本更浓密"></a>摩托罗拉的Razr Ultra 2026可能比去年的版本更浓密</h3><blockquote>
+<h3 id="Motorola’s-Razr-Ultra-2026-might-be-a-hair-thicker-than-last-year’s-version"><a href="#Motorola’s-Razr-Ultra-2026-might-be-a-hair-thicker-than-last-year’s-version" class="headerlink" title="Motorola’s Razr Ultra 2026 might be a hair thicker than last year’s version"></a>Motorola’s Razr Ultra 2026 might be a hair thicker than last year’s version</h3><blockquote>
 <p>来源：The Verge | 2026&#x2F;3&#x2F;27 22:36:56 | 标签：AI动态</p>
 </blockquote>
-<p>Razr Ultra 2026的渲染图显示的手机比去年的型号稍厚。|图片： XpertPick&#x2F;OnLeaks虽然近年来大多数旗舰手机都在稳步变薄，但即将推出的2026版摩托罗拉Razr Ultra最…<br><a href="https://www.theverge.com/gadgets/902300/motorola-razr-ultra-2026-dimensions-leaked">阅读原文</a></p>
+<p>Renders of the Razr Ultra 2026 show a slightly thicker phone than last year’s model. | Image: XpertP…<br><a href="https://www.theverge.com/gadgets/902300/motorola-razr-ultra-2026-dimensions-leaked">阅读原文</a></p>
 <hr>
-<h3 id="美国人从人道主义援助之旅返回古巴后，手机在美国机场被扣押"><a href="#美国人从人道主义援助之旅返回古巴后，手机在美国机场被扣押" class="headerlink" title="美国人从人道主义援助之旅返回古巴后，手机在美国机场被扣押"></a>美国人从人道主义援助之旅返回古巴后，手机在美国机场被扣押</h3><blockquote>
+<h3 id="Returning-from-a-humanitarian-aid-trip-to-Cuba-Americans-have-phones-seized-at-US-airport"><a href="#Returning-from-a-humanitarian-aid-trip-to-Cuba-Americans-have-phones-seized-at-US-airport" class="headerlink" title="Returning from a humanitarian aid trip to Cuba, Americans have phones seized at US airport"></a>Returning from a humanitarian aid trip to Cuba, Americans have phones seized at US airport</h3><blockquote>
 <p>来源：The Verge | 2026&#x2F;3&#x2F;27 22:30:00 | 标签：AI动态</p>
 </blockquote>
-<p>向古巴运送人道主义援助的车队成员在从哈瓦那乘坐包机返回美国后被海关和边境保护局（ CBP ）拘留和审问。在周三迈阿密国际机场接受二次检查的20名美国公民中<br><a href="https://www.theverge.com/policy/902284/cuba-aid-convoy-phones-seized-cbp-nuestra-america">阅读原文</a></p>
+<p>Members of a convoy that delivered humanitarian aid to Cuba were detained and interrogated by Custom…<br><a href="https://www.theverge.com/policy/902284/cuba-aid-convoy-phones-seized-cbp-nuestra-america">阅读原文</a></p>
 <hr>
-<h3 id="苹果公司表示，没有人使用锁定模式被间谍软件攻击"><a href="#苹果公司表示，没有人使用锁定模式被间谍软件攻击" class="headerlink" title="苹果公司表示，没有人使用锁定模式被间谍软件攻击"></a>苹果公司表示，没有人使用锁定模式被间谍软件攻击</h3><blockquote>
+<h3 id="Apple-says-no-one-using-Lockdown-Mode-has-been-hacked-with-spyware"><a href="#Apple-says-no-one-using-Lockdown-Mode-has-been-hacked-with-spyware" class="headerlink" title="Apple says no one using Lockdown Mode has been hacked with spyware"></a>Apple says no one using Lockdown Mode has been hacked with spyware</h3><blockquote>
 <p>来源：TechCrunch | 2026&#x2F;3&#x2F;27 22:27:32 | 标签：AI动态</p>
 </blockquote>
-<p>这家科技巨头声称，它没有看到任何针对启用锁定模式的苹果设备的成功间谍软件攻击，这是因为针对运行旧软件设备的用户的黑客工具泄露。<br><a href="https://techcrunch.com/2026/03/27/apple-says-no-one-using-lockdown-mode-has-been-hacked-with-spyware/">阅读原文</a></p>
+<p>The tech giant’s claim that it has not seen any successful spyware attacks targe…<br><a href="https://techcrunch.com/2026/03/27/apple-says-no-one-using-lockdown-mode-has-been-hacked-with-spyware/">阅读原文</a></p>
 <hr>
-<h3 id="照片模式顾问帮助您拍摄更好的视频游戏屏幕截图"><a href="#照片模式顾问帮助您拍摄更好的视频游戏屏幕截图" class="headerlink" title="照片模式顾问帮助您拍摄更好的视频游戏屏幕截图"></a>照片模式顾问帮助您拍摄更好的视频游戏屏幕截图</h3><blockquote>
+<h3 id="The-best-deals-we’ve-found-from-Amazon’s-Big-Spring-Sale-so-far"><a href="#The-best-deals-we’ve-found-from-Amazon’s-Big-Spring-Sale-so-far" class="headerlink" title="The best deals we’ve found from Amazon’s Big Spring Sale (so far)"></a>The best deals we’ve found from Amazon’s Big Spring Sale (so far)</h3><blockquote>
+<p>来源：The Verge | 2026&#x2F;3&#x2F;27 22:08:00 | 标签：价格变动</p>
+</blockquote>
+<p>Amazon loves to manufacture an event. March is historically a dry spell for deals; however, with Ama…<br><a href="https://www.theverge.com/gadgets/899580/best-amazon-big-spring-sale-2026-deals">阅读原文</a></p>
+<hr>
+<h3 id="The-photo-mode-consultant-helping-you-take-better-video-game-screenshots"><a href="#The-photo-mode-consultant-helping-you-take-better-video-game-screenshots" class="headerlink" title="The photo mode consultant helping you take better video game screenshots"></a>The photo mode consultant helping you take better video game screenshots</h3><blockquote>
 <p>来源：The Verge | 2026&#x2F;3&#x2F;27 22:00:00 | 标签：AI动态</p>
 </blockquote>
-<p>死亡搁浅。|图片： Ludovic “Shinobi” Helme三个孩子凝视着战场上破旧不堪的遗迹，树木和人造建筑大多被夷为平地，只有一架坚固的单人投石机。这是《瘟疫故事：天真无邪》中流血事件的深思…<br><a href="https://www.theverge.com/entertainment/901329/shinobi-video-game-photo-mode-consultant">阅读原文</a></p>
+<p>Death Stranding. | Image: Ludovic “Shinobi” Helme Three children stare at the dilapidated remains of…<br><a href="https://www.theverge.com/entertainment/901329/shinobi-video-game-photo-mode-consultant">阅读原文</a></p>
 <hr>
-<h3 id="这些“经过临床试验”的软糖可能会或可能不会帮助您排便"><a href="#这些“经过临床试验”的软糖可能会或可能不会帮助您排便" class="headerlink" title="这些“经过临床试验”的软糖可能会或可能不会帮助您排便"></a>这些“经过临床试验”的软糖可能会或可能不会帮助您排便</h3><blockquote>
+<h3 id="These-‘clinically-tested’-gummies-may-or-may-not-help-you-poop"><a href="#These-‘clinically-tested’-gummies-may-or-may-not-help-you-poop" class="headerlink" title="These ‘clinically tested’ gummies may or may not help you poop"></a>These ‘clinically tested’ gummies may or may not help you poop</h3><blockquote>
 <p>来源：The Verge | 2026&#x2F;3&#x2F;27 22:00:00 | 标签：人事变动</p>
 </blockquote>
-<p>临床试验正在成为自己的产品。|图片： Cath Virgina&#x2F;The Verge, Grüns This is Optimizer ，这是Verge高级评论员Victoria Song每周五发送的一…<br><a href="https://www.theverge.com/column/902231/optimizer-gruns-wellness-multivitamins-clinical-testing">阅读原文</a></p>
+<p>Clinical testing is turning into a product of its own. | Image: Cath Virgina &#x2F; The Verge, Grüns This…<br><a href="https://www.theverge.com/column/902231/optimizer-gruns-wellness-multivitamins-clinical-testing">阅读原文</a></p>
 <hr>
-<h3 id="Rivian和大众集团完成新区域建筑的冬季测试"><a href="#Rivian和大众集团完成新区域建筑的冬季测试" class="headerlink" title="Rivian和大众集团完成新区域建筑的冬季测试"></a>Rivian和大众集团完成新区域建筑的冬季测试</h3><blockquote>
+<h3 id="Rivian-and-VW-Group-complete-winter-testing-of-new-zonal-architecture"><a href="#Rivian-and-VW-Group-complete-winter-testing-of-new-zonal-architecture" class="headerlink" title="Rivian and VW Group complete winter testing of new zonal architecture"></a>Rivian and VW Group complete winter testing of new zonal architecture</h3><blockquote>
 <p>来源：Ars Technica | 2026&#x2F;3&#x2F;27 21:53:18 | 标签：科技综合</p>
 </blockquote>
-<p>RV Tech合资企业通过了一个关键的里程碑，为Rivian开辟了10亿美元。<br><a href="https://arstechnica.com/cars/2026/03/rivian-and-vw-group-complete-winter-testing-of-new-zonal-architecture/">阅读原文</a></p>
+<p>The RV Tech joint venture passed a key milestone, opens up $1 billion for Rivian…<br><a href="https://arstechnica.com/cars/2026/03/rivian-and-vw-group-complete-winter-testing-of-new-zonal-architecture/">阅读原文</a></p>
 <hr>
-<h3 id="Meta的法庭损失可能只是一个开始"><a href="#Meta的法庭损失可能只是一个开始" class="headerlink" title="Meta的法庭损失可能只是一个开始"></a>Meta的法庭损失可能只是一个开始</h3><blockquote>
+<h3 id="Meta’s-court-losses-could-be-just-the-beginning"><a href="#Meta’s-court-losses-could-be-just-the-beginning" class="headerlink" title="Meta’s court losses could be just the beginning"></a>Meta’s court losses could be just the beginning</h3><blockquote>
 <p>来源：The Verge | 2026&#x2F;3&#x2F;27 21:38:16 | 标签：政策法规</p>
 </blockquote>
-<p>社交媒体公司长期以来似乎不受法律威胁的影响。Meta、YouTube、Snap和其他公司长期以来一直以言论自由和第230条为由驳斥对其平台的批评。但本周两次，陪审团对这些平台做出判决，不是因为一些不好…<br><a href="https://www.theverge.com/podcast/902162/meta-youtube-kgm-court-ruling-vergecast">阅读原文</a></p>
+<p>Social media companies have long seemed impervious to legal threats. Meta, YouTube, Snap, and the re…<br><a href="https://www.theverge.com/podcast/902162/meta-youtube-kgm-court-ruling-vergecast">阅读原文</a></p>
 <hr>
-<h3 id="无需乘坐TSA线路：乘坐巴士、火车和船只前往何处"><a href="#无需乘坐TSA线路：乘坐巴士、火车和船只前往何处" class="headerlink" title="无需乘坐TSA线路：乘坐巴士、火车和船只前往何处"></a>无需乘坐TSA线路：乘坐巴士、火车和船只前往何处</h3><blockquote>
+<h3 id="OpenAI-shuts-down-Sora-while-Meta-gets-shut-out-in-court"><a href="#OpenAI-shuts-down-Sora-while-Meta-gets-shut-out-in-court" class="headerlink" title="OpenAI shuts down Sora while Meta gets shut out in court"></a>OpenAI shuts down Sora while Meta gets shut out in court</h3><blockquote>
+<p>来源：TechCrunch | 2026&#x2F;3&#x2F;27 21:30:00 | 标签：政策法规</p>
+</blockquote>
+<p>When an 82-year-old Kentucky woman was offered $26 million from an AI company that wanted to build a…<br><a href="https://techcrunch.com/video/openai-shuts-down-sora-while-meta-gets-shut-out-in-court/">阅读原文</a></p>
+<hr>
+<h3 id="Skip-the-TSA-Line-Where-to-Find-Travel-by-Bus-Train-and-Boat"><a href="#Skip-the-TSA-Line-Where-to-Find-Travel-by-Bus-Train-and-Boat" class="headerlink" title="Skip the TSA Line: Where to Find Travel by Bus, Train, and Boat"></a>Skip the TSA Line: Where to Find Travel by Bus, Train, and Boat</h3><blockquote>
 <p>来源：Wired | 2026&#x2F;3&#x2F;27 21:22:49 | 标签：AI动态</p>
 </blockquote>
-<p>当您需要更多选择而不是飞往目的地时，这些应用程序和网站会为您找到巴士、火车和渡轮票。<br><a href="https://www.wired.com/story/skip-the-tsa-line-where-to-find-travel-by-bus-train-and-boat/">阅读原文</a></p>
+<p>These apps and websites find bus, train, and ferry tickets when you want more op…<br><a href="https://www.wired.com/story/skip-the-tsa-line-where-to-find-travel-by-bus-train-and-boat/">阅读原文</a></p>
 <hr>
-<h3 id="参议员希望美国能源信息机构监测数据中心用电情况"><a href="#参议员希望美国能源信息机构监测数据中心用电情况" class="headerlink" title="参议员希望美国能源信息机构监测数据中心用电情况"></a>参议员希望美国能源信息机构监测数据中心用电情况</h3><blockquote>
+<h3 id="Senators-want-US-energy-information-agency-to-monitor-data-center-electricity-usage"><a href="#Senators-want-US-energy-information-agency-to-monitor-data-center-electricity-usage" class="headerlink" title="Senators want US energy information agency to monitor data center electricity usage"></a>Senators want US energy information agency to monitor data center electricity usage</h3><blockquote>
 <p>来源：Ars Technica | 2026&#x2F;3&#x2F;27 21:16:40 | 标签：科技综合</p>
 </blockquote>
-<p>在一封信中，参议员们敦促强制要求每年披露数据中心的电力信息。<br><a href="https://arstechnica.com/tech-policy/2026/03/senators-want-us-energy-information-agency-to-monitor-data-center-electricity-usage/">阅读原文</a></p>
+<p>In a letter, senators press for mandated annual electricity disclosure for data …<br><a href="https://arstechnica.com/tech-policy/2026/03/senators-want-us-energy-information-agency-to-monitor-data-center-electricity-usage/">阅读原文</a></p>
 <hr>
-<h3 id="保时捷卡宴电动回顾：一款功能惊人的SUV"><a href="#保时捷卡宴电动回顾：一款功能惊人的SUV" class="headerlink" title="保时捷卡宴电动回顾：一款功能惊人的SUV"></a>保时捷卡宴电动回顾：一款功能惊人的SUV</h3><blockquote>
+<h3 id="Porsche-Cayenne-Electric-Review-A-Phenomenally-Capable-SUV"><a href="#Porsche-Cayenne-Electric-Review-A-Phenomenally-Capable-SUV" class="headerlink" title="Porsche Cayenne Electric Review: A Phenomenally Capable SUV"></a>Porsche Cayenne Electric Review: A Phenomenally Capable SUV</h3><blockquote>
 <p>来源：Wired | 2026&#x2F;3&#x2F;27 21:00:00 | 标签：AI动态</p>
 </blockquote>
-<p>保时捷最新的电动SUV是迄今为止最强大的，也是有史以来最强大的街车。但是你应该等待混合动力车吗？<br><a href="https://www.wired.com/review/porsche-cayenne-electric-2026/">阅读原文</a></p>
+<p>Porsche’s latest electric SUV is its most capable yet, and its most powerful str…<br><a href="https://www.wired.com/review/porsche-cayenne-electric-2026/">阅读原文</a></p>
 <hr>
 <h3 id="比亚迪：2025年全年营收8039-65亿元，同比增长3-46"><a href="#比亚迪：2025年全年营收8039-65亿元，同比增长3-46" class="headerlink" title="比亚迪：2025年全年营收8039.65亿元，同比增长3.46%"></a>比亚迪：2025年全年营收8039.65亿元，同比增长3.46%</h3><blockquote>
 <p>来源：36kr | 2026&#x2F;3&#x2F;27 20:57:42 | 标签：科技综合</p>
@@ -4786,10 +4700,10 @@
 </blockquote>
 <p>36氪获悉，美股大型科技盘前多数下跌，截至发稿，Arm、Meta、谷歌跌超1%，微软跌近1%，亚马逊跌0.65%，特斯拉跌0.63%，英伟达跌0.22%，苹果跌0.03%；奈飞涨超1%。<br><a href="https://36kr.com/newsflashes/3741182487281920?f=rss">阅读原文</a></p>
 <hr>
-<h3 id="AMD的Ryzen-9-9950X3D2双版将208MB的缓存塞入单个芯片中"><a href="#AMD的Ryzen-9-9950X3D2双版将208MB的缓存塞入单个芯片中" class="headerlink" title="AMD的Ryzen 9 9950X3D2双版将208MB的缓存塞入单个芯片中"></a>AMD的Ryzen 9 9950X3D2双版将208MB的缓存塞入单个芯片中</h3><blockquote>
+<h3 id="AMD’s-Ryzen-9-9950X3D2-Dual-Edition-crams-208MB-of-cache-into-a-single-chip"><a href="#AMD’s-Ryzen-9-9950X3D2-Dual-Edition-crams-208MB-of-cache-into-a-single-chip" class="headerlink" title="AMD’s Ryzen 9 9950X3D2 Dual Edition crams 208MB of cache into a single chip"></a>AMD’s Ryzen 9 9950X3D2 Dual Edition crams 208MB of cache into a single chip</h3><blockquote>
 <p>来源：Ars Technica | 2026&#x2F;3&#x2F;27 20:44:12 | 标签：科技综合</p>
 </blockquote>
-<p>芯片的两个CPU芯片都将包括堆叠在下面的64MB额外缓存。<br><a href="https://arstechnica.com/gadgets/2026/03/amds-ryzen-9-9950x3d2-dual-edition-crams-208mb-of-cache-into-a-single-chip/">阅读原文</a></p>
+<p>Both of the chip’s CPU dies will include 64MB of extra cache stacked beneath.<br><a href="https://arstechnica.com/gadgets/2026/03/amds-ryzen-9-9950x3d2-dual-edition-crams-208mb-of-cache-into-a-single-chip/">阅读原文</a></p>
 <hr>
 <h3 id="金帝股份再融资定于4月3日上会"><a href="#金帝股份再融资定于4月3日上会" class="headerlink" title="金帝股份再融资定于4月3日上会"></a>金帝股份再融资定于4月3日上会</h3><blockquote>
 <p>来源：36kr | 2026&#x2F;3&#x2F;27 20:40:59 | 标签：融资并购</p>
@@ -4801,10 +4715,10 @@
 </blockquote>
 <p>36氪获悉，天齐锂业发布2025年业绩报告。报告显示，公司2025年实现营业收入103.46亿元，同比下降20.80%；归属于上市公司股东的净利润为4.63亿元，同比扭亏为盈，2024年为亏损79.0…<br><a href="https://36kr.com/newsflashes/3741174386852103?f=rss">阅读原文</a></p>
 <hr>
-<h3 id="火箭报告：俄罗斯重新开放通往国际空间站的门户；卡纳维拉尔角进行导弹测试"><a href="#火箭报告：俄罗斯重新开放通往国际空间站的门户；卡纳维拉尔角进行导弹测试" class="headerlink" title="火箭报告：俄罗斯重新开放通往国际空间站的门户；卡纳维拉尔角进行导弹测试"></a>火箭报告：俄罗斯重新开放通往国际空间站的门户；卡纳维拉尔角进行导弹测试</h3><blockquote>
+<h3 id="Rocket-Report-Russia-reopens-gateway-to-ISS-Cape-Canaveral-hosts-missile-test"><a href="#Rocket-Report-Russia-reopens-gateway-to-ISS-Cape-Canaveral-hosts-missile-test" class="headerlink" title="Rocket Report: Russia reopens gateway to ISS; Cape Canaveral hosts missile test"></a>Rocket Report: Russia reopens gateway to ISS; Cape Canaveral hosts missile test</h3><blockquote>
 <p>来源：Ars Technica | 2026&#x2F;3&#x2F;27 20:35:40 | 标签：科技综合</p>
 </blockquote>
-<p>美国太空部队可能会从ULA停飞的Vulcan火箭上运走额外的有效载荷。<br><a href="https://arstechnica.com/space/2026/03/rocket-report-russian-megaconstellation-takes-off-isar-preps-for-second-launch/">阅读原文</a></p>
+<p>The US Space Force might move additional payloads off of ULA’s grounded Vulcan r…<br><a href="https://arstechnica.com/space/2026/03/rocket-report-russian-megaconstellation-takes-off-isar-preps-for-second-launch/">阅读原文</a></p>
 <hr>
 <h3 id="胜宏科技：香港联交所审议公司发行境外上市外资股（H股）"><a href="#胜宏科技：香港联交所审议公司发行境外上市外资股（H股）" class="headerlink" title="胜宏科技：香港联交所审议公司发行境外上市外资股（H股）"></a>胜宏科技：香港联交所审议公司发行境外上市外资股（H股）</h3><blockquote>
 <p>来源：36kr | 2026&#x2F;3&#x2F;27 20:33:49 | 标签：科技综合</p>
@@ -4816,35 +4730,10 @@
 </blockquote>
 <p>36氪获悉，3月27日，钉钉CLI开源项目上架Github社区，项目以Apache-2.0协议开源，首批开放AI表格、日历、日志、待办、机器人、通讯录、DING消息、考勤、开放平台文档、工作台共10项…<br><a href="https://36kr.com/newsflashes/3741168187736072?f=rss">阅读原文</a></p>
 <hr>
-<h3 id="下载：互联网上最好的天气应用程序，以及为什么人们会冻结自己的大脑"><a href="#下载：互联网上最好的天气应用程序，以及为什么人们会冻结自己的大脑" class="headerlink" title="下载：互联网上最好的天气应用程序，以及为什么人们会冻结自己的大脑"></a>下载：互联网上最好的天气应用程序，以及为什么人们会冻结自己的大脑</h3><blockquote>
+<h3 id="The-Download-the-internet’s-best-weather-app-and-why-people-freeze-their-brains"><a href="#The-Download-the-internet’s-best-weather-app-and-why-people-freeze-their-brains" class="headerlink" title="The Download: the internet’s best weather app, and why people freeze their brains"></a>The Download: the internet’s best weather app, and why people freeze their brains</h3><blockquote>
 <p>来源：MIT Tech Review | 2026&#x2F;3&#x2F;27 20:32:54 | 标签：政策法规</p>
 </blockquote>
-<p>这是今天的The Download版本，我们的工作日时事通讯，提供有关技术世界每日发生的事情的信息。几个滑雪爱好者如何构建互联网上最好的天气应用程序对于滑雪者来说，最好的降雪预测应用程序不是联邦政府资…<br><a href="https://www.technologyreview.com/2026/03/27/1134755/the-download-best-weather-forecasting-app-why-people-freeze-brains/">阅读原文</a></p>
-<hr>
-<h3 id="潮宏基：2025年净利润4-97亿元，同比增长156-66"><a href="#潮宏基：2025年净利润4-97亿元，同比增长156-66" class="headerlink" title="潮宏基：2025年净利润4.97亿元，同比增长156.66%"></a>潮宏基：2025年净利润4.97亿元，同比增长156.66%</h3><blockquote>
-<p>来源：36kr | 2026&#x2F;3&#x2F;27 20:30:09 | 标签：科技综合</p>
-</blockquote>
-<p>36氪获悉，潮宏基发布2025年业绩报告。报告显示，公司2025年营业收入93.18亿元，同比增长42.96%；归属于上市公司股东的净利润4.97亿元，同比增长156.66%。公司拟以8.89亿股为基…<br><a href="https://36kr.com/newsflashes/3741165308772357?f=rss">阅读原文</a></p>
-<hr>
-<h3 id="百度“抓虾吧”日活暴涨10倍，已有1-8万AI龙虾发贴2-5万个"><a href="#百度“抓虾吧”日活暴涨10倍，已有1-8万AI龙虾发贴2-5万个" class="headerlink" title="百度“抓虾吧”日活暴涨10倍，已有1.8万AI龙虾发贴2.5万个"></a>百度“抓虾吧”日活暴涨10倍，已有1.8万AI龙虾发贴2.5万个</h3><blockquote>
-<p>来源：36kr | 2026&#x2F;3&#x2F;27 20:25:55 | 标签：政策法规</p>
-</blockquote>
-<p>36氪获悉，日前，百度贴吧“抓虾吧”爆火，自创建以来共吸引1.8万个OpenClaw智能体发布2.5万个贴子，累计互动37.5万次。官方透露，24小时内“抓虾吧”日活暴增10倍，24小时内已吸引20万…<br><a href="https://36kr.com/newsflashes/3741161158033670?f=rss">阅读原文</a></p>
-<hr>
-<h3 id="招商证券：2025年净利润同比增长18-91-，拟10派4-49元"><a href="#招商证券：2025年净利润同比增长18-91-，拟10派4-49元" class="headerlink" title="招商证券：2025年净利润同比增长18.91%，拟10派4.49元"></a>招商证券：2025年净利润同比增长18.91%，拟10派4.49元</h3><blockquote>
-<p>来源：36kr | 2026&#x2F;3&#x2F;27 20:25:20 | 标签：科技综合</p>
-</blockquote>
-<p>36氪获悉，招商证券发布2025年业绩报告。报告显示，公司2025年实现营业收入249.72亿元，同比增长19.53%；归母净利润123.50亿元，同比增长18.91%，创历史新高。公司拟每10股派发…<br><a href="https://36kr.com/newsflashes/3741160574648326?f=rss">阅读原文</a></p>
-<hr>
-<h3 id="星宸科技股份有限公司向港交所提交上市申请"><a href="#星宸科技股份有限公司向港交所提交上市申请" class="headerlink" title="星宸科技股份有限公司向港交所提交上市申请"></a>星宸科技股份有限公司向港交所提交上市申请</h3><blockquote>
-<p>来源：36kr | 2026&#x2F;3&#x2F;27 20:22:42 | 标签：科技综合</p>
-</blockquote>
-<p>36氪获悉，据港交所，星宸科技股份有限公司向港交所提交上市申请，联席保荐人为中金公司和中信建投国际。<br><a href="https://36kr.com/newsflashes/3741157997903879?f=rss">阅读原文</a></p>
-<hr>
-<h3 id="伯特利：筹划发行H股股票并申请在香港联合交易所有限公司上市"><a href="#伯特利：筹划发行H股股票并申请在香港联合交易所有限公司上市" class="headerlink" title="伯特利：筹划发行H股股票并申请在香港联合交易所有限公司上市"></a>伯特利：筹划发行H股股票并申请在香港联合交易所有限公司上市</h3><blockquote>
-<p>来源：36kr | 2026&#x2F;3&#x2F;27 20:21:42 | 标签：科技综合</p>
-</blockquote>
-<p>36氪获悉，伯特利公告，为深入推进公司全球化战略布局，打造国际化资本运作平台，加快构建国内国际双循环格局，进一步助推公司产业全球化布局升维，公司拟发行境外上市外资股（H股）股票并申请于香港联合交易所有…<br><a href="https://36kr.com/newsflashes/3741157009260802?f=rss">阅读原文</a></p>
+<p>This is today’s edition of The Download, our weekday newsletter that provides a daily dose of what’s…<br><a href="https://www.technologyreview.com/2026/03/27/1134755/the-download-best-weather-forecasting-app-why-people-freeze-brains/">阅读原文</a></p>
 <hr>
 <blockquote>
 <p><strong>声明</strong>：本文章由自动化脚本生成，内容基于 RSS 订阅源抓取的资讯整理。如有侵权请联系删除。</p>
